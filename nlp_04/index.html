@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>[NLP] 4.텍스트 전처리 - 인코딩 &amp; 패딩 - Plox&#39;s blog</title><meta name="Description" content="프로젝트를 위한 NLP 공부"><meta property="og:title" content="[NLP] 4.텍스트 전처리 - 인코딩 &amp; 패딩" />
+<meta property="og:description" content="프로젝트를 위한 NLP 공부" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://github.plooox.io/nlp_04/" /><meta property="og:image" content="http://github.plooox.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-18T17:02:56+09:00" />
+<meta property="article:modified_time" content="2021-08-18T17:02:56+09:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://github.plooox.io/logo.png"/>
+
+<meta name="twitter:title" content="[NLP] 4.텍스트 전처리 - 인코딩 &amp; 패딩"/>
+<meta name="twitter:description" content="프로젝트를 위한 NLP 공부"/>
+<meta name="application-name" content="Plox&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Plox&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://github.plooox.io/nlp_04/" /><link rel="prev" href="http://github.plooox.io/nlp_03/" /><link rel="next" href="http://github.plooox.io/nlp_05/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[NLP] 4.텍스트 전처리 - 인코딩 \u0026 패딩",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/github.plooox.io\/nlp_04\/"
+        },"genre": "posts","keywords": "NLP","wordcount":  1447 ,
+        "url": "http:\/\/github.plooox.io\/nlp_04\/","datePublished": "2021-08-18T17:02:56+09:00","dateModified": "2021-08-18T17:02:56+09:00","publisher": {
+            "@type": "Organization",
+            "name": "Plox"},"author": {
+                "@type": "Person",
+                "name": "Plox"
+            },"description": "프로젝트를 위한 NLP 공부"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Plox&#39;s blog">Plox&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Plox&#39;s blog">Plox&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">[NLP] 4.텍스트 전처리 - 인코딩 &amp; 패딩</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class="post-category">included in <a href="/categories/nlp/"><i class="far fa-folder fa-fw"></i>NLP</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-18">2021-08-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1447 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#정수-인코딩">정수 인코딩</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#dictionary">Dictionary</a></li>
+            <li><a href="#counter">Counter</a></li>
+            <li><a href="#nltk---freqdist">NLTK - FreqDist</a></li>
+            <li><a href="#enumerate">enumerate</a></li>
+          </ul>
+        </li>
+        <li><a href="#keras">Keras</a></li>
+      </ul>
+    </li>
+    <li><a href="#padding">Padding</a>
+      <ul>
+        <li><a href="#numpy-사용">Numpy 사용</a></li>
+        <li><a href="#keras-사용">keras 사용</a>
+          <ul>
+            <li><a href="#길이-제한-값-수정">길이 제한, 값 수정</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#one-hot-encoding">One-Hot Encoding</a>
+      <ul>
+        <li><a href="#vocabulary단어집합">Vocabulary(단어집합)</a></li>
+        <li><a href="#one-hot-encoding-1">One-Hot Encoding</a></li>
+        <li><a href="#keras-활용">Keras 활용</a></li>
+        <li><a href="#한계점">한계점</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="정수-인코딩">정수 인코딩</h1>
+<p>컴퓨터는 텍스트보다 숫자를 더 잘 처리할 수 있다.<br>
+이 특징을 살리기 위해 NLP에서는 텍스트를 숫자로 바꾸는 기법들을 제안한다.<br>
+이러한 기법들은 각 단어를 고유한 정수값에 Mapping시키는 전처리 작업이 요구되기도 한다.</p>
+<h3 id="dictionary">Dictionary</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;A barber is a person. a barber is good person. a barber is huge person. he Knew A Secret! The Secret He Kept is huge secret. Huge secret. His barber kept his word. a barber kept his word. His barber kept his secret. But keeping and keeping such a huge secret to himself was driving the barber crazy. the barber went up a huge mountain.&#34;</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>  <span class="c1">#문장 토큰화</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="p">{}</span> 
+<span class="n">sentence</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># 문장에 대해 단어 토큰화</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="c1">#대문자 -&gt; 소문자</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>  <span class="c1">#불용어 제거</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># 단어 길이가 2이하인 경우 제거</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vocab</span><span class="p">:</span>
+                    <span class="n">vocab</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">vocab</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">sentence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Word Tokenize&#34;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="c1"># 단어 토큰화</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Word Frequency&#34;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>    <span class="c1"># 중복을 제거한 단어의 빈도수</span>
+
+<span class="n">vocab_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vocab</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="c1">#빈도수 순으로 정렬</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab_sorted</span><span class="p">)</span>
+
+<span class="n">word_to_idx</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1">#빈도수 높은 순서대로 고유번호 부여</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">freq</span><span class="p">)</span> <span class="ow">in</span> <span class="n">vocab_sorted</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">freq</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">word_to_idx</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Encoded Word&#34;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">word_to_idx</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">Word</span> <span class="n">Tokenize</span>
+<span class="p">[[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;knew&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="s1">&#39;word&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="s1">&#39;word&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;keeping&#39;</span><span class="p">,</span> <span class="s1">&#39;keeping&#39;</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="s1">&#39;driving&#39;</span><span class="p">,</span> <span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;crazy&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="s1">&#39;went&#39;</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="s1">&#39;mountain&#39;</span><span class="p">]]</span>
+
+<span class="n">Word</span> <span class="n">Frequency</span>
+<span class="p">{</span><span class="s1">&#39;barber&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;good&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;knew&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;keeping&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;driving&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;crazy&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;went&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;mountain&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="p">[(</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;keeping&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;knew&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;driving&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;crazy&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;went&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mountain&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">Encoded</span> <span class="n">Word</span>
+<span class="p">{</span><span class="s1">&#39;barber&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;keeping&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>word_to_idx</code>를 이용하여 토큰화된 sentence의 각 단어를 정수로 변환시킬 수 있다.</p>
+<blockquote>
+<p>ex) [&lsquo;barber&rsquo;, &lsquo;person&rsquo;] -&gt; [1,5]</p>
+</blockquote>
+<p>단어 집합에 존재하지 않는 단어들은 <strong>Out-Of-Voca</strong>라고 하며, 새로운 index르 인코딩한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">word_to_idx</span><span class="p">[</span><span class="s1">&#39;OOV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word_to_idx</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="counter">Counter</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="p">[])</span>       <span class="c1">#단어집합을 만들기 위해 문장의 경계인 []제거</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>          <span class="c1">#중복을 제거하고 단어의 빈도수 기록</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>    <span class="c1">#등장 빈도수가 높은 상위 5개의 단어만 저장</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">[(</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="nltk---freqdist">NLTK - FreqDist</h3>
+<p><code>Counter()</code>와 사용방법이 동일</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">FreqDist</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">sentence</span><span class="p">))</span>   <span class="c1">#문장 구분 제거 == sum(sentence, [])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">[(</span><span class="s1">&#39;barber&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;huge&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;kept&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="enumerate">enumerate</h3>
+<p>enumerate: 순서가 있는 자료형(list, set, tuple,dictionary, string)을 입력받아 인덱스를 순차적으로 리턴</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">word_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">word_to_idx</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">{</span><span class="s1">&#39;barber&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;huge&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;kept&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;keeping&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="keras">Keras</h2>
+<p>Keras는 기본적인 전처리 도구를 제공
+정수 인코딩의 경우, Keras의 Tokenizer를 사용하기도 한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.text</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span> <span class="c1">#sentences: 단어 토큰화된 데이터</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[Word index]&#34;</span><span class="p">)</span>   <span class="c1"># 인덱스 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">word_index</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[Word count]&#34;</span><span class="p">)</span>   <span class="c1"># 카운트 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">word_counts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[sequences]&#34;</span><span class="p">)</span>    <span class="c1"># corpus를 인덱스로 변환</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">sentence</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">[Word index]
+{&#39;barber&#39;: 1, &#39;secret&#39;: 2, &#39;huge&#39;: 3, &#39;kept&#39;: 4, &#39;person&#39;: 5, &#39;word&#39;: 6, &#39;keeping&#39;: 7, &#39;good&#39;: 8, &#39;knew&#39;: 9, &#39;driving&#39;: 10, &#39;crazy&#39;: 11, &#39;went&#39;: 12, &#39;mountain&#39;: 13}
+[Word count]
+OrderedDict([(&#39;barber&#39;, 8), (&#39;person&#39;, 3), (&#39;good&#39;, 1), (&#39;huge&#39;, 5), (&#39;knew&#39;, 1), (&#39;secret&#39;, 6), (&#39;kept&#39;, 4), (&#39;word&#39;, 2), (&#39;keeping&#39;, 2), (&#39;driving&#39;, 1), (&#39;crazy&#39;, 1), (&#39;went&#39;, 1), (&#39;mountain&#39;, 1)])
+[sequences]
+[[1, 5], [1, 8, 5], [1, 3, 5], [9, 2], [2, 4, 3, 2], [3, 2], [1, 4, 6], [1, 4, 6], [1, 4, 2], [7, 7, 3, 2, 10, 1, 11], [1, 12, 3, 13]]
+</code></pre></td></tr></table>
+</div>
+</div><p>Keras Tokenizer는 기본적으로 OOV에 대해 정수 인코딩 과정에서 단어를 제거한다는 특징을 가진다.<br>
+따라서 OOV를 보존하고 싶으면 인자 <code>oov_token</code>을 사용한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">voca_size</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c1"># 빈도수 상위 5개 단어만 사용, OOV와 숫자 0 고려하여 크기는 +2</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="n">num_words</span><span class="o">=</span> <span class="n">voca_size</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">oov_token</span><span class="o">=</span><span class="s1">&#39;OOV&#39;</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">sentences</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="padding">Padding</h1>
+<p>기계는 길이가 동일한 문서에 대해 행렬 연산이 가능<br>
+병렬 연산을 위해서 여러 문장의 길이를 동일하게 맞춰주는 작업<br>
+<strong>데이터에 특정 값을 채워서 데이터의 크기(shape)를 조정하는 작업</strong></p>
+<h2 id="numpy-사용">Numpy 사용</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">encoded</span><span class="p">)</span> <span class="c1">#문장의 최대 길이 구하기</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">encoded</span><span class="p">:</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">max_len</span><span class="p">:</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 숫자 0 사용 -&gt; Zero padding</span>
+
+<span class="n">padded_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">padded_np</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">[[</span> <span class="mi">1</span>  <span class="mi">5</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">8</span>  <span class="mi">5</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">5</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">9</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">6</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">6</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">7</span>  <span class="mi">7</span>  <span class="mi">3</span>  <span class="mi">2</span> <span class="mi">10</span>  <span class="mi">1</span> <span class="mi">11</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span> <span class="mi">12</span>  <span class="mi">3</span> <span class="mi">13</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="keras-사용">keras 사용</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">pad_sequences</span>
+
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<span class="n">pad_seq</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pad_seq</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">[[</span> <span class="mi">1</span>  <span class="mi">5</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">8</span>  <span class="mi">5</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">5</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">9</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">3</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">6</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">6</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">7</span>  <span class="mi">7</span>  <span class="mi">3</span>  <span class="mi">2</span> <span class="mi">10</span>  <span class="mi">1</span> <span class="mi">11</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span> <span class="mi">12</span>  <span class="mi">3</span> <span class="mi">13</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="길이-제한-값-수정">길이 제한, 값 수정</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 길이제한: maxlen = 5</span>
+<span class="c1"># value 수정: 사용된 정수와 겹치지 않게 단어 집합 크기보다 1 큰 수 사용 </span>
+<span class="n">padded</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">word_index</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 길이가 maxlen(= 5)보다 작으면 0으로 패딩, 크면 데이터 소멸</span>
+<span class="p">[[</span> <span class="mi">1</span>  <span class="mi">5</span> <span class="mi">14</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">8</span>  <span class="mi">5</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">3</span>  <span class="mi">5</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">9</span>  <span class="mi">2</span> <span class="mi">14</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span>  <span class="mi">4</span>  <span class="mi">3</span>  <span class="mi">2</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">3</span>  <span class="mi">2</span> <span class="mi">14</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">6</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">6</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">2</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">3</span>  <span class="mi">2</span> <span class="mi">10</span>  <span class="mi">1</span> <span class="mi">11</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span> <span class="mi">12</span>  <span class="mi">3</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="one-hot-encoding">One-Hot Encoding</h1>
+<h2 id="vocabulary단어집합">Vocabulary(단어집합)</h2>
+<p>서로 다른 단어들의 집합<br>
+텍스트 데이터의 모든 단어를 중복을 허용하지 않고 모아놓을 것을 지칭<br>
+One-Hot encoding은 단어 집합을 만들고 각 단어에 정수 인덱스를 부여하는 것에서부터 시작된다.</p>
+<h2 id="one-hot-encoding-1">One-Hot Encoding</h2>
+<p>단어 집합의 크기를 백터의 차원으로 하고, 표현하고자 하는 단어의 인덱스에 1의 값을 부여하는 단어의 벡터 표현 방식.<br>
+이렇게 표현된 벡터를 One-Hot vector라고 한다.</p>
+<h2 id="keras-활용">Keras 활용</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.text</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;나랑 점심 먹으러 갈래 점심 메뉴는 햄버거 갈래 갈래 햄버거 최고야&#34;</span>
+<span class="n">sub_text</span><span class="o">=</span><span class="s2">&#34;점심 먹으러 갈래 메뉴는 햄버거 최고야&#34;</span>
+
+<span class="c1"># 1. 정수 인코딩</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fit_on_texts</span><span class="p">([</span><span class="n">text</span><span class="p">])</span>  <span class="c1"># 각 단어에 대한 인코딩</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">word_index</span><span class="p">)</span>
+
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">([</span><span class="n">sub_text</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#[[1,2,3,4]] -&gt; [1,2,3,4]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+
+<span class="c1"># 2. One-Hot vector 생성</span>
+<span class="n">one_hot</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">one_hot</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="p">{</span><span class="s1">&#39;갈래&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;점심&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;햄버거&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;나랑&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;먹으러&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;메뉴는&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;최고야&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span> <span class="c1">#단어 인덱스</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>  <span class="c1"># 정수 인코딩</span>
+<span class="p">[[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>  <span class="c1"># 원-핫 인코딩</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">0.</span> <span class="mf">1.</span><span class="p">]]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="한계점">한계점</h2>
+<ol>
+<li>단어의 개수가 늘어날 수록, 벡터를 저장하기 위한 공간이 늘어난다.</li>
+<li>단어의 유사도를 반영할 수 없음<br>
+ex) book과 books를 일반적으로 다른 단어라고 취급</li>
+</ol>
+<p>참고) <a href="https://wikidocs.net/book/2155" target="_blank" rel="noopener noreffer">딥러닝을 이용한 자연어 처리 입문</a></p>
+<!--more--></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-08-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/nlp_04/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nlp/">NLP</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/nlp_03/" class="prev" rel="prev" title="[NLP] 3.텍스트 전처리 - 정제및 정규화"><i class="fas fa-angle-left fa-fw"></i>[NLP] 3.텍스트 전처리 - 정제및 정규화</a>
+            <a href="/nlp_05/" class="next" rel="next" title="[NLP] 5.텍스트 전처리 - Splitting Data">[NLP] 5.텍스트 전처리 - Splitting Data<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Plox</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"plooox/blog_comments"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

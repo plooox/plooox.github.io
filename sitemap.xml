@@ -2,8 +2,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://github.plooox.io/</loc><lastmod>2022-01-12T18:09:43&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://github.plooox.io/posts/</loc><lastmod>2022-01-12T18:09:43&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://github.plooox.io/test/</loc><lastmod>2022-01-12T18:09:43&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://github.plooox.io/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>http://github.plooox.io/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
+            <loc>http://github.plooox.io/categories/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/tags/nlp/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/posts/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/categories/project/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/sentimental_analysis_project/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/tags/</loc><lastmod>2022-01-06T21:24:04&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://github.plooox.io/twitterapi/</loc><lastmod>2021-09-07T22:38:26&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://github.plooox.io/nlp_05/</loc><lastmod>2021-08-24T15:01:45&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://github.plooox.io/categories/nlp/</loc><lastmod>2021-08-24T15:01:45&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://github.plooox.io/nlp_04/</loc><lastmod>2021-08-18T17:02:56&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://github.plooox.io/nlp_03/</loc><lastmod>2021-08-17T13:53:02&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://github.plooox.io/nlp_01/</loc><lastmod>2021-08-15T12:59:18&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://github.plooox.io/nlp_02/</loc><lastmod>2021-08-15T12:59:18&#43;09:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
