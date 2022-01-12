@@ -42,18 +42,18 @@
     <guid>http://github.plooox.io/nlp_03/</guid>
     <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
 </item><item>
-    <title>[NLP] 1.프레임워크와 라이브러리</title>
-    <link>http://github.plooox.io/nlp_01/</link>
-    <pubDate>Sun, 15 Aug 2021 12:59:18 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://github.plooox.io/nlp_01/</guid>
-    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
-</item><item>
     <title>[NLP] 2.텍스트 전처리 - 토큰화</title>
     <link>http://github.plooox.io/nlp_02/</link>
     <pubDate>Sun, 15 Aug 2021 12:59:18 &#43;0900</pubDate>
     <author>Author</author>
     <guid>http://github.plooox.io/nlp_02/</guid>
+    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
+</item><item>
+    <title>[NLP] 1.프레임워크와 라이브러리</title>
+    <link>http://github.plooox.io/nlp_01/</link>
+    <pubDate>Sun, 15 Aug 2021 12:28:18 &#43;0900</pubDate>
+    <author>Author</author>
+    <guid>http://github.plooox.io/nlp_01/</guid>
     <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
 </item></channel>
 </rss>
