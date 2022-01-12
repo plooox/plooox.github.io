@@ -33,7 +33,7 @@ for i in text:
                 vocab[w] += 1
     sentence.append(res)
 print("Word Tokenize")
-print(sentence) # 단어 토큰화
+print(sentence) # 단어토큰화
 print("Word Frequency")
 print(vocab)    # 중복을 제거한 단어의 빈도수
 
