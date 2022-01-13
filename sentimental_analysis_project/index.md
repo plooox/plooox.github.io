@@ -1,9 +1,9 @@
-# SNS 감정분석을 통한 여론 조사
-
-<!--more-->
+# [Project] SNS 감정분석을 통한 여론 조사
 
 <!--more-->
 # 개요
+
+[https://github.com/plooox/SentimentalAnalysis](https://github.com/plooox/SentimentalAnalysis)
 
 대표적인 소셜 네트워크 서비스인 트위터에서 특정 키워드의 검색 결과에 대한 트윗 데이터를 수집하고, 수집한 트윗 내용을 바탕으로 감정 분석을 실시하여 특정 키워드에 대한 여론이 긍정적인지, 부정적인지를 보여주는 프로그램 입니다.
 
@@ -72,8 +72,7 @@ cf.close()
 # 감정 분석
 
 수집한 트위터 데이터들을 가지고 감정 분석을 하여 트윗 텍스트가 긍정적인 의미를 내포하고 있는지, 부정적인 의미를 내포하고 있는지를 분석합니다.  
-이를 위해 kakao brain에서 배포한 [PORORO(Platform Of neuRal mOdels for natuRal language prOcessing)](https://github.com/kakaobrain/pororo)를 이용하였습니다.  
-PORORO에서는 다양한 자연어 처리 Task를 지원하는데, 이중에서 “Sentimental Analysis”를 이용하면 입력한 텍스트 데이터가 ‘긍정’인지, ‘부정’인지 분류할 수 있습니다.
+이를 위해 kakao brain에서 배포한 [PORORO(Platform Of neuRal mOdels for natuRal language prOcessing)](https://github.com/kakaobrain/pororo)를 이용하였습니다. PORORO에서는 다양한 자연어 처리 Task를 지원하는데, 이중에서 “Sentimental Analysis”를 이용하면 입력한 텍스트 데이터가 ‘긍정’인지, ‘부정’인지 분류할 수 있습니다.
 
 ```python
 import pandas as pd
@@ -215,7 +214,7 @@ Streamlit을 통해 로컬 환경에서 웹 어플리케이션을 만들어 시�
 
 # 후기
 
-작년 하반기에 만들었던 것을 문서화 하였습니다.
-과제나 학습이 아닌 프로젝트를 처음으로 해보게 되었는데, 감회가 새로웠습니다.  
-프로그램을 설계하고, 구현하는 과정에서 내가 모르는 것들을 찾아가는 것이 좋았습니다.  
-다만 너무 외부 오픈소스에 의존해서 만들었다는 점이 아쉽게 느껴지고, 만들다보니 개선할 점도 많이 나온 것 같아 좀 아쉽다는 느낌이 듭니다.
+- 작년 하반기에 만들었던 프로젝트를 문서화 하였습니다.
+- 과제나 학습이 아닌 프로젝트를 처음으로 해보게 되었는데, 감회가 새로웠습니다.  
+- 프로그램을 설계하고, 구현하는 과정에서 내가 모르는 것들을 찾아가는 것이 좋았습니다.  
+- 다만 너무 외부 오픈소스에 의존해서 만들었다는 점이 아쉽게 느껴지고, 만들다보니 개선할 점도 많이 나온 것 같아 좀 아쉽다는 느낌이 듭니다.

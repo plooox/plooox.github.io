@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>SNS 감정분석을 통한 여론 조사 - Plox&#39;s blog</title><meta name="Description" content="NLP Project"><meta property="og:title" content="SNS 감정분석을 통한 여론 조사" />
+        <title>[Project] SNS 감정분석을 통한 여론 조사 - Plox&#39;s blog</title><meta name="Description" content="NLP Project"><meta property="og:title" content="[Project] SNS 감정분석을 통한 여론 조사" />
 <meta property="og:description" content="NLP Project" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://github.plooox.io/sentimental_analysis_project/" /><meta property="og:image" content="http://github.plooox.io/logo.png"/><meta property="article:section" content="posts" />
@@ -15,19 +15,19 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://github.plooox.io/logo.png"/>
 
-<meta name="twitter:title" content="SNS 감정분석을 통한 여론 조사"/>
+<meta name="twitter:title" content="[Project] SNS 감정분석을 통한 여론 조사"/>
 <meta name="twitter:description" content="NLP Project"/>
 <meta name="application-name" content="Plox&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="Plox&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://github.plooox.io/sentimental_analysis_project/" /><link rel="prev" href="http://github.plooox.io/twitterapi/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "SNS 감정분석을 통한 여론 조사",
+        "headline": "[Project] SNS 감정분석을 통한 여론 조사",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/github.plooox.io\/sentimental_analysis_project\/"
-        },"genre": "posts","keywords": "NLP","wordcount":  942 ,
+        },"genre": "posts","keywords": "NLP","wordcount":  943 ,
         "url": "http:\/\/github.plooox.io\/sentimental_analysis_project\/","datePublished": "2022-01-06T21:24:04+09:00","dateModified": "2022-01-06T21:24:04+09:00","publisher": {
             "@type": "Organization",
             "name": "Plox"},"author": {
@@ -102,9 +102,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">SNS 감정분석을 통한 여론 조사</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">[Project] SNS 감정분석을 통한 여론 조사</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw"></i>project</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-06">2022-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;942 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-06">2022-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;943 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -126,8 +126,8 @@
     <li><a href="#후기">후기</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><!--more-->
-<h1 id="개요">개요</h1>
+            </div><div class="content" id="content"><h1 id="개요">개요</h1>
+<p><a href="https://github.com/plooox/SentimentalAnalysis" target="_blank" rel="noopener noreffer">https://github.com/plooox/SentimentalAnalysis</a></p>
 <p>대표적인 소셜 네트워크 서비스인 트위터에서 특정 키워드의 검색 결과에 대한 트윗 데이터를 수집하고, 수집한 트윗 내용을 바탕으로 감정 분석을 실시하여 특정 키워드에 대한 여론이 긍정적인지, 부정적인지를 보여주는 프로그램 입니다.</p>
 <p><img
         class="lazyload"
@@ -248,8 +248,7 @@
 </div>
 </div><h1 id="감정-분석">감정 분석</h1>
 <p>수집한 트위터 데이터들을 가지고 감정 분석을 하여 트윗 텍스트가 긍정적인 의미를 내포하고 있는지, 부정적인 의미를 내포하고 있는지를 분석합니다.<br>
-이를 위해 kakao brain에서 배포한 <a href="https://github.com/kakaobrain/pororo" target="_blank" rel="noopener noreffer">PORORO(Platform Of neuRal mOdels for natuRal language prOcessing)</a>를 이용하였습니다.<br>
-PORORO에서는 다양한 자연어 처리 Task를 지원하는데, 이중에서 “Sentimental Analysis”를 이용하면 입력한 텍스트 데이터가 ‘긍정’인지, ‘부정’인지 분류할 수 있습니다.</p>
+이를 위해 kakao brain에서 배포한 <a href="https://github.com/kakaobrain/pororo" target="_blank" rel="noopener noreffer">PORORO(Platform Of neuRal mOdels for natuRal language prOcessing)</a>를 이용하였습니다. PORORO에서는 다양한 자연어 처리 Task를 지원하는데, 이중에서 “Sentimental Analysis”를 이용하면 입력한 텍스트 데이터가 ‘긍정’인지, ‘부정’인지 분류할 수 있습니다.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -516,10 +515,12 @@ Streamlit을 통해 로컬 환경에서 웹 어플리케이션을 만들어 시�
 </tbody>
 </table>
 <h1 id="후기">후기</h1>
-<p>작년 하반기에 만들었던 것을 문서화 하였습니다.
-과제나 학습이 아닌 프로젝트를 처음으로 해보게 되었는데, 감회가 새로웠습니다.<br>
-프로그램을 설계하고, 구현하는 과정에서 내가 모르는 것들을 찾아가는 것이 좋았습니다.<br>
-다만 너무 외부 오픈소스에 의존해서 만들었다는 점이 아쉽게 느껴지고, 만들다보니 개선할 점도 많이 나온 것 같아 좀 아쉽다는 느낌이 듭니다.</p></div><div class="post-footer" id="post-footer">
+<ul>
+<li>작년 하반기에 만들었던 프로젝트를 문서화 하였습니다.</li>
+<li>과제나 학습이 아닌 프로젝트를 처음으로 해보게 되었는데, 감회가 새로웠습니다.</li>
+<li>프로그램을 설계하고, 구현하는 과정에서 내가 모르는 것들을 찾아가는 것이 좋았습니다.</li>
+<li>다만 너무 외부 오픈소스에 의존해서 만들었다는 점이 아쉽게 느껴지고, 만들다보니 개선할 점도 많이 나온 것 같아 좀 아쉽다는 느낌이 듭니다.</li>
+</ul></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
