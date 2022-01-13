@@ -50,7 +50,8 @@ RF모델의 경우, ```feature_importance_```를 통해 매개변수 중요도�
 ![스크린샷 2022-01-13 오후 6 44 13](https://user-images.githubusercontent.com/82520143/149305765-7c44a980-d5a3-48e7-8b8e-1b995e6e6720.png)
 
 뿐만 아니라 SVM모델에서도 ```coef_```를 통해 중요도를 확인 할 수 있습니다.
-![스크린샷 2022-01-13 오후 10 18 53](https://user-images.githubusercontent.com/82520143/149337449-be4e1bac-c256-4052-a831-8b64feabee46.png)
+![스크린샷 2022-01-13 오후 10 18 53](https://user-images.githubusercontent.com/82520143/149337449-be4e1bac-c256-4052-a831-8b64feabee46.png)  
+[참고)https://stackoverflow.com/questions/41592661/determining-the-most-contributing-features-for-svm-classifier-in-sklearn](https://stackoverflow.com/questions/41592661/determining-the-most-contributing-features-for-svm-classifier-in-sklearn)
   
 노즐 온도, 출력 속도, 베드 온도 순으로 중요도가 높다는 결과값이 나오게 되었는데, 이처럼 RF모델을 사용하게 된다면 3D 프린터 사용자가 파라미터를 조정시 어떤 파라미터를 주의깊게 조정해야하는지 알 수 있다.  
 
