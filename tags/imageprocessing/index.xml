@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>ImageProcessing - Tag - Plox&#39;s blog</title>
+        <link>http://github.plooox.io/tags/imageprocessing/</link>
+        <description>ImageProcessing - Tag - Plox&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
+            <webMaster>insuKim97@gmail.com (Plox)</webMaster><lastBuildDate>Thu, 13 Jan 2022 18:25:53 &#43;0900</lastBuildDate><atom:link href="http://github.plooox.io/tags/imageprocessing/" rel="self" type="application/rss+xml" /><item>
+    <title>[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 머신러닝</title>
+    <link>http://github.plooox.io/3dprinting_printability_ml/</link>
+    <pubDate>Thu, 13 Jan 2022 18:25:53 &#43;0900</pubDate>
+    <author>Author</author>
+    <guid>http://github.plooox.io/3dprinting_printability_ml/</guid>
+    <description><![CDATA[졸업논문 프로젝트(2)]]></description>
+</item><item>
+    <title>[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리</title>
+    <link>http://github.plooox.io/3dprinting_printability_imageprocessing/</link>
+    <pubDate>Thu, 13 Jan 2022 17:16:04 &#43;0900</pubDate>
+    <author>Author</author>
+    <guid>http://github.plooox.io/3dprinting_printability_imageprocessing/</guid>
+    <description><![CDATA[졸업논문 프로젝트(1)]]></description>
+</item></channel>
+</rss>
