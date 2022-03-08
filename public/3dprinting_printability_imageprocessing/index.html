@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리 - Plox&#39;s blog</title><meta name="Description" content="졸업논문 프로젝트(1)"><meta property="og:title" content="[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리" />
+<meta property="og:description" content="졸업논문 프로젝트(1)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://plooox.github.io/3dprinting_printability_imageprocessing/" />
+<meta property="og:image" content="http://plooox.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-01-13T17:16:04+09:00" />
+<meta property="article:modified_time" content="2022-01-13T17:16:04+09:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://plooox.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리"/>
+<meta name="twitter:description" content="졸업논문 프로젝트(1)"/>
+<meta name="application-name" content="Plox&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Plox&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://plooox.github.io/3dprinting_printability_imageprocessing/" /><link rel="prev" href="http://plooox.github.io/sentimental_analysis_project/" /><link rel="next" href="http://plooox.github.io/3dprinting_printability_ml/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/plooox.github.io\/3dprinting_printability_imageprocessing\/"
+        },"genre": "posts","keywords": "3D printing, ImageProcessing","wordcount":  374 ,
+        "url": "http:\/\/plooox.github.io\/3dprinting_printability_imageprocessing\/","datePublished": "2022-01-13T17:16:04+09:00","dateModified": "2022-01-13T17:16:04+09:00","publisher": {
+            "@type": "Organization",
+            "name": "Plox"},"author": {
+                "@type": "Person",
+                "name": "Plox"
+            },"description": "졸업논문 프로젝트(1)"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Plox&#39;s blog">Plox&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Plox&#39;s blog">Plox&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw"></i>project</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-13">2022-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;374 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#개요">개요</a></li>
+    <li><a href="#3d-printing">3D printing</a>
+      <ul>
+        <li><a href="#도면">도면</a></li>
+        <li><a href="#parameter-selection">Parameter selection</a></li>
+      </ul>
+    </li>
+    <li><a href="#image-processing">Image processing</a>
+      <ul>
+        <li><a href="#preprocessing">Preprocessing</a></li>
+        <li><a href="#pixel-counting">Pixel Counting</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="개요">개요</h1>
+<p><a href="https://github.com/plooox/ML_3Dprinter_Scaffold" target="_blank" rel="noopener noreffer">https://github.com/plooox/ML_3Dprinter_Scaffold</a></p>
+<p>졸업논문의 일환으로 팀원들과 “머신러닝을 이용한 3D 프린팅의 printability 최적조건”이라는 주제로 논문을 작성하였습니다. 저는 몇몇 팀원들과 이미지처리부분과 머신러닝 파트를 맡아 진행하였는데, 그 중에서 이미지 처리 과정을 기술하고자 합니다.</p>
+<p>논문의 핵심은 3D 프린팅을 할 때 사용되는 여러가지 파라미터를 설정해서 나오는 출력물이 사용자가 원하는 만큼의 품질을 낼 수 있도록 하는 여러 파라미터들의 설정값 조합을 추정하는 과정을 머신러닝을 통해 구할 수 있는지 검증하고, 분석하는 것입니다. 일정 수의 테스트 데이터를 직접 출력하여 머신러닝모델에 학습시키고, 학습된 모델이 추정한 값이 유효한지 검증하였습니다.</p>
+<p>이 페이지에서는 아래 빨간 박스인 이미지 처리 부분을 포스트하려고 합니다.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149294476-24cf9dd4-9f8b-46a0-8c98-7e64c24ddd3d.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149294476-24cf9dd4-9f8b-46a0-8c98-7e64c24ddd3d.png, https://user-images.githubusercontent.com/82520143/149294476-24cf9dd4-9f8b-46a0-8c98-7e64c24ddd3d.png 1.5x, https://user-images.githubusercontent.com/82520143/149294476-24cf9dd4-9f8b-46a0-8c98-7e64c24ddd3d.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149294476-24cf9dd4-9f8b-46a0-8c98-7e64c24ddd3d.png"
+        title="Workflow" /></p>
+<h1 id="3d-printing">3D printing</h1>
+<h2 id="도면">도면</h2>
+<p>도면의 경우, AUTOCAD Inventor프로그램을 사용할 수 있는 팀원을 통해 얇은 1layer로 구성된 500μm 반지름을 가진 작은 원형 pit이 100개 나열된 micro-pit 모델을 설계하였고, 3D printer를 이용해 이 도면을 프린팅 했습니다.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149294814-febdcfc0-c128-4f82-85cb-5903dd69a240.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149294814-febdcfc0-c128-4f82-85cb-5903dd69a240.png, https://user-images.githubusercontent.com/82520143/149294814-febdcfc0-c128-4f82-85cb-5903dd69a240.png 1.5x, https://user-images.githubusercontent.com/82520143/149294814-febdcfc0-c128-4f82-85cb-5903dd69a240.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149294814-febdcfc0-c128-4f82-85cb-5903dd69a240.png"
+        title="Micor-pit" /></p>
+<h2 id="parameter-selection">Parameter selection</h2>
+<p>실험 설계과정에서 조절하는 파라미터는 출력 속도, 노즐 온도, 베드 온도 총 3가지 파라미터를 선정해 랜덤으로 파라미터 조합을 생성하고 직접 프린트하여 총 278개의 입력 데이터셋을 형성하였습니다. 파라미터 범위는 전체적인 출력 형태를 확인하기 위해 본 실험에서 사용한 3D 프린트의 출력이 불가한 범위를 파악하고 출력이 가능한 범위로 한정하였습니다.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>출력 온도</td>
+<td>180℃ ~ 240℃</td>
+</tr>
+<tr>
+<td>베드 온도</td>
+<td>55℃ ~ 85℃</td>
+</tr>
+<tr>
+<td>출력 속도</td>
+<td>30mm/s ~ 150mm/s</td>
+</tr>
+</tbody>
+</table>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149295431-99ece7be-04c9-46e8-914d-35c8572553c4.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149295431-99ece7be-04c9-46e8-914d-35c8572553c4.png, https://user-images.githubusercontent.com/82520143/149295431-99ece7be-04c9-46e8-914d-35c8572553c4.png 1.5x, https://user-images.githubusercontent.com/82520143/149295431-99ece7be-04c9-46e8-914d-35c8572553c4.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149295431-99ece7be-04c9-46e8-914d-35c8572553c4.png"
+        title="Parameter" /></p>
+<h1 id="image-processing">Image processing</h1>
+<p>출력한 출력물을 이용해 논문에서 언급한 “좋은 출력물”을 판단할 수 있도록 데이터화 시키는 과정을 거쳤습니다. &ldquo;좋은 출력물&quot;은 도면과 유사한 크기의 균일한 공극을 가지는 출력물을 의미합니다. 이를 판단하는 기준인 <strong>Printablility</strong>는 출력물의 각 공극의 픽셀 합과 핏 간 표준편차를 통해 이루어 졌습니다. 공극의 픽셀 합을 통해 도면과 출력물의 유사성을 판단하고, 표준편차를 통해 균일도를 확인할 수 있기 때문입니다. 따라서 픽셀 합이 크고, 표준편차 값이 낮을수록 Printability가 높다고 정의하였습니다. Printability를 구하기 위해 프린터에서 출력한 이미지를 이미지 처리하는 과정이 이루어졌습니다. 이미지 처리는 Python과 Python 라이브러리인 OpenCV(cv2)를 이용하였습니다.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149298519-8a35f32e-feb8-4819-aa2a-71a46dfcc5b7.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149298519-8a35f32e-feb8-4819-aa2a-71a46dfcc5b7.png, https://user-images.githubusercontent.com/82520143/149298519-8a35f32e-feb8-4819-aa2a-71a46dfcc5b7.png 1.5x, https://user-images.githubusercontent.com/82520143/149298519-8a35f32e-feb8-4819-aa2a-71a46dfcc5b7.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149298519-8a35f32e-feb8-4819-aa2a-71a46dfcc5b7.png"
+        title="스크린샷 2022-01-13 오후 5 59 49" /></p>
+<h2 id="preprocessing">Preprocessing</h2>
+<p>이미지처리 과정을 자동화 하기 위해, 출력물 사진의 바깥쪽 바탕을 제거하고, 흑/백으로 이진화 하는 전처리 과정을 거쳤습니다.</p>
+<p>우선, 이미지에서 micro-pits부분만 뽑아내기 위해, Thresh값을 바꾸어가며 이미지를 이진화 해보았습니다. Thresh값이 높아질수록 외부 노이즈는 줄어들지만, 내부 이미지가 잘 나오지 않았고, Thresh값을 낮추면 이미지 자체의 퀄리티는 높지만 외부에 노이즈가 생기는 것을 확인 할 수 있었습니다.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149299453-808f782d-2255-46ed-be9b-11e16bd6b292.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149299453-808f782d-2255-46ed-be9b-11e16bd6b292.png, https://user-images.githubusercontent.com/82520143/149299453-808f782d-2255-46ed-be9b-11e16bd6b292.png 1.5x, https://user-images.githubusercontent.com/82520143/149299453-808f782d-2255-46ed-be9b-11e16bd6b292.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149299453-808f782d-2255-46ed-be9b-11e16bd6b292.png"
+        title="스크린샷 2022-01-13 오후 6 06 27" /></p>
+<p>따라서 Thresh값을 높게 잡아 BoundingRect값을 잡았을 때 출력물 테두리가 명확히 잡히도록 하고, 테두리를 기준으로 이미지를 Crop하여 출력물만 나타나는 이미지를 새로 구성한 뒤, 이 이미지를 낮은 Thresh값에서 이진화 하는 방식을 취하였습니다.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149299562-ae4429bc-72f6-4ba0-baa2-0258e744f502.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149299562-ae4429bc-72f6-4ba0-baa2-0258e744f502.png, https://user-images.githubusercontent.com/82520143/149299562-ae4429bc-72f6-4ba0-baa2-0258e744f502.png 1.5x, https://user-images.githubusercontent.com/82520143/149299562-ae4429bc-72f6-4ba0-baa2-0258e744f502.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149299562-ae4429bc-72f6-4ba0-baa2-0258e744f502.png"
+        title="스크린샷 2022-01-13 오후 6 07 08" /></p>
+<h2 id="pixel-counting">Pixel Counting</h2>
+<p>이후 Crop된 이미지를 10 x 10으로 구획을 나누어 구획별 검정 픽셀의 수를 구하였고, 이를 통해 전체 이미지에서 검정 픽셀 수, 표준편차를 구하여 데이터셋으로 구축하였습니다.<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/82520143/149299654-d799fdbe-da24-40fe-bc86-37350823c951.png"
+        data-srcset="https://user-images.githubusercontent.com/82520143/149299654-d799fdbe-da24-40fe-bc86-37350823c951.png, https://user-images.githubusercontent.com/82520143/149299654-d799fdbe-da24-40fe-bc86-37350823c951.png 1.5x, https://user-images.githubusercontent.com/82520143/149299654-d799fdbe-da24-40fe-bc86-37350823c951.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/82520143/149299654-d799fdbe-da24-40fe-bc86-37350823c951.png"
+        title="스크린샷 2022-01-13 오후 6 07 47" /></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-01-13</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/3dprinting_printability_imageprocessing/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/3d-printing/">3D printing</a>,&nbsp;<a href="/tags/imageprocessing/">ImageProcessing</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/sentimental_analysis_project/" class="prev" rel="prev" title="[Project] SNS 감정분석을 통한 여론 조사"><i class="fas fa-angle-left fa-fw"></i>[Project] SNS 감정분석을 통한 여론 조사</a>
+            <a href="/3dprinting_printability_ml/" class="next" rel="next" title="[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 머신러닝">[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 머신러닝<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.68.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Plox</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"plooox/blog_comments"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

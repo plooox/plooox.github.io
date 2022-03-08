@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Regular Expression(정규표현식) - Plox&#39;s blog</title><meta name="Description" content="Hello"><meta property="og:title" content="Regular Expression(정규표현식)" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://plooox.github.io/re/" />
+<meta property="og:image" content="http://plooox.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-03-08T18:58:32+09:00" />
+<meta property="article:modified_time" content="2022-03-08T18:58:32+09:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://plooox.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Regular Expression(정규표현식)"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Plox&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Plox&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://plooox.github.io/re/" /><link rel="prev" href="http://plooox.github.io/3dprinting_printability_ml/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Regular Expression(정규표현식)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/plooox.github.io\/re\/"
+        },"genre": "posts","keywords": "Algorithm","wordcount":  691 ,
+        "url": "http:\/\/plooox.github.io\/re\/","datePublished": "2022-03-08T18:58:32+09:00","dateModified": "2022-03-08T18:58:32+09:00","publisher": {
+            "@type": "Organization",
+            "name": "Plox"},"author": {
+                "@type": "Person",
+                "name": "Plox"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Plox&#39;s blog">Plox&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Plox&#39;s blog">Plox&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Regular Expression(정규표현식)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class="post-category">included in <a href="/categories/algorithm/"><i class="far fa-folder fa-fw"></i>Algorithm</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-08">2022-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;691 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#regular-expression">Regular Expression</a>
+      <ul>
+        <li><a href="#메타문자">메타문자</a>
+          <ul>
+            <li><a href="#-"><code>[ ]</code></a></li>
+            <li><a href="#heading"><code>.</code></a></li>
+            <li><a href="#--mn"><code>*</code>, <code>+</code>, <code>{m,n}</code></a></li>
+            <li><a href="#heading-1"><code>?</code></a></li>
+            <li><a href="#heading-2"><code>|</code></a></li>
+            <li><a href="#-az"><code>^</code>, <code>$</code>,<code>\A</code>,<code>\Z</code></a></li>
+            <li><a href="#b-b"><code>\b</code>, <code>\B</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#grouping">Grouping</a></li>
+        <li><a href="#module-re">module re</a></li>
+        <li><a href="#컴파일-옵션">컴파일 옵션</a></li>
+        <li><a href="#sub">sub</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="regular-expression">Regular Expression</h1>
+<p>복잡한 문자열을 처리할 때 사용하는 기법으로, 문자열을 처리하는 모든 곳에서 사용</p>
+<h2 id="메타문자">메타문자</h2>
+<h3 id="-"><code>[ ]</code></h3>
+<ul>
+<li>문자 클래스</li>
+<li><strong><code>[ ]</code></strong> 사이의 문자들과 매치</li>
+<li><strong><code>-</code></strong> : 두 문자 사이의 범위</li>
+<li><strong><code>^</code></strong> : not</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mf">1.</span> <span class="p">[</span><span class="n">abc</span><span class="p">]</span> <span class="c1"># a,b,c중 한개의 문자와 매칭</span>
+<span class="mf">2.</span> <span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="c1"># == [abc]</span>
+<span class="mf">3.</span> <span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z</span><span class="p">]</span> <span class="c1"># 모든 알파벳</span>
+<span class="mf">4.</span> <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span> <span class="c1"># 숫자</span>
+</code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>re</th>
+<th>content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\d</td>
+<td>숫자와 매치, [0-9]</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>숫자가 아닌 것과 매치, [^0-9]</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>whitespace 문자와 매치, [  \t\n\r\f\v]</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>whitespace 문자가 아닌것과 매치, [^ \t\n\r\f\v]</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>문자+숫자와 매치, [a-zA-Z0-9_]</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>문자+숫자가 아닌 것과 매치, [^a-zA-Z0-9_]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="heading"><code>.</code></h3>
+<ul>
+<li>줄바꿈 문자를 제외한 모든 문자</li>
+<li>문자 클래스(<code>**[ ]**</code>) 내에 Dot(<code>**.**</code>) 메타 문자가 사용된다면 이것은 &ldquo;모든 문자&quot;라는 의미가 아닌 문자 <code>**.**</code> 그대로를 의미</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="mf">1.</span> <span class="n">a</span><span class="o">.</span><span class="n">b</span> <span class="c1"># a + [모든 문자] + b</span>
+<span class="mf">2.</span> <span class="n">a</span><span class="p">[</span><span class="o">.</span><span class="p">]</span><span class="n">b</span> <span class="c1"># a.b</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="--mn"><code>*</code>, <code>+</code>, <code>{m,n}</code></h3>
+<ul>
+<li>반복</li>
+<li><strong><code>*</code></strong> : 바로 앞에 있는 문자가 0부터 무한대로 반복될 수 있음</li>
+<li><strong><code>+</code></strong> :  바로 앞에 있는 문자가 1부터 무한대로 반복될 수 있음(최소 1번)</li>
+<li><strong><code>{m,n}</code></strong>: 바로 앞에 있는 문자가 m부터 n번까지 반복될 수 있음(최소 m번, 최대 n번)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">ca</span><span class="o">*</span><span class="n">t</span>      <span class="c1"># ct, cat,caat,caaaat, ...</span>
+<span class="n">ca</span><span class="o">+</span><span class="n">t</span>      <span class="c1"># cat, caat, caaat, ...</span>
+<span class="n">ca</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span><span class="n">t</span>    <span class="c1"># caat</span>
+<span class="n">ca</span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span><span class="n">t</span>  <span class="c1"># caat, caaat, caaaat</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="heading-1"><code>?</code></h3>
+<ul>
+<li><strong>'{0, 1}'</strong></li>
+<li>있어도 되고, 없어도 된다</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">mol</span><span class="err">?</span><span class="n">lu</span>    <span class="c1"># mollu, molu</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="heading-2"><code>|</code></h3>
+<ul>
+<li>or</li>
+</ul>
+<h3 id="-az"><code>^</code>, <code>$</code>,<code>\A</code>,<code>\Z</code></h3>
+<ul>
+<li><strong><code>^</code></strong>: 문자열의 맨 처음과 일치, <code>re.MULTILINE</code>사용시 각 줄의 처음과 일치</li>
+<li><strong><code>$</code></strong>: 문자열 맨 끝과 일치, <code>re.MULTILINE</code>사용시 각 줄의 끝과일치</li>
+<li><strong><code>\A</code></strong>: 전체 문자열의 맨 처음과 일치</li>
+<li><strong><code>\Z</code></strong>: 전체 문자열의 맨 끝과 일치</li>
+</ul>
+<h3 id="b-b"><code>\b</code>, <code>\B</code></h3>
+<ul>
+<li>단어 구분자</li>
+<li><code>\b</code>: whitespace로 구분된 단어인 경우 매치</li>
+<li><code>\B</code>: whitespace로 구분된 단어가 아닌 경우 매치</li>
+</ul>
+<hr>
+<h2 id="grouping">Grouping</h2>
+<ul>
+<li><strong><code>( )</code></strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>group(인덱스)</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group(0)</td>
+<td>매치된 전체 문자열</td>
+</tr>
+<tr>
+<td>group(1)</td>
+<td>첫 번째 그룹에 해당되는 문자열</td>
+</tr>
+<tr>
+<td>group(2)</td>
+<td>두 번째 그룹에 해당되는 문자열</td>
+</tr>
+<tr>
+<td>group(n)</td>
+<td>n 번째 그룹에 해당되는 문자열</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="module-re">module re</h2>
+<ul>
+<li>파이썬을 설치할 때 자동으로 설치되는 기본 라이브러리</li>
+<li></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>목적</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>match()</td>
+<td>문자열의 처음부터 정규식과 매치되는지 조사한다.</td>
+</tr>
+<tr>
+<td>search()</td>
+<td>문자열 전체를 검색하여 정규식과 매치되는지 조사한다.</td>
+</tr>
+<tr>
+<td>findall()</td>
+<td>정규식과 매치되는 모든 문자열(substring)을 리스트로 돌려준다.</td>
+</tr>
+<tr>
+<td>finditer()</td>
+<td>정규식과 매치되는 모든 문자열(substring)을 반복 가능한 객체로 돌려준다.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># match, search: true면 객체 반환, false면 None 반환</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;python&#34;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;3 python&#34;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&#34;python&#34;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&#34;3 python&#34;</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="o">&gt;</span>
+<span class="bp">None</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="o">&gt;</span>
+<span class="o">--------</span>
+<span class="c1"># match 객체 활용</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;python&#34;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>            <span class="c1"># group: 매치된 문자열 반환</span>
+<span class="s1">&#39;python&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>            <span class="c1"># start: 매치된 문자열의 시작위치 반환</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>              <span class="c1"># end: 매치된 문자열의 끝위치 반환</span>
+<span class="mi">6</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>             <span class="c1"># 매치된 문자열의 (시작, 끝) 반환</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&#34;life is too short&#34;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s2">&#34;life is too short&#34;</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span>
+<span class="p">[</span><span class="s1">&#39;life&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;too&#39;</span><span class="p">,</span> <span class="s1">&#39;short&#39;</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;life&#39;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;is&#39;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;too&#39;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;short&#39;</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="컴파일-옵션">컴파일 옵션</h2>
+<ul>
+<li>
+<p><strong>DOTALL(S)</strong> - <code>.</code> 이 줄바꿈 문자를 포함하여 모든 문자와 매치할 수 있도록 한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;a.b&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;a</span><span class="se">\n</span><span class="s1">b&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;a</span><span class="se">\n</span><span class="s1">b&#39;</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>IGNORECASE(I)</strong> - 대소문자에 관계없이 매치할 수 있도록 한다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[a-z]+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;python&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;Python&#39;</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;Python&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;PYTHON&#39;</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span> <span class="nb">object</span><span class="p">;</span> <span class="n">span</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;PYTHON&#39;</span><span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>MULTILINE(M)</strong> - 여러줄과 매치할 수 있도록 한다. (<code>^</code>, <code>$</code> 메타문자의 사용과 관계가 있는 옵션이다)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&#34;^python\s\w+&#34;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+  
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;python one
+</span><span class="s2">life is too short
+</span><span class="s2">python two
+</span><span class="s2">you need python
+</span><span class="s2">python three&#34;&#34;&#34;</span>
+  
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="s1">&#39;python one&#39;</span><span class="p">,</span> <span class="s1">&#39;python two&#39;</span><span class="p">,</span> <span class="s1">&#39;python three&#39;</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>VERBOSE(X)</strong> - verbose 모드를 사용할 수 있도록 한다. (정규식을 보기 편하게 만들수 있고 주석등을 사용할 수 있게된다.)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">charref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;&#34;&#34;
+</span><span class="s2"> &amp;[#]                # Start of a numeric entity reference
+</span><span class="s2"> (
+</span><span class="s2">     0[0-7]+         # Octal form
+</span><span class="s2">   | [0-9]+          # Decimal form
+</span><span class="s2">   | x[0-9a-fA-F]+   # Hexadecimal form
+</span><span class="s2"> )
+</span><span class="s2"> ;                   # Trailing semicolon
+</span><span class="s2">&#34;&#34;&#34;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="sub">sub</h2>
+<ul>
+<li>정규식과 매치되는 부분을 다른 문자로 변경</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># [정규식].sub(&#34;바꿀 문자열&#34;, &#34;대상 문자열&#34;)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(blue|white|red)&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;colour&#39;</span><span class="p">,</span> <span class="s1">&#39;blue socks and red shoes&#39;</span><span class="p">)</span>
+<span class="s1">&#39;colour socks and colour shoes&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-03-08</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/re/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/algorithm/">Algorithm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/3dprinting_printability_ml/" class="prev" rel="prev" title="[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 머신러닝"><i class="fas fa-angle-left fa-fw"></i>[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 머신러닝</a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.68.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Plox</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"plooox/blog_comments"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
