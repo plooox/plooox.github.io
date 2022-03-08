@@ -1,0 +1,427 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<meta http-equiv=x-ua-compatible content="IE=edge, chrome=1">
+<title>[Project] SNS 감정분석을 통한 여론 조사 - Plox's blog</title><meta name=Description content="NLP Project"><meta property="og:title" content="[Project] SNS 감정분석을 통한 여론 조사">
+<meta property="og:description" content="NLP Project">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://plooox.github.io/sentimental_analysis_project/"><meta property="og:image" content="http://plooox.github.io/logo.png"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2022-01-06T21:24:04+09:00">
+<meta property="article:modified_time" content="2022-01-06T21:24:04+09:00">
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="http://plooox.github.io/logo.png">
+<meta name=twitter:title content="[Project] SNS 감정분석을 통한 여론 조사">
+<meta name=twitter:description content="NLP Project">
+<meta name=application-name content="Plox's blog">
+<meta name=apple-mobile-web-app-title content="Plox's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=canonical href=http://plooox.github.io/sentimental_analysis_project/><link rel=prev href=http://plooox.github.io/twitterapi/><link rel=next href=http://plooox.github.io/3dprinting_printability_imageprocessing/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"[Project] SNS 감정분석을 통한 여론 조사","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plooox.github.io\/sentimental_analysis_project\/"},"genre":"posts","keywords":"NLP","wordcount":942,"url":"http:\/\/plooox.github.io\/sentimental_analysis_project\/","datePublished":"2022-01-06T21:24:04+09:00","dateModified":"2022-01-06T21:24:04+09:00","publisher":{"@type":"Organization","name":"Plox"},"author":{"@type":"Person","name":"Plox"},"description":"NLP Project"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Plox's blog">Plox's Blog</a>
+</div><div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/> Posts </a><a class=menu-item href=/tags/> Tags </a><a class=menu-item href=/categories/> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-desktop>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a>
+</div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title="Plox's blog">Plox's Blog</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile><div class=search-wrapper>
+<div class="search mobile" id=search-mobile>
+<input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search>
+<i class="fas fa-search fa-fw"></i>
+</a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear>
+<i class="fas fa-times-circle fa-fw"></i>
+</a>
+<span class="search-button search-loading" id=search-loading-mobile>
+<i class="fas fa-spinner fa-fw fa-spin"></i>
+</span>
+</div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>
+Cancel
+</a>
+</div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i>
+</a></div></div></header><div class="search-dropdown desktop">
+<div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile">
+<div id=search-dropdown-mobile></div></div><main class=main>
+<div class=container><div class=toc id=toc-auto>
+<h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">[Project] SNS 감정분석을 통한 여론 조사</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class=post-category>included in <a href=/categories/project/><i class="far fa-folder fa-fw"></i>project</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-01-06>2022-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;942 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept>
+<div class="details-summary toc-title">
+<span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#개요>개요</a></li><li><a href=#데이터-수집>데이터 수집</a></li><li><a href=#감정-분석>감정 분석</a></li><li><a href=#키워드-추출>키워드 추출</a>
+<ul>
+<li><a href=#noun---corpus-생성>Noun - Corpus 생성</a></li><li><a href=#키워드-추출-1>키워드 추출</a></li></ul></li><li><a href=#어플리케이션>어플리케이션</a></li><li><a href=#후기>후기</a></li></ul></nav></div></div><div class=content id=content><h1 id=개요>개요</h1><p><a href=https://github.com/plooox/SentimentalAnalysis target=_blank rel="noopener noreffer">https://github.com/plooox/SentimentalAnalysis</a></p><p>대표적인 소셜 네트워크 서비스인 트위터에서 특정 키워드의 검색 결과에 대한 트윗 데이터를 수집하고, 수집한 트윗 내용을 바탕으로 감정 분석을 실시하여 특정 키워드에 대한 여론이 긍정적인지, 부정적인지를 보여주는 프로그램 입니다.</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/148382820-6027e725-7d02-406b-bcae-6aeb3b422b5c.png data-srcset="https://user-images.githubusercontent.com/82520143/148382820-6027e725-7d02-406b-bcae-6aeb3b422b5c.png, https://user-images.githubusercontent.com/82520143/148382820-6027e725-7d02-406b-bcae-6aeb3b422b5c.png 1.5x, https://user-images.githubusercontent.com/82520143/148382820-6027e725-7d02-406b-bcae-6aeb3b422b5c.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/148382820-6027e725-7d02-406b-bcae-6aeb3b422b5c.png title=https://user-images.githubusercontent.com/82520143/148382820-6027e725-7d02-406b-bcae-6aeb3b422b5c.png></p><h1 id=데이터-수집>데이터 수집</h1><p>트위터의 경우, <a href=https://developer.twitter.com/en/docs/twitter-api target=_blank rel="noopener noreffer">트위터api</a>를 통해 트위터의 데이터를 받을 수 있습니다.<br>
+하지만 트위터 api의 경우, 무료로 사용하게 되면 7일 이내의 데이터만 수집이 가능하다는 단점을 가지고 있습니다. 7일이라는 기간은 내가 필요로 하는 기간(6개월 이상)에 비하면 터무니 없이 부족했기 때문에, 외부 프로그램을 통해 데이터를 크롤링 해야만 했습니다. 오픈소스로 존재하는 수많은 크롤러들 중 대부분은 크롤링이 잘 되지 않았습니다(2021년 8월 기준). 그 중 <a href=https://github.com/JustAnotherArchivist/snscrape target=_blank rel="noopener noreffer">snscrape</a>라는 파이썬 패키지가 원활하게 데이터 수집이 되는 것을 확인하고, 이를 통해 데이터 수집을 하였습니다.</p><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>datetime</span> <span class=k>as</span> <span class=nn>dt</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pickle</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>csv</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>snscrape.modules.twitter</span> <span class=k>as</span> <span class=nn>sntwitter</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>start</span> <span class=o>=</span> <span class=s2>&#34;2021-01-01&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>end</span> <span class=o>=</span> <span class=s2>&#34;2021-08-31&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>dateTimeList</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=n>posNegList</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=n>contentList</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=n>tweetList</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>querys</span> <span class=o>=</span> <span class=p>[</span> <span class=c1>#Keywords.... ]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>query</span> <span class=ow>in</span> <span class=n>querys</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>params</span> <span class=o>=</span> <span class=n>query</span><span class=o>+</span><span class=s2>&#34;lang:ko &#34;</span><span class=o>+</span><span class=s2>&#34;since:&#34;</span><span class=o>+</span><span class=n>start</span><span class=o>+</span><span class=s2>&#34; until:&#34;</span><span class=o>+</span><span class=n>end</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>csvRoute</span> <span class=o>=</span> <span class=s2>&#34;./&#34;</span><span class=o>+</span><span class=n>query</span><span class=o>+</span><span class=s2>&#34;.csv&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>csvFile</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>csvRoute</span><span class=p>,</span> <span class=s2>&#34;a&#34;</span><span class=p>,</span> <span class=n>newline</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s2>&#34;utf-8&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvWrite</span><span class=o>.</span><span class=n>writerow</span><span class=p>([</span><span class=s2>&#34;Date&#34;</span><span class=p>,</span><span class=s2>&#34;Pos/Neg&#34;</span><span class=p>,</span><span class=s2>&#34;Tweet&#34;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvFile</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># for each keywords...</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span><span class=p>,</span><span class=n>tweet</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>sntwitter</span><span class=o>.</span><span class=n>TwitterSearchScraper</span><span class=p>(</span><span class=n>params</span><span class=p>)</span><span class=o>.</span><span class=n>get_items</span><span class=p>()):</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Twitter data -&gt; Date, Content</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Save csv file</span>
+</span></span><span class=line><span class=cl>        <span class=n>tw_content</span> <span class=o>=</span> <span class=n>tweet</span><span class=o>.</span><span class=n>content</span> 
+</span></span><span class=line><span class=cl>        <span class=n>tw_date</span> <span class=o>=</span> <span class=n>tweet</span><span class=o>.</span><span class=n>date</span>
+</span></span><span class=line><span class=cl>        <span class=n>tw_posNeg</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>      <span class=c1>#Pos/Neg setting run another code!</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>csvFile</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>csvRoute</span><span class=p>,</span> <span class=s2>&#34;a&#34;</span><span class=p>,</span> <span class=n>newline</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s2>&#34;utf-8&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>csvWrite</span> <span class=o>=</span> <span class=n>csv</span><span class=o>.</span><span class=n>writer</span><span class=p>(</span><span class=n>csvFile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>csvWrite</span><span class=o>.</span><span class=n>writerow</span><span class=p>([</span><span class=n>tw_date</span><span class=p>,</span> <span class=n>tw_posNeg</span><span class=p>,</span> <span class=n>tw_content</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=n>csvFile</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>f</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>csvRoute</span><span class=p>,</span> <span class=s2>&#34;a&#34;</span><span class=p>,</span> <span class=n>newline</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s2>&#34;utf-8&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>r</span> <span class=o>=</span> <span class=n>csv</span><span class=o>.</span><span class=n>reader</span><span class=p>(</span><span class=n>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>cf</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;./Keyword1.csv&#39;</span><span class=p>,</span> <span class=s1>&#39;a&#39;</span><span class=p>,</span> <span class=n>newline</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>wf</span> <span class=o>=</span> <span class=n>csv</span><span class=o>.</span><span class=n>writer</span><span class=p>(</span><span class=n>cf</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>wf</span><span class=o>.</span><span class=n>writerow</span><span class=p>([</span><span class=s2>&#34;Date&#34;</span><span class=p>,</span><span class=s2>&#34;Pos/Neg&#34;</span><span class=p>,</span><span class=s2>&#34;Tweet&#34;</span><span class=p>])</span>    
+</span></span><span class=line><span class=cl><span class=n>f</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>cf</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=감정-분석>감정 분석</h1><p>수집한 트위터 데이터들을 가지고 감정 분석을 하여 트윗 텍스트가 긍정적인 의미를 내포하고 있는지, 부정적인 의미를 내포하고 있는지를 분석합니다.<br>
+이를 위해 kakao brain에서 배포한 <a href=https://github.com/kakaobrain/pororo target=_blank rel="noopener noreffer">PORORO(Platform Of neuRal mOdels for natuRal language prOcessing)</a>를 이용하였습니다. PORORO에서는 다양한 자연어 처리 Task를 지원하는데, 이중에서 “Sentimental Analysis”를 이용하면 입력한 텍스트 데이터가 ‘긍정’인지, ‘부정’인지 분류할 수 있습니다.</p><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>csv</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pororo</span> <span class=kn>import</span> <span class=n>Pororo</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>sa</span> <span class=o>=</span> <span class=n>Pororo</span><span class=p>(</span><span class=n>task</span> <span class=o>=</span> <span class=s2>&#34;sentiment&#34;</span><span class=p>,</span> <span class=n>model</span> <span class=o>=</span> <span class=s2>&#34;brainbert.base.ko.nsmc&#34;</span><span class=p>,</span> <span class=n>lang</span> <span class=o>=</span> <span class=s2>&#34;ko&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>fileList</span> <span class=o>=</span> <span class=p>[</span><span class=c1>#Keywords]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># for each keywords..</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>keyword</span> <span class=ow>in</span> <span class=n>fileList</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvName</span> <span class=o>=</span> <span class=n>keyword</span><span class=o>+</span><span class=s1>&#39;_sa.csv&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvFile</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>csvName</span><span class=p>,</span> <span class=s1>&#39;a&#39;</span><span class=p>,</span> <span class=n>newline</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvWrite</span> <span class=o>=</span> <span class=n>csv</span><span class=o>.</span><span class=n>writer</span><span class=p>(</span><span class=n>csvFile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvWrite</span><span class=o>.</span><span class=n>writerow</span><span class=p>([</span><span class=s1>&#39;Date&#39;</span><span class=p>,</span><span class=s1>&#39;Pos/Neg&#39;</span><span class=p>,</span><span class=s1>&#39;Tweet&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=n>csvFile</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>refCsv</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>keyword</span><span class=o>+</span><span class=s1>&#39;.csv&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=n>rowData</span> <span class=ow>in</span> <span class=n>refCsv</span><span class=o>.</span><span class=n>iterrows</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>tw_date</span> <span class=o>=</span> <span class=n>rowData</span><span class=p>[</span><span class=s1>&#39;Date&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>tw_content</span> <span class=o>=</span> <span class=n>rowData</span><span class=p>[</span><span class=s1>&#39;Tweet&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>tw_posneg</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>sa</span><span class=p>(</span><span class=n>tw_content</span><span class=p>)</span> <span class=o>==</span> <span class=s2>&#34;Positive&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>tw_posneg</span> <span class=o>=</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>            <span class=k>elif</span> <span class=n>sa</span><span class=p>(</span><span class=n>tw_content</span><span class=p>)</span> <span class=o>==</span> <span class=s2>&#34;Negative&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>tw_posneg</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1># Save csv file with Pos/Neg</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Add for each row</span>
+</span></span><span class=line><span class=cl>            <span class=n>csvFile</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=n>csvName</span><span class=p>,</span> <span class=s1>&#39;a&#39;</span><span class=p>,</span> <span class=n>newline</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s1>&#39;utf-8&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>csvWrite</span> <span class=o>=</span> <span class=n>csv</span><span class=o>.</span><span class=n>writer</span><span class=p>(</span><span class=n>csvFile</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>csvWrite</span><span class=o>.</span><span class=n>writerow</span><span class=p>([</span><span class=n>tw_date</span><span class=p>,</span> <span class=n>tw_posneg</span><span class=p>,</span> <span class=n>tw_content</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>            <span class=n>csvFile</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>idx</span> <span class=o>%</span> <span class=mi>10000</span> <span class=o>==</span> <span class=mi>0</span><span class=p>):</span>  <span class=c1># Check running</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Now: &#34;</span><span class=o>+</span> <span class=n>keyword</span><span class=o>+</span> <span class=s2>&#34; - &#34;</span><span class=o>+</span><span class=nb>str</span><span class=p>(</span><span class=n>idx</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;error&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=키워드-추출>키워드 추출</h1><p>이왕 데이터를 수집한 겸, 찾고자 하는 키워드와 연관도가 높은 키워드를 보여주는 것도 좋을 것 같다고 생각해 키워드 추출 부분을 중간에 추가하였습니다.</p><h2 id=noun---corpus-생성>Noun - Corpus 생성</h2><p>우선 수집한 트윗 데이터에서, 키워드가 될 수 있는 명사 데이터만 추출하였습니다. 아무래도 텍스트 데이터에는 키워드라고 부르기 어려운 단어들이 많아서, 이부분을 걸러내기 위함입니다. 형태소 분석기 중 kkma에서 텍스트 데이터에서 명사를 추출하는 기능이 있어서 이를 활용하였습니다.</p><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pickle</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>konlpy.tag</span> <span class=kn>import</span> <span class=n>Kkma</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>pName</span> <span class=o>=</span> <span class=p>[</span><span class=c1>#Keywords]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>name</span> <span class=ow>in</span> <span class=n>pName</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>  <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s1>&#39;#Path&#39;</span><span class=o>+</span><span class=n>name</span><span class=o>+</span><span class=s1>&#39;.csv&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=n>tw</span> <span class=o>=</span> <span class=n>df</span><span class=p>[</span><span class=s1>&#39;Tweet&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>  <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>  <span class=n>twList</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>  <span class=n>original</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>  <span class=k>for</span> <span class=n>twData</span> <span class=ow>in</span> <span class=n>tw</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>noun</span> <span class=o>=</span> <span class=n>okt</span><span class=o>.</span><span class=n>nouns</span><span class=p>(</span><span class=n>twData</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>original</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>twData</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>string</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>idx</span><span class=p>,</span> <span class=n>v</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>noun</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>v</span><span class=p>)</span> <span class=o>&lt;</span> <span class=mi>2</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>noun</span><span class=o>.</span><span class=n>pop</span><span class=p>(</span><span class=n>idx</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=n>string</span> <span class=o>=</span> <span class=s1>&#39; &#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>noun</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>twList</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>string</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>+=</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>i</span> <span class=o>%</span> <span class=mi>1000</span> <span class=o>==</span> <span class=mi>0</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>      <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Running....&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;#Path&#39;</span><span class=o>+</span><span class=n>name</span><span class=o>+</span><span class=s1>&#39;.pkl&#39;</span><span class=p>,</span> <span class=s1>&#39;wb&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>pickle</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>twList</span><span class=p>,</span> <span class=n>file</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;End: &#34;</span><span class=o>+</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;#Path&#39;</span><span class=o>+</span><span class=n>name</span><span class=o>+</span><span class=s1>&#39;.pkl&#39;</span><span class=p>,</span> <span class=s1>&#39;wb&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>pickle</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>twList</span><span class=p>,</span> <span class=n>file</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=키워드-추출-1>키워드 추출</h2><p><a href=https://github.com/lovit/KR-WordRank target=_blank rel="noopener noreffer">KR-WordRank</a>는 비지도학습을 기반으로 한국어 키워드를 추출합니다. 이를 활용해 생성한 Noun - Corpus에서 상위 7개의 키워드를 추출했습니다.</p><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>krwordrank.word</span> <span class=kn>import</span> <span class=n>KRWordRank</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>krwordrank.sentence</span> <span class=kn>import</span> <span class=n>summarize_with_sentences</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>stopwords</span> <span class=o>=</span> <span class=p>{}</span> <span class=c1># Stopwords you want to except</span>
+</span></span><span class=line><span class=cl><span class=n>penalty</span> <span class=o>=</span> <span class=k>lambda</span> <span class=n>x</span><span class=p>:</span><span class=mi>0</span> <span class=k>if</span> <span class=p>(</span><span class=mi>25</span> <span class=o>&lt;=</span> <span class=nb>len</span><span class=p>(</span><span class=n>x</span><span class=p>)</span> <span class=o>&lt;=</span> <span class=mi>80</span><span class=p>)</span> <span class=k>else</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=n>keywords</span><span class=p>,</span> <span class=n>sents</span> <span class=o>=</span> <span class=n>summarize_with_sentences</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>twList</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>penalty</span><span class=o>=</span><span class=n>penalty</span><span class=p>,</span>   <span class=c1># penalty of word-length: remove too short and too long</span>
+</span></span><span class=line><span class=cl>    <span class=n>stopwords</span> <span class=o>=</span> <span class=n>stopwords</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>diversity</span><span class=o>=</span><span class=mf>0.5</span><span class=p>,</span>     <span class=c1># Diversity of keywords</span>
+</span></span><span class=line><span class=cl>    <span class=n>num_keywords</span><span class=o>=</span><span class=mi>100</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>num_keysents</span><span class=o>=</span><span class=mi>10</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>verbose</span><span class=o>=</span><span class=kc>False</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>pName</span> <span class=o>=</span> <span class=p>[</span><span class=c1>#Keywords]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>name</span> <span class=ow>in</span> <span class=n>pName</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>  <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s1>&#39;#Path&#39;</span><span class=o>+</span><span class=n>name</span><span class=o>+</span><span class=s1>&#39;.csv&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=n>tw</span> <span class=o>=</span> <span class=n>df</span><span class=p>[</span><span class=s1>&#39;Tweet&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>  <span class=n>twList</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>  <span class=n>nounStr</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>for</span> <span class=n>twData</span> <span class=ow>in</span> <span class=n>tw</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>noun</span> <span class=o>=</span> <span class=n>okt</span><span class=o>.</span><span class=n>nouns</span><span class=p>(</span><span class=n>twData</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>nounStr</span> <span class=o>=</span> <span class=s1>&#39; &#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>noun</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>nounPos</span> <span class=o>=</span> <span class=n>kkma</span><span class=o>.</span><span class=n>pos</span><span class=p>(</span><span class=n>nounStr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>string</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>onlyNNP</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=n>text</span><span class=p>,</span> <span class=n>pos</span><span class=p>)</span> <span class=ow>in</span> <span class=n>nounPos</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=n>pos</span> <span class=o>==</span> <span class=s1>&#39;NNP&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>onlyNNP</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>text</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>string</span> <span class=o>=</span> <span class=s1>&#39; &#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>onlyNNP</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>twList</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>string</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;#Path&#39;</span><span class=o>+</span><span class=n>name</span><span class=o>+</span><span class=s1>&#39;_NNP.pkl&#39;</span><span class=p>,</span> <span class=s1>&#39;wb&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>pickle</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>twList</span><span class=p>,</span> <span class=n>file</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h1 id=어플리케이션>어플리케이션</h1><p>처리한 데이터를 사용자에게 보여주기 위해 웹 페이지를 구현하기로 하였습니다.<br>
+웹페이지를 구성한다면 Django, Flask등을 활용하여 웹 어플리케이션을 만들게 되는데, 저는 Streamlit이라는 파이썬 웹 어플리케이션 툴을 사용하기로 하였습니다.</p><p><a href=https://streamlit.io/ target=_blank rel="noopener noreffer">Streamlit</a>은 기계학습과 데이터 과학을 위한 웹 앱을 편리하게 만들수 있도록 합니다.
+Streamlit을 통해 로컬 환경에서 웹 어플리케이션을 만들어 시연해보았습니다.</p><table>
+<thead>
+<tr>
+<th></th><th></th></tr></thead><tbody>
+<tr>
+<td style=text-align:center><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/148383439-9ab30f79-7013-47e8-a6fe-81aefc63d7f1.png data-srcset="https://user-images.githubusercontent.com/82520143/148383439-9ab30f79-7013-47e8-a6fe-81aefc63d7f1.png, https://user-images.githubusercontent.com/82520143/148383439-9ab30f79-7013-47e8-a6fe-81aefc63d7f1.png 1.5x, https://user-images.githubusercontent.com/82520143/148383439-9ab30f79-7013-47e8-a6fe-81aefc63d7f1.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/148383439-9ab30f79-7013-47e8-a6fe-81aefc63d7f1.png title=https://user-images.githubusercontent.com/82520143/148383439-9ab30f79-7013-47e8-a6fe-81aefc63d7f1.png></td><td style=text-align:center><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/148383499-aadb125e-087d-4023-bba6-3108476201a5.png data-srcset="https://user-images.githubusercontent.com/82520143/148383499-aadb125e-087d-4023-bba6-3108476201a5.png, https://user-images.githubusercontent.com/82520143/148383499-aadb125e-087d-4023-bba6-3108476201a5.png 1.5x, https://user-images.githubusercontent.com/82520143/148383499-aadb125e-087d-4023-bba6-3108476201a5.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/148383499-aadb125e-087d-4023-bba6-3108476201a5.png title=https://user-images.githubusercontent.com/82520143/148383499-aadb125e-087d-4023-bba6-3108476201a5.png></td></tr></tbody></table><h1 id=후기>후기</h1><ul>
+<li>작년 하반기에 만들었던 프로젝트를 문서화 하였습니다.</li><li>과제나 학습이 아닌 프로젝트를 처음으로 해보게 되었는데, 감회가 새로웠습니다.</li><li>프로그램을 설계하고, 구현하는 과정에서 내가 모르는 것들을 찾아가는 것이 좋았습니다.</li><li>다만 너무 외부 오픈소스에 의존해서 만들었다는 점이 아쉽게 느껴지고, 만들다보니 개선할 점도 많이 나온 것 같아 좀 아쉽다는 느낌이 듭니다.</li></ul></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>Updated on 2022-01-06</span>
+</div><div class=post-info-license></div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/sentimental_analysis_project/index.md target=_blank>Read Markdown</a>
+</span></div><div class=post-info-share>
+<span></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/nlp/>NLP</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span>
+</section></div><div class=post-nav><a href=/twitterapi/ class=prev rel=prev title="Colab 환경에서 트윗 데이터 수집하기"><i class="fas fa-angle-left fa-fw"></i>Colab 환경에서 트윗 데이터 수집하기</a>
+<a href=/3dprinting_printability_imageprocessing/ class=next rel=next title="[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리">[Project] 머신러닝을 이용한 3D프린팅의 printability 최적조건 - 이미지 처리<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=utterances></div><noscript>
+Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.
+</noscript></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.93.2">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+</div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Plox</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top">
+<i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments">
+<i class="fas fa-comment fa-fw"></i>
+</a>
+</div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"plooox/blog_comments"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
