@@ -3,7 +3,7 @@ title: "[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축"
 date: 2022-06-02T15:05:23+09:00
 description: ""
 description: "k8s 전문가 양성 과정 중 진행하게된 프로젝트"
-draft: true
+draft: false
 tags: ["k8s", "AWS", "jenkins", "argocd"]
 categories: ["project"]
 
