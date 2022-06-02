@@ -1,0 +1,165 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축 - Plox's blog</title><meta name=Description content="k8s 전문가 양성 과정 중 진행하게된 프로젝트"><meta property="og:title" content="[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축"><meta property="og:description" content="k8s 전문가 양성 과정 중 진행하게된 프로젝트"><meta property="og:type" content="article"><meta property="og:url" content="http://plooox.github.io/cd/"><meta property="og:image" content="http://plooox.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-06-02T15:05:23+09:00"><meta property="article:modified_time" content="2022-06-02T15:05:23+09:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://plooox.github.io/logo.png"><meta name=twitter:title content="[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축"><meta name=twitter:description content="k8s 전문가 양성 과정 중 진행하게된 프로젝트"><meta name=application-name content="Plox's blog"><meta name=apple-mobile-web-app-title content="Plox's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=canonical href=http://plooox.github.io/cd/><link rel=prev href=http://plooox.github.io/ci/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plooox.github.io\/cd\/"},"genre":"posts","keywords":"k8s, AWS, jenkins, argocd","wordcount":277,"url":"http:\/\/plooox.github.io\/cd\/","datePublished":"2022-06-02T15:05:23+09:00","dateModified":"2022-06-02T15:05:23+09:00","publisher":{"@type":"Organization","name":"Plox"},"author":{"@type":"Person","name":"Plox"},"description":"k8s 전문가 양성 과정 중 진행하게된 프로젝트"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class=post-category>included in <a href=/categories/project/><i class="far fa-folder fa-fw"></i>project</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-06-02>2022-06-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;277 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#cd>CD</a><ul><li><ul><li><a href=#설치>설치</a></li><li><a href=#사용법>사용법</a></li></ul></li><li><a href=#argo-cd>ARGO CD</a></li><li><a href=#배포-결과>배포 결과</a></li></ul></li></ul></nav></div></div><div class=content id=content><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png data-srcset="https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png, https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png 1.5x, https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png title=image></p><h1 id=cd>CD</h1><ul><li>Continuous Deployment</li><li>변경 사항을 자동으로 배포/릴리스
+<a href=https://cwal.tistory.com/22 target=_blank rel="noopener noreffer">참고자료</a></li></ul><blockquote><p>ArgoCD를 사용하여 k8s cluster 배포 자동화<br><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171565872-c2fd5372-0e82-425d-b825-30b6f5969811.png data-srcset="https://user-images.githubusercontent.com/82520143/171565872-c2fd5372-0e82-425d-b825-30b6f5969811.png, https://user-images.githubusercontent.com/82520143/171565872-c2fd5372-0e82-425d-b825-30b6f5969811.png 1.5x, https://user-images.githubusercontent.com/82520143/171565872-c2fd5372-0e82-425d-b825-30b6f5969811.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171565872-c2fd5372-0e82-425d-b825-30b6f5969811.png title=image></p></blockquote><ul><li>kustomization 파일을 통해 쿠버네티스 오브젝트를 사용자가 원하는 대로 변경하는(customize) 독립형 도구</li></ul><h3 id=설치>설치</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>curl -s <span class=s2>&#34;https://raw.githubusercontent.com/\
+</span></span></span><span class=line><span class=cl><span class=s2>kubernetes-sigs/kustomize/master/hack/install_kustomize.sh&#34;</span>  <span class=p>|</span> bash
+</span></span><span class=line><span class=cl>sudo mv kustomize /usr/local/bin
+</span></span><span class=line><span class=cl>kustomize version
+</span></span></code></pre></td></tr></table></div></div><h3 id=사용법>사용법</h3><ol><li><p>파일 구성<br><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171564048-22bf638d-b030-4a49-9d11-6dd1794ad3c9.png data-srcset="https://user-images.githubusercontent.com/82520143/171564048-22bf638d-b030-4a49-9d11-6dd1794ad3c9.png, https://user-images.githubusercontent.com/82520143/171564048-22bf638d-b030-4a49-9d11-6dd1794ad3c9.png 1.5x, https://user-images.githubusercontent.com/82520143/171564048-22bf638d-b030-4a49-9d11-6dd1794ad3c9.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171564048-22bf638d-b030-4a49-9d11-6dd1794ad3c9.png title=image></p></li><li><p><code>/base</code></p><ol><li><p><code>/base/back-test-deployment.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apiVersion: apps/v1
+</span></span><span class=line><span class=cl>kind: Deployment
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: api-server
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  replicas: <span class=m>3</span>
+</span></span><span class=line><span class=cl>  selector:
+</span></span><span class=line><span class=cl>    matchLabels:
+</span></span><span class=line><span class=cl>      app: api-server
+</span></span><span class=line><span class=cl>  template:
+</span></span><span class=line><span class=cl>    metadata:
+</span></span><span class=line><span class=cl>      name: api-server-pod
+</span></span><span class=line><span class=cl>      labels:
+</span></span><span class=line><span class=cl>        app: api-server
+</span></span><span class=line><span class=cl>    spec:
+</span></span><span class=line><span class=cl>      containers:
+</span></span><span class=line><span class=cl>      - name: api-server
+</span></span><span class=line><span class=cl>        image: api-server-image
+</span></span><span class=line><span class=cl>        ports:
+</span></span><span class=line><span class=cl>        - containerPort: <span class=m>8080</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p><code>/base/kustomization.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apiVersion: kustomize.config.k8s.io/v1beta1
+</span></span><span class=line><span class=cl>kind: Kustomization
+</span></span><span class=line><span class=cl>resources:
+</span></span><span class=line><span class=cl>- deployment.yaml
+</span></span></code></pre></td></tr></table></div></div></li></ol></li><li><p><code>/overlay</code></p><ol><li><p><code>/overlay/kustomization.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apiVersion: apps/v1
+</span></span><span class=line><span class=cl>kind: Deployment
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: api-server
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  containers:
+</span></span><span class=line><span class=cl>  - name: api-server-image
+</span></span></code></pre></td></tr></table></div></div></li><li><p><code>/overlay/back-test-deployment-patch.yaml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apiVersion: kustomize.config.k8s.io/v1beta1
+</span></span><span class=line><span class=cl>kind: Kustomization
+</span></span><span class=line><span class=cl>patchesStrategicMerge:
+</span></span><span class=line><span class=cl>- back-test-deployment-patch.yaml
+</span></span><span class=line><span class=cl>resources:
+</span></span><span class=line><span class=cl>- ../../base
+</span></span><span class=line><span class=cl>images:
+</span></span><span class=line><span class=cl>- name: api-server-image
+</span></span><span class=line><span class=cl>  newName: plox/modoosugang_server
+</span></span><span class=line><span class=cl>  newTag: <span class=s2>&#34;7&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></li></ol></li><li><p>kustomize시 base와 overlay/dev 내용이 merge되면서 manifest파일이 생성됨</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ kustomize build overlay/dev
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    apiVersion: apps/v1
+</span></span><span class=line><span class=cl>    kind: Deployment
+</span></span><span class=line><span class=cl>    metadata:
+</span></span><span class=line><span class=cl>      name: api-server
+</span></span><span class=line><span class=cl>    spec:
+</span></span><span class=line><span class=cl>      containers:
+</span></span><span class=line><span class=cl>      - name: api-server-image
+</span></span><span class=line><span class=cl>      minReadySeconds: <span class=m>5</span>
+</span></span><span class=line><span class=cl>      replicas: <span class=m>2</span>
+</span></span><span class=line><span class=cl>      selector:
+</span></span><span class=line><span class=cl>        matchLabels:
+</span></span><span class=line><span class=cl>          app: api-server
+</span></span><span class=line><span class=cl>      template:
+</span></span><span class=line><span class=cl>        metadata:
+</span></span><span class=line><span class=cl>          labels:
+</span></span><span class=line><span class=cl>            app: api-server
+</span></span><span class=line><span class=cl>          name: api-server-pod
+</span></span><span class=line><span class=cl>        spec:
+</span></span><span class=line><span class=cl>          containers:
+</span></span><span class=line><span class=cl>            image: **plox/modoosugang_server:7   <span class=c1># &lt; - ./overlay/dev/kustomization.yaml 파일 내용 merge**</span>
+</span></span><span class=line><span class=cl>            name: api-server
+</span></span><span class=line><span class=cl>            ports:
+</span></span><span class=line><span class=cl>            - containerPort: <span class=m>8080</span>
+</span></span><span class=line><span class=cl>    <span class=sb>```</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Kustomize에 대한 자세한 설명은 <span class=o>[</span>이곳<span class=o>](</span>https://velog.io/@pullee/Kustomize%EB%A1%9C-K8S-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0<span class=o>)</span>에 자세히 설명한 글이 있어 참고하였음.
+</span></span></code></pre></td></tr></table></div></div></li></ol><h2 id=argo-cd>ARGO CD</h2><ol><li>Github repo에 Kustomize위한 계층 구조 생성<br><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171564634-9be9065a-c9b7-4b8f-9042-abb371c67f9b.png data-srcset="https://user-images.githubusercontent.com/82520143/171564634-9be9065a-c9b7-4b8f-9042-abb371c67f9b.png, https://user-images.githubusercontent.com/82520143/171564634-9be9065a-c9b7-4b8f-9042-abb371c67f9b.png 1.5x, https://user-images.githubusercontent.com/82520143/171564634-9be9065a-c9b7-4b8f-9042-abb371c67f9b.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171564634-9be9065a-c9b7-4b8f-9042-abb371c67f9b.png title=image></li><li>manifest 파일 자동 업데이트 설정<ul><li>Jenkinsfile을 통해 구현되었음<a href=https://plooox.github.io/ci/ target=_blank rel="noopener noreffer">(링크)</a></li></ul></li><li>Argo CD에서 Create App<br><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566029-7d7a10df-3476-4754-ae26-027f0520f20b.png data-srcset="https://user-images.githubusercontent.com/82520143/171566029-7d7a10df-3476-4754-ae26-027f0520f20b.png, https://user-images.githubusercontent.com/82520143/171566029-7d7a10df-3476-4754-ae26-027f0520f20b.png 1.5x, https://user-images.githubusercontent.com/82520143/171566029-7d7a10df-3476-4754-ae26-027f0520f20b.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566029-7d7a10df-3476-4754-ae26-027f0520f20b.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566042-78b1f867-40e4-4911-8833-7111c83b5604.png data-srcset="https://user-images.githubusercontent.com/82520143/171566042-78b1f867-40e4-4911-8833-7111c83b5604.png, https://user-images.githubusercontent.com/82520143/171566042-78b1f867-40e4-4911-8833-7111c83b5604.png 1.5x, https://user-images.githubusercontent.com/82520143/171566042-78b1f867-40e4-4911-8833-7111c83b5604.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566042-78b1f867-40e4-4911-8833-7111c83b5604.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566062-6d3b8296-7a14-4749-98b6-ff9b71929e72.png data-srcset="https://user-images.githubusercontent.com/82520143/171566062-6d3b8296-7a14-4749-98b6-ff9b71929e72.png, https://user-images.githubusercontent.com/82520143/171566062-6d3b8296-7a14-4749-98b6-ff9b71929e72.png 1.5x, https://user-images.githubusercontent.com/82520143/171566062-6d3b8296-7a14-4749-98b6-ff9b71929e72.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566062-6d3b8296-7a14-4749-98b6-ff9b71929e72.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566073-8facdfe7-d86e-4f3f-adc6-6cfbe1019bc3.png data-srcset="https://user-images.githubusercontent.com/82520143/171566073-8facdfe7-d86e-4f3f-adc6-6cfbe1019bc3.png, https://user-images.githubusercontent.com/82520143/171566073-8facdfe7-d86e-4f3f-adc6-6cfbe1019bc3.png 1.5x, https://user-images.githubusercontent.com/82520143/171566073-8facdfe7-d86e-4f3f-adc6-6cfbe1019bc3.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566073-8facdfe7-d86e-4f3f-adc6-6cfbe1019bc3.png title=image></li></ol><h2 id=배포-결과>배포 결과</h2><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566201-47a5f76c-e219-4fa3-a6f2-247a425a5a40.png data-srcset="https://user-images.githubusercontent.com/82520143/171566201-47a5f76c-e219-4fa3-a6f2-247a425a5a40.png, https://user-images.githubusercontent.com/82520143/171566201-47a5f76c-e219-4fa3-a6f2-247a425a5a40.png 1.5x, https://user-images.githubusercontent.com/82520143/171566201-47a5f76c-e219-4fa3-a6f2-247a425a5a40.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566201-47a5f76c-e219-4fa3-a6f2-247a425a5a40.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566212-9f45eeca-cbe0-45d8-8999-81f6a9da2d57.png data-srcset="https://user-images.githubusercontent.com/82520143/171566212-9f45eeca-cbe0-45d8-8999-81f6a9da2d57.png, https://user-images.githubusercontent.com/82520143/171566212-9f45eeca-cbe0-45d8-8999-81f6a9da2d57.png 1.5x, https://user-images.githubusercontent.com/82520143/171566212-9f45eeca-cbe0-45d8-8999-81f6a9da2d57.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566212-9f45eeca-cbe0-45d8-8999-81f6a9da2d57.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171566224-0119738b-535d-4225-9def-42a1eb68d7f0.png data-srcset="https://user-images.githubusercontent.com/82520143/171566224-0119738b-535d-4225-9def-42a1eb68d7f0.png, https://user-images.githubusercontent.com/82520143/171566224-0119738b-535d-4225-9def-42a1eb68d7f0.png 1.5x, https://user-images.githubusercontent.com/82520143/171566224-0119738b-535d-4225-9def-42a1eb68d7f0.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171566224-0119738b-535d-4225-9def-42a1eb68d7f0.png title=image></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2022-06-02</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/cd/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/aws/>AWS</a>,&nbsp;<a href=/tags/jenkins/>jenkins</a>,&nbsp;<a href=/tags/argocd/>argocd</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/ci/ class=prev rel=prev title="[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축"><i class="fas fa-angle-left fa-fw"></i>[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축</a></div></div><div id=comments><div id=utterances></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Plox</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"plooox/blog_comments"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
