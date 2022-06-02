@@ -1,0 +1,647 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축 - Plox's blog</title><meta name=Description content="k8s 전문가 양성 과정 중 진행하게된 프로젝트"><meta property="og:title" content="[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축"><meta property="og:description" content="k8s 전문가 양성 과정 중 진행하게된 프로젝트"><meta property="og:type" content="article"><meta property="og:url" content="http://plooox.github.io/ci/"><meta property="og:image" content="http://plooox.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-05-25T20:55:02+09:00"><meta property="article:modified_time" content="2022-05-25T20:55:02+09:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://plooox.github.io/logo.png"><meta name=twitter:title content="[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축"><meta name=twitter:description content="k8s 전문가 양성 과정 중 진행하게된 프로젝트"><meta name=application-name content="Plox's blog"><meta name=apple-mobile-web-app-title content="Plox's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=canonical href=http://plooox.github.io/ci/><link rel=prev href=http://plooox.github.io/troubleshooting_springjpa/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plooox.github.io\/ci\/"},"genre":"posts","keywords":"k8s, AWS, jenkins, argocd","wordcount":1571,"url":"http:\/\/plooox.github.io\/ci\/","datePublished":"2022-05-25T20:55:02+09:00","dateModified":"2022-05-25T20:55:02+09:00","publisher":{"@type":"Organization","name":"Plox"},"author":{"@type":"Person","name":"Plox"},"description":"k8s 전문가 양성 과정 중 진행하게된 프로젝트"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class=post-category>included in <a href=/categories/project/><i class="far fa-folder fa-fw"></i>project</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-05-25>2022-05-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1571 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#ci>CI</a><ul><li><a href=#step-by-step>Step By Step</a><ul><li><a href=#0-ec2-instance에-docker-설치>0. EC2 Instance에 Docker 설치</a></li><li><a href=#1-jenkins-container-생성-및-실행>1. Jenkins Container 생성 및 실행</a></li><li><a href=#2-프로젝트에-dockerfile-만들기>2. 프로젝트에 Dockerfile 만들기</a></li><li><a href=#3-jenkins-접속-후-세팅>3. Jenkins 접속 후 세팅</a></li><li><a href=#4-servier-project-생성>4. Servier project 생성</a></li><li><a href=#5-client-project-생성>5. Client project 생성</a></li><li><a href=#6-github-webhook-설정>6. github webhook 설정</a></li></ul></li><li><a href=#결과>결과</a></li></ul></li></ul></nav></div></div><div class=content id=content><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png data-srcset="https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png, https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png 1.5x, https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/170256707-d1f3fa65-5880-4ecb-95f5-accfe8fee26c.png title=image></p><h1 id=ci>CI</h1><ul><li>Continuous Integration</li><li>빌드 / 테스트 자동화</li><li>소스&버전관리 시스템(예시: git)에 대한 변경사항을 정기적으로 커밋 → 모든 사람에게 동일한 작업 기반 제공</li></ul><blockquote><p>Jenkins에서 CI 파이프라인 구축
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/170256783-a0421797-65d2-408a-a578-5f462250553d.png data-srcset="https://user-images.githubusercontent.com/82520143/170256783-a0421797-65d2-408a-a578-5f462250553d.png, https://user-images.githubusercontent.com/82520143/170256783-a0421797-65d2-408a-a578-5f462250553d.png 1.5x, https://user-images.githubusercontent.com/82520143/170256783-a0421797-65d2-408a-a578-5f462250553d.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/170256783-a0421797-65d2-408a-a578-5f462250553d.png title=image></p></blockquote><ul><li>EC2 인스턴스 안에서 Docker를 통해 Jenkins 컨테이너 생성 (java나 이런저런 설정의 간편화)</li><li>Jenkins 인스턴스에 Elastic IP 할당 → 나중에 webhook등 설정할 때 값 고정하기 위해</li></ul><h2 id=step-by-step>Step By Step</h2><h3 id=0-ec2-instance에-docker-설치>0. EC2 Instance에 Docker 설치</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># SSH로 EC2 Instance 접속</span>
+</span></span><span class=line><span class=cl><span class=c1># .pem파일 있는 경로에서</span>
+</span></span><span class=line><span class=cl>ssh -i ./<span class=o>[</span>FILE_NAME<span class=o>]</span>.pem ubuntu@<span class=o>[</span>IP Address<span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># docker 설치</span>
+</span></span><span class=line><span class=cl>sudo apt-get update
+</span></span><span class=line><span class=cl>sudo apt-get install docker -y
+</span></span><span class=line><span class=cl><span class=c1># docker 서비스 시작</span>
+</span></span><span class=line><span class=cl>sudo service docker start
+</span></span><span class=line><span class=cl><span class=c1># docker 서비스 상태 확인</span>
+</span></span><span class=line><span class=cl>systemctl status docker.service
+</span></span></code></pre></td></tr></table></div></div><h3 id=1-jenkins-container-생성-및-실행>1. Jenkins Container 생성 및 실행</h3><p>Jenkins Container에도 Docker를 설치</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Dockerfile 생성</span>
+</span></span><span class=line><span class=cl>sudo vim Dockerfile
+</span></span><span class=line><span class=cl>---------------------------------
+</span></span><span class=line><span class=cl><span class=c1># Dockerfile</span>
+</span></span><span class=line><span class=cl><span class=c1># Dockerfile 작성 시작</span>
+</span></span><span class=line><span class=cl>FROM jenkins/jenkins:jdk11
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#도커를 실행하기 위한 root 계정으로 전환</span>
+</span></span><span class=line><span class=cl>USER root
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#도커 설치</span>
+</span></span><span class=line><span class=cl>COPY docker_install.sh /docker_install.sh
+</span></span><span class=line><span class=cl>RUN chmod +x /docker_install.sh
+</span></span><span class=line><span class=cl>RUN /docker_install.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 도커 그룹에 사용자 추가</span>
+</span></span><span class=line><span class=cl>RUN usermod -aG docker jenkins
+</span></span><span class=line><span class=cl>USER jenkins
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>-------------------------------------
+</span></span><span class=line><span class=cl><span class=c1># docker_install.sh 파일 생성</span>
+</span></span><span class=line><span class=cl>sudo vim docker_install.sh
+</span></span><span class=line><span class=cl>--------------------------------------
+</span></span><span class=line><span class=cl><span class=c1># docker_install.sh 파일 작성 시작</span>
+</span></span><span class=line><span class=cl><span class=c1>#!/bin/sh</span>
+</span></span><span class=line><span class=cl>apt-get update <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>apt-get -y install apt-transport-https <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  ca-certificates <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  curl <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  gnupg2 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  zip <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  unzip <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  software-properties-common <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>curl -fsSL https://download.docker.com/linux/<span class=k>$(</span>. /etc/os-release<span class=p>;</span> <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$ID</span><span class=s2>&#34;</span><span class=k>)</span>/gpg &gt; /tmp/dkey<span class=p>;</span> apt-key add /tmp/dkey <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>add-apt-repository <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>&#34;deb [arch=amd64] https://download.docker.com/linux/</span><span class=k>$(</span>. /etc/os-release<span class=p>;</span> <span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$ID</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2> \
+</span></span></span><span class=line><span class=cl><span class=s2></span><span class=k>$(</span>lsb_release -cs<span class=k>)</span><span class=s2> \
+</span></span></span><span class=line><span class=cl><span class=s2>stable&#34;</span> <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>apt-get update <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>apt-get -y install docker-ce
+</span></span><span class=line><span class=cl>-----------------------------------------
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 권한 설정</span>
+</span></span><span class=line><span class=cl>sudo chmod <span class=m>666</span> /var/run/docker.sock
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 이미지 생성</span>
+</span></span><span class=line><span class=cl>docker build -t jenkins .
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># jenkins 폴더 만들기</span>
+</span></span><span class=line><span class=cl>mkdir jenkins
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 해당 폴더에 대해 권한 부여하기</span>
+</span></span><span class=line><span class=cl>sudo chown -R <span class=m>1000</span> ./jenkins
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 컨테이너 생성</span>
+</span></span><span class=line><span class=cl>sudo docker run -d --name jenkins <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>-v /home/ec2-user/jenkins:/var/jenkins_home <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>-v /var/run/docker.sock:/var/run/docker.sock <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>-p 8080:8080 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>-e <span class=nv>TZ</span><span class=o>=</span>Asia/Seoul <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>jenkins
+</span></span></code></pre></td></tr></table></div></div><p><a href=https://velog.io/@haeny01/AWS-Jenkins%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Docker-x-SpringBoot-CICD-%EA%B5%AC%EC%B6%95 target=_blank rel="noopener noreffer">참고자료 1</a></p><h3 id=2-프로젝트에-dockerfile-만들기>2. 프로젝트에 Dockerfile 만들기</h3><ul><li>Springboot Project</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>FROM openjdk:11-jdk
+</span></span><span class=line><span class=cl>EXPOSE 8081
+</span></span><span class=line><span class=cl>ARG JAR_FILE=build/libs/modoosugang_be-0.0.1-SNAPSHOT.jar
+</span></span><span class=line><span class=cl>COPY ${JAR_FILE} app.jar
+</span></span><span class=line><span class=cl>ENTRYPOINT [&#34;java&#34;, &#34;-jar&#34;, &#34;/app.jar&#34;]
+</span></span></code></pre></td></tr></table></div></div><ul><li>React Project</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>FROM nginx:latest
+</span></span><span class=line><span class=cl>RUN mkdir /app
+</span></span><span class=line><span class=cl>WORKDIR /app
+</span></span><span class=line><span class=cl>RUN mkdir ./build
+</span></span><span class=line><span class=cl>ADD ./build ./build
+</span></span><span class=line><span class=cl>RUN rm /etc/nginx/conf.d/default.conf
+</span></span><span class=line><span class=cl>COPY ./nginx.conf /etc/nginx/conf.d
+</span></span><span class=line><span class=cl>EXPOSE 80
+</span></span><span class=line><span class=cl>CMD [&#34;nginx&#34;, &#34;-g&#34;, &#34;daemon off;&#34;]
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-jenkins-접속-후-세팅>3. Jenkins 접속 후 세팅</h3><ol><li>암호입력
+<img width=507 alt=image src=https://user-images.githubusercontent.com/82520143/170260153-cf651542-acbb-408c-9414-62fd33c807bc.png></li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li><p>Install suggested plugins</p></li><li><p>Jenkins페이지 → jenkins 관리 → System Configuration → 플러그인 관리</p><ol><li>gradle</li><li>github integration</li><li>post build task</li><li>publish over ssh</li><li>Docker pipeline</li><li>NodeJS</li></ol></li><li><p>Jenkins페이지 → jenkins 관리 → Security → Manage Credentials</p><ul><li>Github 계정 등록</li><li>DockerHuB 계정 등록</li></ul></li><li><p>Credential 추가
+❗이부분에서 잘 설정해줘야 에러가 적게남: pipeline script 에러 1순위(경험상)
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png data-srcset="https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png, https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png 1.5x, https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/170260849-fb3647ee-aad9-4605-b886-0fe478331f1b.png data-srcset="https://user-images.githubusercontent.com/82520143/170260849-fb3647ee-aad9-4605-b886-0fe478331f1b.png, https://user-images.githubusercontent.com/82520143/170260849-fb3647ee-aad9-4605-b886-0fe478331f1b.png 1.5x, https://user-images.githubusercontent.com/82520143/170260849-fb3647ee-aad9-4605-b886-0fe478331f1b.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/170260849-fb3647ee-aad9-4605-b886-0fe478331f1b.png title=image></p><ol><li>Github Credential 추가
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/170261036-f2b8cd60-73f9-45d1-be5f-4a0498723fc0.png data-srcset="https://user-images.githubusercontent.com/82520143/170261036-f2b8cd60-73f9-45d1-be5f-4a0498723fc0.png, https://user-images.githubusercontent.com/82520143/170261036-f2b8cd60-73f9-45d1-be5f-4a0498723fc0.png 1.5x, https://user-images.githubusercontent.com/82520143/170261036-f2b8cd60-73f9-45d1-be5f-4a0498723fc0.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/170261036-f2b8cd60-73f9-45d1-be5f-4a0498723fc0.png title=image></li></ol></li><li><p>필요에 따라 환경변수 선언
+Jenkins 관리 -> 시스템 설정 -> Global properties</p></li><li><p>Gradle & NodeJS 세팅</p><ul><li>Jenkins페이지 → jenkins 관리 → *<strong>*Global Tool Configuration**</strong>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png data-srcset="https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png, https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png 1.5x, https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171557752-5118f1bb-0d75-401f-aaf3-0cb0b567d7bb.png data-srcset="https://user-images.githubusercontent.com/82520143/171557752-5118f1bb-0d75-401f-aaf3-0cb0b567d7bb.png, https://user-images.githubusercontent.com/82520143/171557752-5118f1bb-0d75-401f-aaf3-0cb0b567d7bb.png 1.5x, https://user-images.githubusercontent.com/82520143/171557752-5118f1bb-0d75-401f-aaf3-0cb0b567d7bb.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171557752-5118f1bb-0d75-401f-aaf3-0cb0b567d7bb.png title=image></li></ul></li></ol><h3 id=4-servier-project-생성>4. Servier project 생성</h3><p>jenkinsfile을 생성하여 pipdline 프로젝트 생성</p><ul><li>새로운 Item → pipeline 선택</li><li>Springboot에서 사용한 환경변수들은 k8s secret을 통해 Deployment 부분에서 선언</li><li><strong>jenkinsfile</strong></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>pipeline</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>agent</span> <span class=n>any</span>
+</span></span><span class=line><span class=cl>    <span class=n>environment</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>				<span class=c1>// 환경변수 설정
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>dockerHubRegistry</span> <span class=o>=</span> <span class=s1>&#39;plox/modoosugang-server&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>dockerHubRegistryCredential</span> <span class=o>=</span> <span class=s1>&#39;8181e4ed-46b2-4fd1-bfbf-1fa5ab5fc938&#39;</span>
+</span></span><span class=line><span class=cl>      <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>stages</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>				<span class=c1>// 단계 1. github repo 가져오기
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Checkout Application Git Branch&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>								<span class=c1>// 가져올 github repo와 branch를 설정하고, 여기에 권한을 가진 credential ID 입력
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>git</span> <span class=nl>credentialsId:</span> <span class=s1>&#39;4b1dcb95-da80-40e8-8a26-312fb71aed5a&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>url:</span> <span class=s1>&#39;https://github.com/modooSugangOrg/modooSugang_BE.git&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>branch:</span> <span class=s1>&#39;main&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Repository clone failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Repository clone success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>				<span class=c1>// 단계 2. java build
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Jar Build&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>								<span class=c1>// gradlew 실행권한 부여
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>sh</span> <span class=s1>&#39;chmod +x gradlew&#39;</span>
+</span></span><span class=line><span class=cl>								<span class=c1>// clean 후 build
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>sh</span> <span class=s1>&#39;./gradlew clean build&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;jar build failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;jar build success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>				<span class=c1>//  단계 3. Docker Image Build
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Docker Image Build&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s2>&#34;docker build . -t plox/modoosugang-server:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s2>&#34;docker build . -t plox/modoosugang-server:latest&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker image build failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker image build success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>				<span class=c1>// 단계 4. Docker Image Push
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Docker Image Push&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>								<span class=c1>// DockerHub 관련 Credential ID
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>withDockerRegistry</span><span class=o>([</span> <span class=nl>credentialsId:</span> <span class=s1>&#39;8181e4ed-46b2-4fd1-bfbf-1fa5ab5fc938&#39;</span><span class=o>,</span> <span class=nl>url:</span> <span class=s2>&#34;&#34;</span> <span class=o>])</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                                    <span class=n>sh</span> <span class=s2>&#34;docker push ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                                    <span class=n>sh</span> <span class=s2>&#34;docker push ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>                                <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker Image Push failure !&#39;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker image push success !&#39;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 단계 5. k8s manifest 파일 업데이트
+</span></span></span><span class=line><span class=cl><span class=c1></span>				<span class=c1>// docker image tag를 빌드 번호로 업데이트
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;K8S Manifest Update&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>								<span class=c1>// Manifest repo 가져오기
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>git</span> <span class=nl>credentialsId:</span> <span class=s1>&#39;4b1dcb95-da80-40e8-8a26-312fb71aed5a&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>url:</span> <span class=s1>&#39;https://github.com/modooSugangOrg/modoosugang_BE_manifest.git&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>branch:</span> <span class=s1>&#39;main&#39;</span>
+</span></span><span class=line><span class=cl>                <span class=c1>// 수정할 파일(kustomization.yaml) 경로에 들어가서 &amp;&amp; 파일의 내용을 수정
+</span></span></span><span class=line><span class=cl><span class=c1></span>								<span class=c1>// sed 명령어 해석(뇌피셜)
+</span></span></span><span class=line><span class=cl><span class=c1></span>								<span class=c1>//      sed -i &#39;s/{newTag로 시작하는 부분을}\$/{요걸로 바꾸겠습니다.}/g&#39; {바꾸고 싶은 파일}
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>sh</span> <span class=s2>&#34;cd ./overlay/dev &amp;&amp; sed -i &#39;s/newTag:.*\$/newTag: \&#34;${BUILD_NUMBER}\&#34;/g&#39; kustomization.yaml&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s2>&#34;cat ./overlay/dev/kustomization.yaml&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>								<span class=c1>//  커밋 &amp; 푸시 전 사용자 정보 입력
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>sh</span> <span class=s1>&#39;git config --global user.name plooox&#39;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s1>&#39;git config --global user.email insukim97@gmail.com&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>								<span class=c1>// credentialId의 Id와 Password 데이터를 &#39;usernameVariable&#39;과 &#39;passVariable&#39;로 할당
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>withCredentials</span><span class=o>([</span><span class=n>usernamePassword</span><span class=o>(</span><span class=nl>credentialsId:</span> <span class=s1>&#39;4b1dcb95-da80-40e8-8a26-312fb71aed5a&#39;</span><span class=o>,</span> <span class=nl>passwordVariable:</span> <span class=s1>&#39;pass&#39;</span><span class=o>,</span> <span class=nl>usernameVariable:</span> <span class=s1>&#39;user&#39;</span><span class=o>)])</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=n>sh</span> <span class=s2>&#34;git pull origin main&#34;</span>   <span class=c1>// 혹시 모를 충돌 대비 pull
+</span></span></span><span class=line><span class=cl><span class=c1></span>                        <span class=n>sh</span> <span class=s2>&#34;git add ./overlay/dev/kustomization.yaml&#34;</span>   <span class=c1>// build파일도 같이 커밋되는 걸 막기 위해 수정한 파일만 추가
+</span></span></span><span class=line><span class=cl><span class=c1></span>                        <span class=n>sh</span> <span class=s2>&#34;git commit -m &#39;[:alien: UPDATE] modoosugang_server ${BUILD_NUMBER} image versioning&#39;&#34;</span>  <span class=c1>// 커밋
+</span></span></span><span class=line><span class=cl><span class=c1></span>                        <span class=n>sh</span> <span class=s2>&#34;git push http://$user:$pass@github.com/modooSugangOrg/modoosugang_BE_manifest.git main&#34;</span>  <span class=c1>// id &amp; pw 를 통해 push
+</span></span></span><span class=line><span class=cl><span class=c1></span>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;K8S Manifest Update failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;K8S Manifest Update success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><details><summary>⚠️ Credential ID 확인하는 법</summary><div markdown=1><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171558639-333f74e0-fab5-452c-9225-efd71d262a3c.png data-srcset="https://user-images.githubusercontent.com/82520143/171558639-333f74e0-fab5-452c-9225-efd71d262a3c.png, https://user-images.githubusercontent.com/82520143/171558639-333f74e0-fab5-452c-9225-efd71d262a3c.png 1.5x, https://user-images.githubusercontent.com/82520143/171558639-333f74e0-fab5-452c-9225-efd71d262a3c.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171558639-333f74e0-fab5-452c-9225-efd71d262a3c.png title=image></p></div></details><h3 id=5-client-project-생성>5. Client project 생성</h3><ul><li><p>react의 경우, 빌드된 파일만 Dockerize하기 때문에 필요한 환경변수 파일을 미리 넣어서 빌드해야함</p><ul><li>react에서 사용되는 환경변수 파일들은 전부 <code>REACT_APP_</code>으로 시작 (REACT_APP_TEST_MESSAGE, REACT_APP_SERVER_URL등)</li><li>jenkinsfile에서 필요한 <code>.env</code>파일을 생성하여 환경변수를 처리할 수 있도록 하였음</li></ul></li><li><p>사전 작업</p><ul><li><p>Global Tool Configuration</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171558992-3fbd9b95-0ac6-48d0-897a-96a4a77616a7.png data-srcset="https://user-images.githubusercontent.com/82520143/171558992-3fbd9b95-0ac6-48d0-897a-96a4a77616a7.png, https://user-images.githubusercontent.com/82520143/171558992-3fbd9b95-0ac6-48d0-897a-96a4a77616a7.png 1.5x, https://user-images.githubusercontent.com/82520143/171558992-3fbd9b95-0ac6-48d0-897a-96a4a77616a7.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171558992-3fbd9b95-0ac6-48d0-897a-96a4a77616a7.png title=image></p></li><li><p>시스템 설정</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171559004-18c27887-2566-41e0-adc2-7a99a9314252.png data-srcset="https://user-images.githubusercontent.com/82520143/171559004-18c27887-2566-41e0-adc2-7a99a9314252.png, https://user-images.githubusercontent.com/82520143/171559004-18c27887-2566-41e0-adc2-7a99a9314252.png 1.5x, https://user-images.githubusercontent.com/82520143/171559004-18c27887-2566-41e0-adc2-7a99a9314252.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171559004-18c27887-2566-41e0-adc2-7a99a9314252.png title=image></p></li><li><p>Jenkins에서 발생하는 CI 에러 방지</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171559030-21c22d9f-4a74-4a26-a2ab-ef46b5064316.png data-srcset="https://user-images.githubusercontent.com/82520143/171559030-21c22d9f-4a74-4a26-a2ab-ef46b5064316.png, https://user-images.githubusercontent.com/82520143/171559030-21c22d9f-4a74-4a26-a2ab-ef46b5064316.png 1.5x, https://user-images.githubusercontent.com/82520143/171559030-21c22d9f-4a74-4a26-a2ab-ef46b5064316.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171559030-21c22d9f-4a74-4a26-a2ab-ef46b5064316.png title=image></p></li></ul></li><li><p><strong>jenkinsfile</strong></p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>pipeline</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>agent</span> <span class=n>any</span>
+</span></span><span class=line><span class=cl>		<span class=c1>// 빌드에 사용할 툴 ( Global Tool Configuration에서 선언한 Name을 토대로 {사용 Tool }:{Name})
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>tools</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>nodejs</span> <span class=s2>&#34;nodejs&#34;</span> <span class=c1>// Global Tool Configuration에서 NodeJS 16.14.2를 &#34;nodejs&#34;로 선언했음
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>environment</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>dockerHubRegistry</span> <span class=o>=</span> <span class=s1>&#39;plox/modoosugang-client&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>dockerHubRegistryCredential</span> <span class=o>=</span> <span class=s1>&#39;8181e4ed-46b2-4fd1-bfbf-1fa5ab5fc938&#39;</span>
+</span></span><span class=line><span class=cl>      <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>stages</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Checkout Application Git Branch&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>git</span> <span class=nl>credentialsId:</span> <span class=s1>&#39;4b1dcb95-da80-40e8-8a26-312fb71aed5a&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>url:</span> <span class=s1>&#39;https://github.com/modooSugangOrg/modooSugang_FE.git&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>branch:</span> <span class=s1>&#39;main&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Repository clone failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Repository clone success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;npm Build&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=c1>// 필요한 환경변수들 -&gt; .env 파일에 저장
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=n>sh</span> <span class=s1>&#39;echo REACT_APP_SERVER_URL=${REACT_APP_SERVER_URL} &gt; .env&#39;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s1>&#39;echo REACT_APP_TEST_MESSAGE=${REACT_APP_TEST_MESSAGE} &gt;&gt; .env&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s1>&#39;npm install&#39;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s1>&#39;npm run build&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;npm build failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;npm build success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Docker Image Build&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s2>&#34;docker build . -t ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s2>&#34;docker build . -t ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker image build failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker image build success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Docker Image Push&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>withDockerRegistry</span><span class=o>([</span> <span class=nl>credentialsId:</span> <span class=n>dockerHubRegistryCredential</span><span class=o>,</span> <span class=nl>url:</span> <span class=s2>&#34;&#34;</span> <span class=o>])</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                                    <span class=n>sh</span> <span class=s2>&#34;docker push ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                                    <span class=n>sh</span> <span class=s2>&#34;docker push ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>                                    <span class=n>sleep</span> <span class=mi>10</span> <span class=cm>/* Wait uploading */</span>
+</span></span><span class=line><span class=cl>                                <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker Image Push failure !&#39;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;Docker image push success !&#39;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:${BUILD_NUMBER}&#34;</span>
+</span></span><span class=line><span class=cl>                      <span class=n>sh</span> <span class=s2>&#34;docker rmi ${dockerHubRegistry}:latest&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;K8S Manifest Update&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>git</span> <span class=nl>credentialsId:</span> <span class=s1>&#39;4b1dcb95-da80-40e8-8a26-312fb71aed5a&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>url:</span> <span class=s1>&#39;https://github.com/modooSugangOrg/modoosugang_FE_manifest.git&#39;</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nl>branch:</span> <span class=s1>&#39;main&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s2>&#34;cd ./overlay/dev &amp;&amp; sed -i &#39;s/newTag:.*\$/newTag: \&#34;${BUILD_NUMBER}\&#34;/g&#39; kustomization.yaml&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s1>&#39;git config --global user.name plooox&#39;</span>
+</span></span><span class=line><span class=cl>                <span class=n>sh</span> <span class=s1>&#39;git config --global user.email insukim97@gmail.com&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>withCredentials</span><span class=o>([</span><span class=n>usernamePassword</span><span class=o>(</span><span class=nl>credentialsId:</span> <span class=s1>&#39;4b1dcb95-da80-40e8-8a26-312fb71aed5a&#39;</span><span class=o>,</span> <span class=nl>passwordVariable:</span> <span class=s1>&#39;pass&#39;</span><span class=o>,</span> <span class=nl>usernameVariable:</span> <span class=s1>&#39;user&#39;</span><span class=o>)])</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=n>sh</span> <span class=s2>&#34;git pull origin main&#34;</span>
+</span></span><span class=line><span class=cl>                        <span class=n>sh</span> <span class=s2>&#34;git add ./overlay/dev&#34;</span>
+</span></span><span class=line><span class=cl>                        <span class=n>sh</span> <span class=s2>&#34;git commit -m &#39;[:alien: UPDATE] modoosugang_client ${BUILD_NUMBER} image versioning&#39;&#34;</span>
+</span></span><span class=line><span class=cl>                        <span class=n>sh</span> <span class=s2>&#34;git push http://$user:$pass@github.com/modooSugangOrg/modoosugang_FE_manifest.git main&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>post</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>failure</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;K8S Manifest Update failure !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                    <span class=n>success</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                      <span class=n>echo</span> <span class=s1>&#39;K8S Manifest Update success !&#39;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=6-github-webhook-설정>6. github webhook 설정</h3><ul><li>github에서 commit과 같은 이벤트가 발생시, HTTP POST Payload를 지정된 URL로 전송</li><li>git repo가 업데이트 되면 자동으로 Jenkins 프로젝트가 실행</li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171559316-db70ed55-7069-407a-bfb3-c471c7bff736.png data-srcset="https://user-images.githubusercontent.com/82520143/171559316-db70ed55-7069-407a-bfb3-c471c7bff736.png, https://user-images.githubusercontent.com/82520143/171559316-db70ed55-7069-407a-bfb3-c471c7bff736.png 1.5x, https://user-images.githubusercontent.com/82520143/171559316-db70ed55-7069-407a-bfb3-c471c7bff736.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171559316-db70ed55-7069-407a-bfb3-c471c7bff736.png title=image><br><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171559353-ab65dc30-8813-4f48-a6fb-5cc8e0f09758.png data-srcset="https://user-images.githubusercontent.com/82520143/171559353-ab65dc30-8813-4f48-a6fb-5cc8e0f09758.png, https://user-images.githubusercontent.com/82520143/171559353-ab65dc30-8813-4f48-a6fb-5cc8e0f09758.png 1.5x, https://user-images.githubusercontent.com/82520143/171559353-ab65dc30-8813-4f48-a6fb-5cc8e0f09758.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171559353-ab65dc30-8813-4f48-a6fb-5cc8e0f09758.png title=image></p><h2 id=결과>결과</h2><p><img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171559487-a986a175-b726-4d56-b90a-47364231f38d.png data-srcset="https://user-images.githubusercontent.com/82520143/171559487-a986a175-b726-4d56-b90a-47364231f38d.png, https://user-images.githubusercontent.com/82520143/171559487-a986a175-b726-4d56-b90a-47364231f38d.png 1.5x, https://user-images.githubusercontent.com/82520143/171559487-a986a175-b726-4d56-b90a-47364231f38d.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171559487-a986a175-b726-4d56-b90a-47364231f38d.png title=image>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://user-images.githubusercontent.com/82520143/171559507-31e325b2-028f-4d1a-a85b-512073e5c41c.png data-srcset="https://user-images.githubusercontent.com/82520143/171559507-31e325b2-028f-4d1a-a85b-512073e5c41c.png, https://user-images.githubusercontent.com/82520143/171559507-31e325b2-028f-4d1a-a85b-512073e5c41c.png 1.5x, https://user-images.githubusercontent.com/82520143/171559507-31e325b2-028f-4d1a-a85b-512073e5c41c.png 2x" data-sizes=auto alt=https://user-images.githubusercontent.com/82520143/171559507-31e325b2-028f-4d1a-a85b-512073e5c41c.png title=image></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2022-05-25</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/ci/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/k8s/>k8s</a>,&nbsp;<a href=/tags/aws/>AWS</a>,&nbsp;<a href=/tags/jenkins/>jenkins</a>,&nbsp;<a href=/tags/argocd/>argocd</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/troubleshooting_springjpa/ class=prev rel=prev title="[Trouble Shooting] JPA에서 Like, Contains구문 사용시 에러"><i class="fas fa-angle-left fa-fw"></i>[Trouble Shooting] JPA에서 Like, Contains구문 사용시 에러</a></div></div><div id=comments><div id=utterances></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Plox</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"plooox/blog_comments"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
