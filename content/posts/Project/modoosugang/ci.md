@@ -2,7 +2,7 @@
 title: "[k8s project] CI/CD Pipeline 구현 - Jenkins를 사용한 CI 구축"
 date: 2022-05-25T20:55:02+09:00
 description: "k8s 전문가 양성 과정 중 진행하게된 프로젝트"
-draft: true
+draft: false
 tags: ["k8s", "AWS", "jenkins", "argocd"]
 categories: ["project"]
 
