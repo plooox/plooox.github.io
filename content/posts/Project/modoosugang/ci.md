@@ -35,8 +35,8 @@ comment:
 - 빌드 / 테스트 자동화
 - 소스&버전관리 시스템(예시: git)에 대한 변경사항을 정기적으로 커밋 → 모든 사람에게 동일한 작업 기반 제공
 
-> Jenkins에서 CI 파이프라인 구축
-> ![image](https://user-images.githubusercontent.com/82520143/170256783-a0421797-65d2-408a-a578-5f462250553d.png)
+> Jenkins에서 CI 파이프라인 구축  
+> ![image](https://user-images.githubusercontent.com/82520143/171565286-06a9b55c-2b4e-48f1-a0d7-efc808a0b123.png)
 
 - EC2 인스턴스 안에서 Docker를 통해 Jenkins 컨테이너 생성 (java나 이런저런 설정의 간편화)
 - Jenkins 인스턴스에 Elastic IP 할당 → 나중에 webhook등 설정할 때 값 고정하기 위해
@@ -161,7 +161,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ### 3. Jenkins 접속 후 세팅
 
-1. 암호입력
+1. 암호입력  
    <img width="507" alt="image" src="https://user-images.githubusercontent.com/82520143/170260153-cf651542-acbb-408c-9414-62fd33c807bc.png">
 
 ```bash
@@ -180,18 +180,18 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
    - Github 계정 등록
    - DockerHuB 계정 등록
 5. Credential 추가
-   ❗이부분에서 잘 설정해줘야 에러가 적게남: pipeline script 에러 1순위(경험상)
-   ![image](https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png)
+   ❗이부분에서 잘 설정해줘야 에러가 적게남: pipeline script 에러 1순위(경험상)  
+   ![image](https://user-images.githubusercontent.com/82520143/170260705-2eabe301-218a-46b3-a5be-c06cd75e1bad.png)  
    ![image](https://user-images.githubusercontent.com/82520143/170260849-fb3647ee-aad9-4605-b886-0fe478331f1b.png)
 
-   1. Github Credential 추가
+   1. Github Credential 추가  
       ![image](https://user-images.githubusercontent.com/82520143/170261036-f2b8cd60-73f9-45d1-be5f-4a0498723fc0.png)
 
 6. 필요에 따라 환경변수 선언
    Jenkins 관리 -> 시스템 설정 -> Global properties
 7. Gradle & NodeJS 세팅
-   - Jenkins페이지 → jenkins 관리 → \***\*Global Tool Configuration\*\***
-     ![image](https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png)
+   - Jenkins페이지 → jenkins 관리 → \***\*Global Tool Configuration\*\***  
+     ![image](https://user-images.githubusercontent.com/82520143/171557709-c4486eda-000c-4bed-b1ff-b135823bf732.png)  
      ![image](https://user-images.githubusercontent.com/82520143/171557752-5118f1bb-0d75-401f-aaf3-0cb0b567d7bb.png)
 
 ### 4. Servier project 생성
