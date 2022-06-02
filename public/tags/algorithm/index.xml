@@ -1,15 +1,22 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Algorithm - Tag - Plox&#39;s blog</title>
-        <link>http://plooox.github.io/tags/algorithm/</link>
-        <description>Algorithm - Tag - Plox&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
-            <webMaster>insuKim97@gmail.com (Plox)</webMaster><lastBuildDate>Tue, 08 Mar 2022 18:58:32 &#43;0900</lastBuildDate><atom:link href="http://plooox.github.io/tags/algorithm/" rel="self" type="application/rss+xml" /><item>
-    <title>Regular Expression(정규표현식)</title>
-    <link>http://plooox.github.io/re/</link>
-    <pubDate>Tue, 08 Mar 2022 18:58:32 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/re/</guid>
-    <description><![CDATA[]]></description>
-</item></channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on Plox&#39;s blog</title>
+    <link>http://plooox.github.io/tags/algorithm/</link>
+    <description>Recent content in Algorithm on Plox&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
+    <webMaster>insuKim97@gmail.com (Plox)</webMaster>
+    <lastBuildDate>Tue, 08 Mar 2022 18:58:32 +0900</lastBuildDate><atom:link href="http://plooox.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Regular Expression(정규표현식)</title>
+      <link>http://plooox.github.io/re/</link>
+      <pubDate>Tue, 08 Mar 2022 18:58:32 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/re/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
 </rss>

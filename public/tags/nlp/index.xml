@@ -1,57 +1,76 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>NLP - Tag - Plox&#39;s blog</title>
-        <link>http://plooox.github.io/tags/nlp/</link>
-        <description>NLP - Tag - Plox&#39;s blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
-            <webMaster>insuKim97@gmail.com (Plox)</webMaster><lastBuildDate>Thu, 06 Jan 2022 21:24:04 &#43;0900</lastBuildDate><atom:link href="http://plooox.github.io/tags/nlp/" rel="self" type="application/rss+xml" /><item>
-    <title>[Project] SNS 감정분석을 통한 여론 조사</title>
-    <link>http://plooox.github.io/sentimental_analysis_project/</link>
-    <pubDate>Thu, 06 Jan 2022 21:24:04 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/sentimental_analysis_project/</guid>
-    <description><![CDATA[NLP Project]]></description>
-</item><item>
-    <title>Colab 환경에서 트윗 데이터 수집하기</title>
-    <link>http://plooox.github.io/twitterapi/</link>
-    <pubDate>Tue, 07 Sep 2021 22:38:26 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/twitterapi/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>[NLP] 5.텍스트 전처리 - Splitting Data</title>
-    <link>http://plooox.github.io/nlp_05/</link>
-    <pubDate>Tue, 24 Aug 2021 15:01:45 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/nlp_05/</guid>
-    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
-</item><item>
-    <title>[NLP] 4.텍스트 전처리 - 인코딩 &amp; 패딩</title>
-    <link>http://plooox.github.io/nlp_04/</link>
-    <pubDate>Wed, 18 Aug 2021 17:02:56 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/nlp_04/</guid>
-    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
-</item><item>
-    <title>[NLP] 3.텍스트 전처리 - 정제및 정규화</title>
-    <link>http://plooox.github.io/nlp_03/</link>
-    <pubDate>Tue, 17 Aug 2021 13:53:02 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/nlp_03/</guid>
-    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
-</item><item>
-    <title>[NLP] 2.텍스트 전처리 - 토큰화</title>
-    <link>http://plooox.github.io/nlp_02/</link>
-    <pubDate>Sun, 15 Aug 2021 12:59:18 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/nlp_02/</guid>
-    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
-</item><item>
-    <title>[NLP] 1.프레임워크와 라이브러리</title>
-    <link>http://plooox.github.io/nlp_01/</link>
-    <pubDate>Sun, 15 Aug 2021 12:28:18 &#43;0900</pubDate>
-    <author>Author</author>
-    <guid>http://plooox.github.io/nlp_01/</guid>
-    <description><![CDATA[프로젝트를 위한 NLP 공부]]></description>
-</item></channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NLP on Plox&#39;s blog</title>
+    <link>http://plooox.github.io/tags/nlp/</link>
+    <description>Recent content in NLP on Plox&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
+    <webMaster>insuKim97@gmail.com (Plox)</webMaster>
+    <lastBuildDate>Thu, 06 Jan 2022 21:24:04 +0900</lastBuildDate><atom:link href="http://plooox.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Project] SNS 감정분석을 통한 여론 조사</title>
+      <link>http://plooox.github.io/sentimental_analysis_project/</link>
+      <pubDate>Thu, 06 Jan 2022 21:24:04 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/sentimental_analysis_project/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Colab 환경에서 트윗 데이터 수집하기</title>
+      <link>http://plooox.github.io/twitterapi/</link>
+      <pubDate>Tue, 07 Sep 2021 22:38:26 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/twitterapi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[NLP] 5.텍스트 전처리 - Splitting Data</title>
+      <link>http://plooox.github.io/nlp_05/</link>
+      <pubDate>Tue, 24 Aug 2021 15:01:45 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/nlp_05/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[NLP] 4.텍스트 전처리 - 인코딩 &amp; 패딩</title>
+      <link>http://plooox.github.io/nlp_04/</link>
+      <pubDate>Wed, 18 Aug 2021 17:02:56 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/nlp_04/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[NLP] 3.텍스트 전처리 - 정제및 정규화</title>
+      <link>http://plooox.github.io/nlp_03/</link>
+      <pubDate>Tue, 17 Aug 2021 13:53:02 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/nlp_03/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[NLP] 2.텍스트 전처리 - 토큰화</title>
+      <link>http://plooox.github.io/nlp_02/</link>
+      <pubDate>Sun, 15 Aug 2021 12:59:18 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/nlp_02/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[NLP] 1.프레임워크와 라이브러리</title>
+      <link>http://plooox.github.io/nlp_01/</link>
+      <pubDate>Sun, 15 Aug 2021 12:28:18 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/nlp_01/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
 </rss>

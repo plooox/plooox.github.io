@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>troubleshooting on Plox&#39;s blog</title>
+    <link>http://plooox.github.io/categories/troubleshooting/</link>
+    <description>Recent content in troubleshooting on Plox&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
+    <webMaster>insuKim97@gmail.com (Plox)</webMaster>
+    <lastBuildDate>Tue, 19 Apr 2022 16:05:37 +0900</lastBuildDate><atom:link href="http://plooox.github.io/categories/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Trouble Shooting] JPA에서 Like, Contains구문 사용시 에러</title>
+      <link>http://plooox.github.io/troubleshooting_springjpa/</link>
+      <pubDate>Tue, 19 Apr 2022 16:05:37 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/troubleshooting_springjpa/</guid>
+      <description>&lt;p&gt;React + Springboot + Mysql을 사용한 프로젝트를 진행하던 중 발생한 문제를 다룹니다.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

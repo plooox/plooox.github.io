@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>react on Plox&#39;s blog</title>
+    <link>http://plooox.github.io/tags/react/</link>
+    <description>Recent content in react on Plox&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>insuKim97@gmail.com (Plox)</managingEditor>
+    <webMaster>insuKim97@gmail.com (Plox)</webMaster>
+    <lastBuildDate>Sun, 17 Apr 2022 15:11:50 +0900</lastBuildDate><atom:link href="http://plooox.github.io/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[k8s project] Frontend UI</title>
+      <link>http://plooox.github.io/frontend/</link>
+      <pubDate>Sun, 17 Apr 2022 15:11:50 +0900</pubDate>
+      <author>insuKim97@gmail.com (Plox)</author>
+      <guid>http://plooox.github.io/frontend/</guid>
+      <description>&lt;p&gt;&lt;code&gt; Goorm kubernetes 전문가 양성 과정&lt;/code&gt; 중 프로젝트 진행 과정을 공유합니다.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
