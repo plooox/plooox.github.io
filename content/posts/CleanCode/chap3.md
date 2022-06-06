@@ -2,7 +2,7 @@
 title: "[Clean Code] Chap3. 함수"
 date: 2022-06-06T22:04:21+09:00
 description: "Clean Code 스터디에서 담당했던 부분 포스트 입니다."
-draft: true
+draft: false
 tags: ["CleanCode"]
 categories: ["CleanCode"]
 
@@ -255,7 +255,7 @@ TO 설정 페이지와 해제 페이지를 포함하려면, 설정 페이지를 
   `InputStream fileOpen(“MyFile”)`
 - 이벤트 함수: 입력 인수만 있음.
   - 이벤트라는 사실이 코드에 명확히 드러나도록 이름과 문맥을 주의해서 선택
-  `passwordAttemptFailedNtimes(int attempts)`
+    `passwordAttemptFailedNtimes(int attempts)`
 
 ### 바람직하지 않은 단항 형식
 
@@ -393,6 +393,7 @@ public class UserValidator {
   }
   ```
 - try/catch 블록도 별도 함수로 분리하는 것이 가독성에 좋다
+
   ```java
   public void delete(Page page) {
   	try {
