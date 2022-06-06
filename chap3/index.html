@@ -1,0 +1,404 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>[Clean Code] Chap3. 함수 - Plox's blog</title><meta name=Description content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta property="og:title" content="[Clean Code] Chap3. 함수"><meta property="og:description" content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta property="og:type" content="article"><meta property="og:url" content="http://plooox.github.io/chap3/"><meta property="og:image" content="http://plooox.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-06-06T22:04:21+09:00"><meta property="article:modified_time" content="2022-06-06T22:04:21+09:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://plooox.github.io/logo.png"><meta name=twitter:title content="[Clean Code] Chap3. 함수"><meta name=twitter:description content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta name=application-name content="Plox's blog"><meta name=apple-mobile-web-app-title content="Plox's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=canonical href=http://plooox.github.io/chap3/><link rel=prev href=http://plooox.github.io/cd/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"[Clean Code] Chap3. 함수","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plooox.github.io\/chap3\/"},"genre":"posts","keywords":"CleanCode","wordcount":1475,"url":"http:\/\/plooox.github.io\/chap3\/","datePublished":"2022-06-06T22:04:21+09:00","dateModified":"2022-06-06T22:04:21+09:00","publisher":{"@type":"Organization","name":"Plox"},"author":{"@type":"Person","name":"Plox"},"description":"Clean Code 스터디에서 담당했던 부분 포스트 입니다."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark')&&document.body.setAttribute('theme','dark')</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">[Clean Code] Chap3. 함수</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cleancode/><i class="far fa-folder fa-fw"></i>CleanCode</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-06-06>2022-06-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1475 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#함수>함수</a><ul><li><a href=#intro>Intro</a></li><li><a href=#작게-만들어라>작게 만들어라!</a><ul><li><a href=#블록과-들여쓰기>블록과 들여쓰기</a></li></ul></li><li><a href=#한가지만-해라>한가지만 해라</a><ul><li><a href=#한-가지의-기준은>한 가지의 기준은?</a></li></ul></li><li><a href=#함수-당-추상화-수준은-하나로>함수 당 추상화 수준은 하나로!</a><ul><li><a href=#내려가기-규칙>내려가기 규칙</a></li></ul></li><li><a href=#switch-문>Switch 문</a></li><li><a href=#서술적인-이름을-사용>서술적인 이름을 사용</a></li><li><a href=#함수-인수>함수 인수</a><ul><li><a href=#많이-쓰는-단항-형식>많이 쓰는 단항 형식</a></li><li><a href=#바람직하지-않은-단항-형식>바람직하지 않은 단항 형식</a></li><li><a href=#플래그-인수>플래그 인수</a></li><li><a href=#이항-함수>이항 함수</a></li><li><a href=#삼항-함수>삼항 함수</a></li><li><a href=#인수-객체>인수 객체</a></li><li><a href=#동사와-키워드>동사와 키워드</a></li></ul></li><li><a href=#부수효과를-일으키지-마라>부수효과를 일으키지 마라!</a><ul><li><a href=#부수효과>부수효과?</a></li><li><a href=#부수효과는-거짓말이다>부수효과는 거짓말이다</a></li><li><a href=#출력인수>출력인수</a></li></ul></li><li><a href=#명령과-조회를-분리하라>명령과 조회를 분리하라</a></li><li><a href=#오류-코드-보다-예외를-사용하라>오류 코드 보다 예외를 사용하라!</a></li><li><a href=#반복하지-마라>반복하지 마라</a></li><li><a href=#구조적-프로그래밍>구조적 프로그래밍</a></li><li><a href=#함수를-어떻게-짜죠>함수를 어떻게 짜죠?</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=함수>함수</h1><h2 id=intro>Intro</h2><ul><li>함수 → 프로그램의 가장 기본적인 단위</li><li>처음 읽는 사람이 프로그램 내부를 직관적으로 파악하기 위해서 읽기 쉽고 이해하기 쉬운 함수를 만들어야 한다.</li><li>함수 - 절망편<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=n>String</span> <span class=nf>testableHtml</span><span class=o>(</span><span class=n>PageData</span> <span class=n>pageData</span><span class=o>,</span> <span class=kt>boolean</span> <span class=n>includeSuiteSetup</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>Wikipage</span> <span class=n>wikipage</span> <span class=o>=</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getWikiPage</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>StringBuffer</span> <span class=n>buffer</span> <span class=o>=</span> <span class=k>new</span> <span class=n>StringBuffer</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>(</span><span class=n>pageData</span><span class=o>.</span><span class=na>hasAttribute</span><span class=o>(</span><span class=s>&#34;Test&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>includeSuiteSetup</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>WikiPage</span> <span class=n>suiteSetup</span> <span class=o>=</span> <span class=n>PageCrawlerlmpl</span><span class=o>.</span><span class=na>getlnheritedPage</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>SuiteResponder</span><span class=o>.</span><span class=na>SUITE_SETUP_NAME</span><span class=o>,</span> <span class=n>wikiPage</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>suiteSetup</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>wikiPagePath</span> <span class=n>pagePath</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>            <span class=n>suiteSetup</span><span class=o>.</span><span class=na>getPageCrawler</span><span class=o>().</span><span class=na>getFullPath</span><span class=o>(</span><span class=n>suiteSetup</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>          <span class=n>String</span> <span class=n>pagePathName</span> <span class=o>=</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>render</span><span class=o>(</span><span class=n>pagePath</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>          <span class=n>buffer</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;include -setup .&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>pagePathName</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;\n&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>WikiPage</span> <span class=n>setup</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>      <span class=n>PageCrawlerlmpl</span><span class=o>.</span><span class=na>getInheritedPage</span><span class=o>(</span><span class=s>&#34;SetUp&#34;</span><span class=o>,</span> <span class=n>wikiPage</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>setup</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>WikiPagePath</span> <span class=n>setupPath</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>        <span class=n>wikiPage</span><span class=o>.</span><span class=na>getPageCrawler</span><span class=o>().</span><span class=na>getFullPath</span><span class=o>(</span><span class=n>setup</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>      <span class=n>String</span> <span class=n>setupPathName</span> <span class=o>=</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>render</span><span class=o>(</span><span class=n>setupPath</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>      <span class=n>buffer</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;!include -setup .&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>setupPathName</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;\n&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=n>buffer</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>pageData</span><span class=o>.</span><span class=na>getContent</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>(</span><span class=n>pageData</span><span class=o>.</span><span class=na>hasAttribute</span><span class=o>(</span><span class=s>&#34;Test&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>WikiPage</span> <span class=n>teardown</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>      <span class=n>pageCrawlerlmpl</span><span class=o>.</span><span class=na>getInheritedPage</span><span class=o>(</span><span class=s>&#34;TearDown&#34;</span><span class=o>,</span> <span class=n>wikiPage</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>teardown</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>WikiPagePath</span> <span class=n>tearDownPath</span> <span class=o>=</span> <span class=n>wikiPage</span><span class=o>.</span><span class=na>getPageCrawler</span><span class=o>().</span><span class=na>getFullPath</span><span class=o>(</span><span class=n>teardown</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>      <span class=n>String</span> <span class=n>tearDownPathName</span> <span class=o>=</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>render</span><span class=o>(</span><span class=n>tearDownPath</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>      <span class=n>buffer</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;\n&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;!include -teardown .&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>tearDownPathName</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;\n&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>includeSuiteSetup</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>WikiPage</span> <span class=n>suiteTeardown</span> <span class=o>=</span> <span class=n>PageCrawlerlmpl</span><span class=o>.</span><span class=na>getlnheritedPage</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>                      <span class=n>SuiteResponder</span><span class=o>.</span><span class=na>SUITE_TEARDOWN_NAME</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>                      <span class=n>wikiPage</span>
+</span></span><span class=line><span class=cl>      <span class=o>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=o>(</span><span class=n>suiteTeardown</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Wikipagepath</span> <span class=n>pagePath</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>          <span class=n>suiteTeardown</span><span class=o>.</span><span class=na>getPageCrawler</span><span class=o>().</span><span class=na>getFullPath</span> <span class=o>(</span><span class=n>suiteTeardown</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>          <span class=n>String</span> <span class=n>pagePathName</span> <span class=o>=</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>render</span><span class=o>(</span><span class=n>pagePath</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>          <span class=n>buffer</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;!include -teardown .&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>pagePathName</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>                <span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=s>&#34;\n&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>      <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=n>pageData</span><span class=o>.</span><span class=na>setContent</span><span class=o>(</span><span class=n>buffer</span><span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getHtml</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li>1차 리펙토링<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=n>String</span> <span class=nf>renderPageWithSetupsAndTeardowns</span><span class=o>(</span> <span class=n>PageData</span> <span class=n>pageData</span><span class=o>,</span> <span class=kt>boolean</span> <span class=n>isSuite</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kt>boolean</span> <span class=n>isTestPage</span> <span class=o>=</span> <span class=n>pageData</span><span class=o>.</span><span class=na>hasAttribute</span><span class=o>(</span><span class=s>&#34;Test&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=o>(</span><span class=n>isTestPage</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>WikiPage</span> <span class=n>testPage</span> <span class=o>=</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getWikiPage</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=n>StringBuffer</span> <span class=n>newPageContent</span> <span class=o>=</span> <span class=k>new</span> <span class=n>StringBuffer</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=n>includeSetupPages</span><span class=o>(</span><span class=n>testPage</span><span class=o>,</span> <span class=n>newPageContent</span><span class=o>,</span> <span class=n>isSuite</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>newPageContent</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>pageData</span><span class=o>.</span><span class=na>getContent</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>		<span class=n>includeTeardownPages</span><span class=o>(</span><span class=n>testPage</span><span class=o>,</span> <span class=n>newPageContent</span><span class=o>,</span> <span class=n>isSuite</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>pageData</span><span class=o>.</span><span class=na>setContent</span><span class=o>(</span><span class=n>newPageContent</span><span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getHtml</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=작게-만들어라>작게 만들어라!</h2><ul><li>함수를 만드는 첫번째 규칙 → <strong>작게!</strong></li><li><strong>2 ~ 4줄 길이의 함수</strong>를 만들 것을 권장<ul><li>1차 리펙토링( 7 ~ 8 줄 )<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=n>String</span> <span class=nf>renderPageWithSetupsAndTeardowns</span><span class=o>(</span> <span class=n>PageData</span> <span class=n>pageData</span><span class=o>,</span> <span class=kt>boolean</span> <span class=n>isSuite</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kt>boolean</span> <span class=n>isTestPage</span> <span class=o>=</span> <span class=n>pageData</span><span class=o>.</span><span class=na>hasAttribute</span><span class=o>(</span><span class=s>&#34;Test&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=o>(</span><span class=n>isTestPage</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>WikiPage</span> <span class=n>testPage</span> <span class=o>=</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getWikiPage</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=n>StringBuffer</span> <span class=n>newPageContent</span> <span class=o>=</span> <span class=k>new</span> <span class=n>StringBuffer</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=n>includeSetupPages</span><span class=o>(</span><span class=n>testPage</span><span class=o>,</span> <span class=n>newPageContent</span><span class=o>,</span> <span class=n>isSuite</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>newPageContent</span><span class=o>.</span><span class=na>append</span><span class=o>(</span><span class=n>pageData</span><span class=o>.</span><span class=na>getContent</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>		<span class=n>includeTeardownPages</span><span class=o>(</span><span class=n>testPage</span><span class=o>,</span> <span class=n>newPageContent</span><span class=o>,</span> <span class=n>isSuite</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>pageData</span><span class=o>.</span><span class=na>setContent</span><span class=o>(</span><span class=n>newPageContent</span><span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getHtml</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li>2차 리펙토링( 3 ~ 4 줄 )<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=n>String</span> <span class=nf>renderPageWithSetupsAndTeardowns</span><span class=o>(</span> <span class=n>PageData</span> <span class=n>pageData</span><span class=o>,</span> <span class=kt>boolean</span> <span class=n>isSuite</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>   <span class=k>if</span> <span class=o>(</span><span class=n>isTestPage</span><span class=o>(</span><span class=n>pageData</span><span class=o>))</span>
+</span></span><span class=line><span class=cl>   	<span class=n>includeSetupAndTeardownPages</span><span class=o>(</span><span class=n>pageData</span><span class=o>,</span> <span class=n>isSuite</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>   <span class=k>return</span> <span class=n>pageData</span><span class=o>.</span><span class=na>getHtml</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul></li></ul><h3 id=블록과-들여쓰기>블록과 들여쓰기</h3><ul><li><code>**if문</code>, <code>if/else문</code>, <code>while문</code> 등에 들어가는 블록은 한 줄** 이어야 한다<ul><li>바깥을 감싸는 함수가 작아지고, 코드를 이해하기도 쉬워진다</li></ul></li><li>중첩 구조가 생길만큼 함수가 켜져서는 안된다<ul><li>함수의 들여쓰기 수준은 2단을 넘지 않도록 한다.</li></ul></li></ul><h2 id=한가지만-해라>한가지만 해라</h2><aside>💡 함수는 한 가지를 해야 한다. 그 한가지를 잘 해야 한다. 그 한 가지만을 해야 한다.</aside><h3 id=한-가지의-기준은>한 가지의 기준은?</h3><ul><li>지정된 함수 이름 아래에서 <strong>추상화 수준이 하나</strong>!</li><li>의미를 유지하면서 코드를 줄이기 불가능한 정도<ul><li>의미 있는 이름으로 다른 함수를 추출할 수 있다면, 그 함수는여러 작업을 하는 것</li></ul></li></ul><h2 id=함수-당-추상화-수준은-하나로>함수 당 추상화 수준은 하나로!</h2><ul><li><strong>모든 문장의 추상화 수준이 동일</strong>
+<a href=https://onestone-dev.tistory.com/3 target=_blank rel="noopener noreffer">참고</a></li></ul><h3 id=내려가기-규칙>내려가기 규칙</h3><ul><li>위에서 아래로 코드 읽기</li><li>한 함수 다음에는 추상화 수준이 한 단계 낮은 함수가 온다</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-mysql data-lang=mysql><span class=line><span class=cl><span class=k>TO</span><span class=w> </span><span class=err>설정</span><span class=w> </span><span class=err>페이지와</span><span class=w> </span><span class=err>해제</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함하려면</span><span class=p>,</span><span class=w> </span><span class=err>설정</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함하고</span><span class=p>,</span><span class=w> </span><span class=err>테스트</span><span class=w> </span><span class=err>페이지</span><span class=w> </span><span class=err>내용을</span><span class=w> </span><span class=err>포함하고</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=err>해제</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함한다</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>TO</span><span class=w> </span><span class=err>설정</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함하려면</span><span class=p>,</span><span class=w> </span><span class=err>슈트이면</span><span class=w> </span><span class=err>슈트</span><span class=w> </span><span class=err>설정</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함한</span><span class=w> </span><span class=err>후</span><span class=w> </span><span class=err>일반</span><span class=w> </span><span class=err>설정</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함한다</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    	</span><span class=k>TO</span><span class=w> </span><span class=err>슈트</span><span class=w> </span><span class=err>설정</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>포함하려면</span><span class=p>,</span><span class=w> </span><span class=err>부모</span><span class=w> </span><span class=err>계층에서</span><span class=w> </span><span class=o>`</span><span class=n>SuiteSetUp</span><span class=o>`</span><span class=w> </span><span class=err>페이지를</span><span class=w> </span><span class=err>찾아</span><span class=w> </span><span class=n>include</span><span class=w> </span><span class=err>문과</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    	</span><span class=err>페이지</span><span class=w> </span><span class=err>경로를</span><span class=w> </span><span class=err>추가한다</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>TO</span><span class=w> </span><span class=err>부모</span><span class=w> </span><span class=err>계층을</span><span class=w> </span><span class=err>검색하려면</span><span class=p>,</span><span class=w> </span><span class=p>......</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=switch-문>Switch 문</h2><ul><li>switch문 특) 작게 만들기 어렵고, 한가지 작업만 시키기도 어렵다<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>Money</span> <span class=nf>calculatePay</span><span class=o>(</span><span class=n>Employee</span> <span class=n>e</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>InvalidEmployeeType</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>switch</span> <span class=o>(</span><span class=n>e</span><span class=o>.</span><span class=na>type</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=n>COMMISSIONED</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>			<span class=k>return</span> <span class=n>calculateCommissionedPay</span><span class=o>(</span><span class=n>e</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=n>HOURLY</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>			<span class=k>return</span> <span class=n>calculateHourlyPay</span><span class=o>(</span><span class=n>e</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=n>SALARIED</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>			<span class=k>return</span> <span class=n>calculateSalariedPay</span><span class=o>(</span><span class=n>e</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>			<span class=k>throw</span> <span class=k>new</span> <span class=n>InvalidEmployeeType</span><span class=o>(</span><span class=n>e</span><span class=o>.</span><span class=na>type</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div>문제점)<ul><li>함수가 길다. 유형을 추가하게 되면 더욱 길어진다.</li><li>한 가지 작업만 수행하지 않음</li><li>Single Responsibility Principle(SRP) 위배 → 코드를 변경해야할 이유가 다양함<ul><li>SRP(단일 책임 원칙): 클래스는 단 한 개의 책임을 가져야 한다</li></ul></li><li>Open Closed Principle(OCP) 위배 → 새 직원 유형 추가할 때마다 코드를 변경<ul><li>OCP(개방-폐쇄 원칙): 확장에 대해 열려 있어야 하고, 수정에 대해서는 닫혀 있어야 한다</li></ul></li><li>동일한 구조의 함수가 무한정 존재할 수 있음<ul><li><code>isPayday</code>, <code>deliverPay</code> 같은 함수가 있다면 똑같이 Switch문이 생기고, 코드가 너저분해진다.</li></ul></li></ul></li><li>다형성을 이용하여 switch문을 ABSTRACT FACTORY에 숨겨 다형적 객체를 생성하는 코드 안에서만 switch를 사용하도록 구성<ul><li>Factory는 Switch문을 사용해 적절한 Employee 파생 클래스 생성</li><li>다형성(Polymorphism)을 통해 Switch문 재사용</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>abstract</span> <span class=kd>class</span> <span class=nc>Employee</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>abstract</span> <span class=kt>boolean</span> <span class=nf>isPayday</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>abstract</span> <span class=n>Money</span> <span class=nf>calculatePay</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>abstract</span> <span class=kt>void</span> <span class=nf>deliverPay</span><span class=o>(</span><span class=n>Money</span> <span class=n>pay</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>-----------------</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>interface</span> <span class=nc>EmployeeFactory</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Employee</span> <span class=nf>makeEmployee</span><span class=o>(</span><span class=n>EmployeeRecord</span> <span class=n>r</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>InvalidEmployeeType</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>-----------------</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>EmployeeFactoryImpl</span> <span class=kd>implements</span> <span class=n>EmployeeFactory</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Employee</span> <span class=nf>makeEmployee</span><span class=o>(</span><span class=n>EmployeeRecord</span> <span class=n>r</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>InvalidEmployeeType</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>switch</span> <span class=o>(</span><span class=n>r</span><span class=o>.</span><span class=na>type</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=k>case</span> <span class=n>COMMISSIONED</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>				<span class=k>return</span> <span class=k>new</span> <span class=n>CommissionedEmployee</span><span class=o>(</span><span class=n>r</span><span class=o>)</span> <span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=k>case</span> <span class=n>HOURLY</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>				<span class=k>return</span> <span class=k>new</span> <span class=n>HourlyEmployee</span><span class=o>(</span><span class=n>r</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=k>case</span> <span class=n>SALARIED</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>				<span class=k>return</span> <span class=k>new</span> <span class=n>SalariedEmploye</span><span class=o>(</span><span class=n>r</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>				<span class=k>throw</span> <span class=k>new</span> <span class=n>InvalidEmployeeType</span><span class=o>(</span><span class=n>r</span><span class=o>.</span><span class=na>type</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=서술적인-이름을-사용>서술적인 이름을 사용</h2><ul><li>함수가 하는 일을 좀 더 잘 표현할 수 있도록 서술적인 이름을 사용<ul><li>깨끗한 코드 → 코드를 읽으면서 짐작했던 기능을 각 루틴이 그대로 수행</li></ul></li><li>짧고 어려운 이름 &#171;&lt; 길고 서술적인 이름</li><li>일관성이 있어야 한다.<ul><li>모듈 내에서 함수 이름은 같은 문구, 명사, 동사를 사용</li></ul></li></ul><h2 id=함수-인수>함수 인수</h2><ul><li>함수에서 이상적인 인수 → 0개(무항) > 1개(단항) > 2개(이항)<ul><li>3개 이상은 지양</li></ul></li><li>인수는 코드 이해에 방해가 되는 요소이므로, 최소화 해야함</li></ul><h3 id=많이-쓰는-단항-형식>많이 쓰는 단항 형식</h3><ul><li>인수에 질문을 던지는 경우
+<code>boolean fileExists(“MyFile”)</code></li><li>인수를 뭔가로 변환해 결과를 변환하는 경우
+<code>InputStream fileOpen(“MyFile”)</code></li><li>이벤트 함수: 입력 인수만 있음.<ul><li>이벤트라는 사실이 코드에 명확히 드러나도록 이름과 문맥을 주의해서 선택
+<code>passwordAttemptFailedNtimes(int attempts)</code></li></ul></li></ul><h3 id=바람직하지-않은-단항-형식>바람직하지 않은 단항 형식</h3><ul><li><code>void transform(StringBuffer in)</code> &#171;&lt; <code>StringBuffer transform(StringBuffer out)</code><ul><li>입력 인수를 변환하는 함수라면 변환 결과는 반환해주는 것이 혼동을 방지한다.</li></ul></li></ul><h3 id=플래그-인수>플래그 인수</h3><ul><li>추하다.</li><li>함수로 boolean 값을 넘기는 건 끔찍하다.</li></ul><h3 id=이항-함수>이항 함수</h3><ul><li>일반적으로 이항 함수보다 단항 함수가 이해하기 쉽다<ul><li>예외) 좌표계 관련 함수</li></ul></li><li>일반적으로 2개 인수간의 자연적인 순서가 있어야 함.</li></ul><h3 id=삼항-함수>삼항 함수</h3><ul><li>말해 뭐해…</li></ul><h3 id=인수-객체>인수 객체</h3><ul><li>인수가 2~3개 이상 필요할 경우, 일부를 독자적인 클라스로 묶어서 사용하자.</li></ul><p><code>Circle makeCircle(double x, double y, double radius)</code></p><p>→ <code>Circle makeCircle(Point center, double radius)</code></p><h3 id=동사와-키워드>동사와 키워드</h3><ul><li><strong>단항 함수</strong>는 함수와 인수가 <strong>동사/명사 쌍</strong>을 이뤄아 한다
+<code>writeField(name)</code></li><li>함수 이름에 키워드(인수 이름)을 넣기
+<code>assertExpectedEqualsActual(expected, actual)</code> : 인수 순서를 기억할 필요가 없어짐</li></ul><h2 id=부수효과를-일으키지-마라>부수효과를 일으키지 마라!</h2><h3 id=부수효과>부수효과?</h3><ul><li>함수 내의 실행으로 인해 <strong>함수 외부가 영향을 받는 것</strong></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>dump</span> <span class=o>=</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>addWithDump</span><span class=p>(</span><span class=n>a</span><span class=p>,</span> <span class=n>b</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>global</span> <span class=n>dump</span>
+</span></span><span class=line><span class=cl>    <span class=n>dump</span> <span class=o>+=</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span><span class=o>+</span><span class=n>b</span><span class=o>+</span><span class=n>dump</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>addWithDump</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>))</span> <span class=c1># 23</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>addWithDump</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>))</span> <span class=c1># 33</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=부수효과는-거짓말이다>부수효과는 거짓말이다</h3><p>한 함수에서는 딱 한가지만 수행</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>UserValidator</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=n>Cryptographer</span> <span class=n>cryptographer</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>checkPassword</span><span class=o>(</span><span class=n>String</span> <span class=n>userName</span><span class=o>,</span> <span class=n>String</span> <span class=n>password</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>User</span> <span class=n>user</span> <span class=o>=</span> <span class=n>UserGateway</span><span class=o>.</span><span class=na>findByName</span><span class=o>(</span><span class=n>userName</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=o>(</span><span class=n>user</span> <span class=o>!=</span> <span class=n>User</span><span class=o>.</span><span class=na>NULL</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>String</span> <span class=n>codedPhrase</span> <span class=o>=</span> <span class=n>user</span><span class=o>.</span><span class=na>getPhraseEncodedByPassword</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>			<span class=n>String</span> <span class=n>phrase</span> <span class=o>=</span> <span class=n>cryptographer</span><span class=o>.</span><span class=na>decrypt</span><span class=o>(</span><span class=n>codedPhrase</span><span class=o>,</span> <span class=n>password</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=o>(</span><span class=s>&#34;Valid Password&#34;</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>phrase</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>				<span class=o>**</span><span class=n>Session</span><span class=o>.</span><span class=na>initialize</span><span class=o>();</span> <span class=c1>// &lt;---- 부수 효과**
+</span></span></span><span class=line><span class=cl><span class=c1></span>				<span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=o>}</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>checkPassword</code> : 암호를 확인<ul><li>이름만으로 세션을 초기화 한다는 걸 알 수 없음</li></ul></li><li>부수 효과는 시간적인 결합을 초래한다.<ul><li>함수가 특정 상황에서만 호출하도록 강제함 → 혼란 유발</li><li>시간적인 결합이 필요하다면 명시해주어야함
+<code>checkPassword</code> → <code>checkPasswordAndInitializeSession</code></li></ul></li></ul><h3 id=출력인수>출력인수</h3><p><a href=https://velog.io/@sansam202/Output-Parameter%ec%97%90-%eb%8c%80%ed%95%9c-%ea%b3%a0%ec%b0%b0 target=_blank rel="noopener noreffer">참고자료</a></p><ul><li>method의 값 반환 목적으로 method로 전달된 parameter를 사용하는 것</li><li>일반적으로 인수는 함수 <strong>입력</strong>으로 인지<ul><li>appendFooter(s) ← 딱 보면 헷갈린다<ul><li>s를 Footer에 첨부?</li><li>s에 Footer를 첨부?</li></ul></li></ul></li><li>OOP 환경에서 출력 인수를 사용해야할 이유가 없다<ul><li><code>this.</code> 로 전부 커버가 되기 때문</li></ul></li></ul><h2 id=명령과-조회를-분리하라>명령과 조회를 분리하라</h2><ul><li>함수는 <strong>뭔가를 수행</strong>하거나 <strong>뭔가에 답하거나</strong> 둘 중 하나만 해야한다</li><li><code>public boolean set(String attribute, String value);</code> → <code>if(set(“username”, “unclebob”))…</code><ul><li>의미가 모호함(동사? 형용사?)</li><li>명령과 조회를 분리하여 혼란을 제거<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=k>if</span> <span class=o>(</span><span class=n>attributeExists</span><span class=o>(</span><span class=s>&#34;username&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>setAttribute</span><span class=o>(</span><span class=s>&#34;username&#34;</span><span class=o>,</span> <span class=s>&#34;unclebob&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul></li></ul><h2 id=오류-코드-보다-예외를-사용하라>오류 코드 보다 예외를 사용하라!</h2><ul><li><p>오류 코드 사용시, 명령/조회 분리 규칙을 위반할 가능성이 높음</p></li><li><p>try/catch를 사용하면 오류 처리 코드가 원래 코드에서 분리되므로 코드가 깔끔해 진다.****</p></li><li><p>오류 코드 사용</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=k>if</span> <span class=o>(</span><span class=n>deletePage</span><span class=o>(</span><span class=n>page</span><span class=o>)</span> <span class=o>==</span> <span class=n>E_OK</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=o>(</span><span class=n>registry</span><span class=o>.</span><span class=na>deleteReference</span><span class=o>(</span><span class=n>page</span><span class=o>.</span><span class=na>name</span><span class=o>)</span> <span class=o>==</span> <span class=n>E_OK</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=o>(</span><span class=n>configKeys</span><span class=o>.</span><span class=na>deleteKey</span><span class=o>(</span><span class=n>page</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>makeKey</span><span class=o>())</span> <span class=o>==</span> <span class=n>E_OK</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>logger</span><span class=o>.</span><span class=na>log</span><span class=o>(</span><span class=s>&#34;page deleted&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span> <span class=k>else</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>logger</span><span class=o>.</span><span class=na>log</span><span class=o>(</span><span class=s>&#34;configKey not deleted&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span> <span class=k>else</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>logger</span><span class=o>.</span><span class=na>log</span><span class=o>(</span><span class=s>&#34;deleteReference from registry failed&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span> <span class=k>else</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>logger</span><span class=o>.</span><span class=na>log</span><span class=o>(</span><span class=s>&#34;delete failed&#34;</span><span class=o>);</span> <span class=k>return</span> <span class=n>E_ERROR</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p>try/catch 사용</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>deletePage</span><span class=o>(</span><span class=n>page</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>registry</span><span class=o>.</span><span class=na>deleteReference</span><span class=o>(</span><span class=n>page</span><span class=o>.</span><span class=na>name</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>configKeys</span><span class=o>.</span><span class=na>deleteKey</span><span class=o>(</span><span class=n>page</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>makeKey</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>Exception</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>logger</span><span class=o>.</span><span class=na>log</span><span class=o>(</span><span class=n>e</span><span class=o>.</span><span class=na>getMessage</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li><li><p>try/catch 블록도 별도 함수로 분리하는 것이 가독성에 좋다</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>delete</span><span class=o>(</span><span class=n>Page</span> <span class=n>page</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>deletePageAndAllReferences</span><span class=o>(</span><span class=n>page</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  	<span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>Exception</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  		<span class=n>logError</span><span class=o>(</span><span class=n>e</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>private</span> <span class=kt>void</span> <span class=nf>deletePageAndAllReferences</span><span class=o>(</span><span class=n>Page</span> <span class=n>page</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>deletePage</span><span class=o>(</span><span class=n>page</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=n>registry</span><span class=o>.</span><span class=na>deleteReference</span><span class=o>(</span><span class=n>page</span><span class=o>.</span><span class=na>name</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=n>configKeys</span><span class=o>.</span><span class=na>deleteKey</span><span class=o>(</span><span class=n>page</span><span class=o>.</span><span class=na>name</span><span class=o>.</span><span class=na>makeKey</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>private</span> <span class=kt>void</span> <span class=nf>logError</span><span class=o>(</span><span class=n>Exception</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>logger</span><span class=o>.</span><span class=na>log</span><span class=o>(</span><span class=n>e</span><span class=o>.</span><span class=na>getMessage</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul><h2 id=반복하지-마라>반복하지 마라</h2><ul><li>중복은 소프트웨어에서 모든 악의 근원</li><li>소스 코드에서 중복을 제거하려는 지속적인 노력 필요</li></ul><h2 id=구조적-프로그래밍>구조적 프로그래밍</h2><ul><li>다익스트라 왈, <strong>모든 함수와 함수 내 모든 블록에 입구와 출구가 하나여야 된다.</strong></li><li>return 문이 하나만 존재해야 한다</li><li>break나 continue를 사용해선 안되며, goto는 쳐다도 보지마라</li><li>큰 함수에 대해 효과적인 솔루션<ul><li>작은 함수에서는 break나 continue를 요령껏 써도 된다</li><li>goto는 큰 함수에서나 쓸모 있는 거니 작은 함수에서는 쓰면 안된다. (결론: 쓰지마라)</li></ul></li></ul><h2 id=함수를-어떻게-짜죠>함수를 어떻게 짜죠?</h2><ul><li>처음에는 길고 복잡하고, 들여쓰기 단계나 중복된 루프도 많다. 인수목록도 길다.</li><li>처음 작성한 코드들을 다듬고, 함수를 만들고, 이름을 바꾸고, 중복을 제거하고, 메서드를 줄이고, 순서를 바꾼다. + 동시에 코드는 항상 단위 테스트를 통과한다.</li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2022-06-06</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/chap3/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/cleancode/>CleanCode</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/cd/ class=prev rel=prev title="[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축"><i class="fas fa-angle-left fa-fw"></i>[k8s project] CI/CD Pipeline 구현 - ArgoCD를 사용한 CD 구축</a></div></div><div id=comments><div id=utterances></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.100.1">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Plox</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"plooox/blog_comments"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
