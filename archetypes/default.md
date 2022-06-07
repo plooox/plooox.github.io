@@ -2,7 +2,7 @@
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 description: ""
-draft: true
+draft: false
 tags: []
 categories: []
 
@@ -24,4 +24,5 @@ math:
 comment:
   enable: true
 ---
+
 <!--more-->
