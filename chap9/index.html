@@ -1,0 +1,361 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>[Clean Code] Chap9. 단위 테스트 - Plox's blog</title><meta name=Description content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta property="og:title" content="[Clean Code] Chap9. 단위 테스트"><meta property="og:description" content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta property="og:type" content="article"><meta property="og:url" content="http://plooox.github.io/chap9/"><meta property="og:image" content="http://plooox.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-06-21T08:08:18+09:00"><meta property="article:modified_time" content="2022-06-21T08:08:18+09:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://plooox.github.io/logo.png"><meta name=twitter:title content="[Clean Code] Chap9. 단위 테스트"><meta name=twitter:description content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta name=application-name content="Plox's blog"><meta name=apple-mobile-web-app-title content="Plox's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=canonical href=http://plooox.github.io/chap9/><link rel=prev href=http://plooox.github.io/chap4/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"[Clean Code] Chap9. 단위 테스트","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plooox.github.io\/chap9\/"},"genre":"posts","keywords":"CleanCode","wordcount":1032,"url":"http:\/\/plooox.github.io\/chap9\/","datePublished":"2022-06-21T08:08:18+09:00","dateModified":"2022-06-21T08:08:18+09:00","publisher":{"@type":"Organization","name":"Plox"},"author":{"@type":"Person","name":"Plox"},"description":"Clean Code 스터디에서 담당했던 부분 포스트 입니다."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">[Clean Code] Chap9. 단위 테스트</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cleancode/><i class="far fa-folder fa-fw"></i>CleanCode</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-06-21>2022-06-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1032 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#단위-테스트>단위 테스트</a><ul><li><a href=#tdd-법칙-3가지>TDD 법칙 3가지</a></li><li><a href=#깨끗한-테스트-코드-유지하기>깨끗한 테스트 코드 유지하기</a><ul><li><a href=#테스트는-유연성-유지보수성-재사용성을-제공>테스트는 유연성, 유지보수성, 재사용성을 제공</a></li></ul></li><li><a href=#깨끗한-테스트-코드>깨끗한 테스트 코드</a><ul><li><a href=#도메인에-특화된-테스트-언어>도메인에 특화된 테스트 언어</a></li><li><a href=#이중-표준>이중 표준</a></li></ul></li><li><a href=#테스트-당-assert-하나>테스트 당 assert 하나</a><ul><li><a href=#테스트-당-개념-하나>테스트 당 개념 하나</a></li></ul></li><li><a href=#first>F.I.R.S.T</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=단위-테스트>단위 테스트</h1><p>애자일과 TDD → 단위 테스트의 자동화</p><h2 id=tdd-법칙-3가지>TDD 법칙 3가지</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>💡 TDD란?</p><ul><li>테스트 주도 개발</li><li>반복 테스트를 이용한 소프트웨어 방법론</li><li>작은 단위의 테스트 케이스를 작성하고 이를 통과하는 코드를 추가하는 단계를 반복하여 구현</li><li>실패하는 코드 작성 → 테스트 코드를 성공시키는 코드 작성 → 리펙토링 수행 → …</li><li>JUnit은 대표적인 TDD 도구</li></ul></div></div></div><ol><li><p>실패하는 단위 테스트를 통과할 때까지 실제 코드를 작성하지 않는다.</p></li><li><p>컴파일은 실패하지 않으면서 실행이 실패하는 정도로만 단위 테스트를 작성</p></li><li><p>현재 실패하는 테스트를 통과할 정도로만 실제 코드를 작성</p><p>→ 실제 코드를 사실상 전부 테스트하는 테스트 케이스가 생성되지만, 방대한 테스트 코드는 심각한 관리 문제를 유발할 위험이 존재한다.</p></li></ol><h2 id=깨끗한-테스트-코드-유지하기>깨끗한 테스트 코드 유지하기</h2><ul><li>테스트 코드를 마구잡이로 작성하는 것을 TDD의 효과를 저하시킨다</li><li>테스트 코드 또한 실제 코드 못지않게 중요하다.</li></ul><h3 id=테스트는-유연성-유지보수성-재사용성을-제공>테스트는 유연성, 유지보수성, 재사용성을 제공</h3><ul><li>코드의 유연성, 유지보수성, 재사용성을 제공하는 버팀목 → 단위 테스트</li></ul><h2 id=깨끗한-테스트-코드>깨끗한 테스트 코드</h2><p>🔥 가독성🔥 이 중요하다 !!</p><details><summary>리펙토링 전</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetPageHieratchyAsXml</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;PageOne&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>  <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;PageOne.ChildOne&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>  <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;PageTwo&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>request</span><span class=o>.</span><span class=na>setResource</span><span class=o>(</span><span class=s>&#34;root&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>request</span><span class=o>.</span><span class=na>addInput</span><span class=o>(</span><span class=s>&#34;type&#34;</span><span class=o>,</span> <span class=s>&#34;pages&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>Responder</span> <span class=n>responder</span> <span class=o>=</span> <span class=k>new</span> <span class=n>SerializedPageResponder</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>SimpleResponse</span> <span class=n>response</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=o>(</span><span class=n>SimpleResponse</span><span class=o>)</span> <span class=n>responder</span><span class=o>.</span><span class=na>makeResponse</span><span class=o>(</span><span class=k>new</span> <span class=n>FitNesseContext</span><span class=o>(</span><span class=n>root</span><span class=o>),</span> <span class=n>request</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>String</span> <span class=n>xml</span> <span class=o>=</span> <span class=n>response</span><span class=o>.</span><span class=na>getContent</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;text/xml&#34;</span><span class=o>,</span> <span class=n>response</span><span class=o>.</span><span class=na>getContentType</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;name&gt;PageOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;name&gt;PageTwo&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;name&gt;ChildOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetPageHieratchyAsXmlDoesntContainSymbolicLinks</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>WikiPage</span> <span class=n>pageOne</span> <span class=o>=</span> <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;PageOne&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>  <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;PageOne.ChildOne&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>  <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;PageTwo&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>PageData</span> <span class=n>data</span> <span class=o>=</span> <span class=n>pageOne</span><span class=o>.</span><span class=na>getData</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>WikiPageProperties</span> <span class=n>properties</span> <span class=o>=</span> <span class=n>data</span><span class=o>.</span><span class=na>getProperties</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>WikiPageProperty</span> <span class=n>symLinks</span> <span class=o>=</span> <span class=n>properties</span><span class=o>.</span><span class=na>set</span><span class=o>(</span><span class=n>SymbolicPage</span><span class=o>.</span><span class=na>PROPERTY_NAME</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>symLinks</span><span class=o>.</span><span class=na>set</span><span class=o>(</span><span class=s>&#34;SymPage&#34;</span><span class=o>,</span> <span class=s>&#34;PageTwo&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>pageOne</span><span class=o>.</span><span class=na>commit</span><span class=o>(</span><span class=n>data</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>request</span><span class=o>.</span><span class=na>setResource</span><span class=o>(</span><span class=s>&#34;root&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>request</span><span class=o>.</span><span class=na>addInput</span><span class=o>(</span><span class=s>&#34;type&#34;</span><span class=o>,</span> <span class=s>&#34;pages&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>Responder</span> <span class=n>responder</span> <span class=o>=</span> <span class=k>new</span> <span class=n>SerializedPageResponder</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>SimpleResponse</span> <span class=n>response</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=o>(</span><span class=n>SimpleResponse</span><span class=o>)</span> <span class=n>responder</span><span class=o>.</span><span class=na>makeResponse</span><span class=o>(</span><span class=k>new</span> <span class=n>FitNesseContext</span><span class=o>(</span><span class=n>root</span><span class=o>),</span> <span class=n>request</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>String</span> <span class=n>xml</span> <span class=o>=</span> <span class=n>response</span><span class=o>.</span><span class=na>getContent</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;text/xml&#34;</span><span class=o>,</span> <span class=n>response</span><span class=o>.</span><span class=na>getContentType</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;name&gt;PageOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;name&gt;PageTwo&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;name&gt;ChildOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertNotSubString</span><span class=o>(</span><span class=s>&#34;SymPage&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetDataAsHtml</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>crawler</span><span class=o>.</span><span class=na>addPage</span><span class=o>(</span><span class=n>root</span><span class=o>,</span> <span class=n>PathParser</span><span class=o>.</span><span class=na>parse</span><span class=o>(</span><span class=s>&#34;TestPageOne&#34;</span><span class=o>),</span> <span class=s>&#34;test page&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>request</span><span class=o>.</span><span class=na>setResource</span><span class=o>(</span><span class=s>&#34;TestPageOne&#34;</span><span class=o>);</span> <span class=n>request</span><span class=o>.</span><span class=na>addInput</span><span class=o>(</span><span class=s>&#34;type&#34;</span><span class=o>,</span> <span class=s>&#34;data&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>Responder</span> <span class=n>responder</span> <span class=o>=</span> <span class=k>new</span> <span class=n>SerializedPageResponder</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>SimpleResponse</span> <span class=n>response</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=o>(</span><span class=n>SimpleResponse</span><span class=o>)</span> <span class=n>responder</span><span class=o>.</span><span class=na>makeResponse</span><span class=o>(</span><span class=k>new</span> <span class=n>FitNesseContext</span><span class=o>(</span><span class=n>root</span><span class=o>),</span> <span class=n>request</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>String</span> <span class=n>xml</span> <span class=o>=</span> <span class=n>response</span><span class=o>.</span><span class=na>getContent</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;text/xml&#34;</span><span class=o>,</span> <span class=n>response</span><span class=o>.</span><span class=na>getContentType</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;test page&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertSubString</span><span class=o>(</span><span class=s>&#34;&lt;Test&#34;</span><span class=o>,</span> <span class=n>xml</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>addPage</code>와 <code>assertSubstring</code>을 부르는 중복된 코드가 너무 많다<ul><li>자잘구레한 사항들의 테스트코드의 표현력을 저하시킨다</li></ul></li><li>테스트와 무관한 코드가 테스트 의도를 흐린다<ul><li><code>PathParser</code> , <code>Responser</code>, <code>response</code></li></ul></li><li>읽는 사람을 고려하지 않음</li></ul></div></details><details><summary>리펙토링 후</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetPageHierarchyAsXml</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>makePages</span><span class=o>(</span><span class=s>&#34;PageOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageOne.ChildOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageTwo&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>submitRequest</span><span class=o>(</span><span class=s>&#34;root&#34;</span><span class=o>,</span> <span class=s>&#34;type:pages&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseIsXML</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseContains</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>    <span class=s>&#34;&lt;name&gt;PageOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;name&gt;PageTwo&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;name&gt;ChildOne&lt;/name&gt;&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testSymbolicLinksAreNotInXmlPageHierarchy</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>WikiPage</span> <span class=n>page</span> <span class=o>=</span> <span class=n>makePage</span><span class=o>(</span><span class=s>&#34;PageOne&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>makePages</span><span class=o>(</span><span class=s>&#34;PageOne.ChildOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageTwo&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>addLinkTo</span><span class=o>(</span><span class=n>page</span><span class=o>,</span> <span class=s>&#34;PageTwo&#34;</span><span class=o>,</span> <span class=s>&#34;SymPage&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>submitRequest</span><span class=o>(</span><span class=s>&#34;root&#34;</span><span class=o>,</span> <span class=s>&#34;type:pages&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseIsXML</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseContains</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>    <span class=s>&#34;&lt;name&gt;PageOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;name&gt;PageTwo&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;name&gt;ChildOne&lt;/name&gt;&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseDoesNotContain</span><span class=o>(</span><span class=s>&#34;SymPage&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetDataAsXml</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>makePageWithContent</span><span class=o>(</span><span class=s>&#34;TestPageOne&#34;</span><span class=o>,</span> <span class=s>&#34;test page&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>submitRequest</span><span class=o>(</span><span class=s>&#34;TestPageOne&#34;</span><span class=o>,</span> <span class=s>&#34;type:data&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseIsXML</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertResponseContains</span><span class=o>(</span><span class=s>&#34;test page&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;Test&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>BUILD-OPERATE-CHECK 패턴</strong><ul><li>테스트 자료 생성 (BUILD)</li><li>테스트 자료 조작 (OPERATE)</li><li>조작 결과 확인 (CHECK)</li></ul></li></ul></div></details><h3 id=도메인에-특화된-테스트-언어>도메인에 특화된 테스트 언어</h3><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>💡 DSL이란?</p><ul><li>도메인 특화 언어</li><li>특정 분야에 최적화된 프로그래밍 언어</li></ul></div></div></div><ul><li>API 위에다 함수와 유틸리티를 구현 → 테스트에서 사용하는 특수 API</li><li>다른 테스트 코드에서 재활용이 가능하고, 가독성이 높다</li></ul><h3 id=이중-표준>이중 표준</h3><details><summary>리펙토링 전</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl>  <span class=nd>@Test</span>
+</span></span><span class=line><span class=cl>  <span class=kd>public</span> <span class=kt>void</span> <span class=nf>turnOnLoTempAlarmAtThreashold</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>hw</span><span class=o>.</span><span class=na>setTemp</span><span class=o>(</span><span class=n>WAY_TOO_COLD</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>controller</span><span class=o>.</span><span class=na>tic</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>assertTrue</span><span class=o>(</span><span class=n>hw</span><span class=o>.</span><span class=na>heaterState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>    <span class=n>assertTrue</span><span class=o>(</span><span class=n>hw</span><span class=o>.</span><span class=na>blowerState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>    <span class=n>assertFalse</span><span class=o>(</span><span class=n>hw</span><span class=o>.</span><span class=na>coolerState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>    <span class=n>assertFalse</span><span class=o>(</span><span class=n>hw</span><span class=o>.</span><span class=na>hiTempAlarm</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>    <span class=n>assertTrue</span><span class=o>(</span><span class=n>hw</span><span class=o>.</span><span class=na>loTempAlarm</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>세세한 사항이 너무 많음 → 모든 state를 일일이 읽어야하는 번거로움</li></ul></div></details><details><summary>리펙토링 후</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl>  <span class=nd>@Test</span>
+</span></span><span class=line><span class=cl>  <span class=kd>public</span> <span class=kt>void</span> <span class=nf>turnOnLoTempAlarmAtThreshold</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>wayTooCold</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;HBchL&#34;</span><span class=o>,</span> <span class=n>hw</span><span class=o>.</span><span class=na>getState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>대문자는 켜짐, 소문자는 꺼짐을 의미</p></li><li><p>문자는 항상 {heater, blower, cooler, hi-temp-alarm, lo-temp-alarm} 순서</p><ul><li><p>앞에서 말했던 “그릇된 정보를 피하라”라는 규칙 위반</p></li><li><p>의미만 알고있다면 문자열을 보고 결과를 빠르게 판단 가능</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Test</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>turnOnCoolerAndBlowerIfTooHot</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>tooHot</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;hBChl&#34;</span><span class=o>,</span> <span class=n>hw</span><span class=o>.</span><span class=na>getState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@Test</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>turnOnHeaterAndBlowerIfTooCold</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>tooCold</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;HBchl&#34;</span><span class=o>,</span> <span class=n>hw</span><span class=o>.</span><span class=na>getState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@Test</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>turnOnHiTempAlarmAtThreshold</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>wayTooHot</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;hBCHl&#34;</span><span class=o>,</span> <span class=n>hw</span><span class=o>.</span><span class=na>getState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nd>@Test</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>turnOnLoTempAlarmAtThreshold</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>wayTooCold</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=s>&#34;HBchL&#34;</span><span class=o>,</span> <span class=n>hw</span><span class=o>.</span><span class=na>getState</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul></li><li><p><code>getstate()</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>getState</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>String</span> <span class=n>state</span> <span class=o>=</span> <span class=s>&#34;&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>state</span> <span class=o>+=</span> <span class=n>heater</span> <span class=o>?</span> <span class=s>&#34;H&#34;</span> <span class=o>:</span> <span class=s>&#34;h&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>state</span> <span class=o>+=</span> <span class=n>blower</span> <span class=o>?</span> <span class=s>&#34;B&#34;</span> <span class=o>:</span> <span class=s>&#34;b&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>state</span> <span class=o>+=</span> <span class=n>cooler</span> <span class=o>?</span> <span class=s>&#34;C&#34;</span> <span class=o>:</span> <span class=s>&#34;c&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>state</span> <span class=o>+=</span> <span class=n>hiTempAlarm</span> <span class=o>?</span> <span class=s>&#34;H&#34;</span> <span class=o>:</span> <span class=s>&#34;h&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>state</span> <span class=o>+=</span> <span class=n>loTempAlarm</span> <span class=o>?</span> <span class=s>&#34;L&#34;</span> <span class=o>:</span> <span class=s>&#34;l&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>state</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>효율상 <code>StringBuffer</code>가 더 적합하나, <code>StringBuffer</code>는 보기 흉하다</li><li>위와 같은 코드에서는 <code>StringBuffer</code> 를 안쓰는 디메리트가 매우 적다 → 실제 테스트 환경은 자원이 제한적일 가능성이 높다(CPU나 메모리 등등…)</li></ul></li></ul><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content>💡 실제 환경에서는 사용해서는 안되지만, 테스트 환경에서는 문제없는 방식
+CPU나 메모리가 제한적인 환경의 경우, 코드의 깨끗함과는 철저히 무관
+<strong>이중표준</strong> → 테스트 환경에서 표준을 다르게 두는 것</div></div></div></div></details><h2 id=테스트-당-assert-하나>테스트 당 assert 하나</h2><ul><li><p>assert가 하나 → 결론이 하나 뿐이다 → 코드를 이해하기 쉽다</p></li><li><p>assert문을 병합하기 어려운 경우에는 테스트를 쪼개자</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetPageHierarchyAsXml</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>givenPages</span><span class=o>(</span><span class=s>&#34;PageOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageOne.ChildOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageTwo&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>whenRequestIsIssued</span><span class=o>(</span><span class=s>&#34;root&#34;</span><span class=o>,</span> <span class=s>&#34;type:pages&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>thenResponseShouldBeXML</span><span class=o>();</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testGetPageHierarchyHasRightTags</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>givenPages</span><span class=o>(</span><span class=s>&#34;PageOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageOne.ChildOne&#34;</span><span class=o>,</span> <span class=s>&#34;PageTwo&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>whenRequestIsIssued</span><span class=o>(</span><span class=s>&#34;root&#34;</span><span class=o>,</span> <span class=s>&#34;type:pages&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>thenResponseShouldContain</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>    <span class=s>&#34;&lt;name&gt;PageOne&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;name&gt;PageTwo&lt;/name&gt;&#34;</span><span class=o>,</span> <span class=s>&#34;&lt;name&gt;ChildOne&lt;/name&gt;&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul><h3 id=테스트-당-개념-하나>테스트 당 개념 하나</h3><ul><li><strong>테스트 함수마다 한 개념만 테스트하라</strong></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm> * addMonth() 메서드를 테스트하는 장황한 코드
+</span></span></span><span class=line><span class=cl><span class=cm> */</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>testAddMonths</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>SerialDate</span> <span class=n>d1</span> <span class=o>=</span> <span class=n>SerialDate</span><span class=o>.</span><span class=na>createInstance</span><span class=o>(</span><span class=n>31</span><span class=o>,</span> <span class=n>5</span><span class=o>,</span> <span class=n>2004</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>SerialDate</span> <span class=n>d2</span> <span class=o>=</span> <span class=n>SerialDate</span><span class=o>.</span><span class=na>addMonths</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>d1</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>30</span><span class=o>,</span> <span class=n>d2</span><span class=o>.</span><span class=na>getDayOfMonth</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>6</span><span class=o>,</span> <span class=n>d2</span><span class=o>.</span><span class=na>getMonth</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>2004</span><span class=o>,</span> <span class=n>d2</span><span class=o>.</span><span class=na>getYYYY</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>SerialDate</span> <span class=n>d3</span> <span class=o>=</span> <span class=n>SerialDate</span><span class=o>.</span><span class=na>addMonths</span><span class=o>(</span><span class=n>2</span><span class=o>,</span> <span class=n>d1</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>31</span><span class=o>,</span> <span class=n>d3</span><span class=o>.</span><span class=na>getDayOfMonth</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>7</span><span class=o>,</span> <span class=n>d3</span><span class=o>.</span><span class=na>getMonth</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>2004</span><span class=o>,</span> <span class=n>d3</span><span class=o>.</span><span class=na>getYYYY</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>SerialDate</span> <span class=n>d4</span> <span class=o>=</span> <span class=n>SerialDate</span><span class=o>.</span><span class=na>addMonths</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>SerialDate</span><span class=o>.</span><span class=na>addMonths</span><span class=o>(</span><span class=n>1</span><span class=o>,</span> <span class=n>d1</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>30</span><span class=o>,</span> <span class=n>d4</span><span class=o>.</span><span class=na>getDayOfMonth</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>7</span><span class=o>,</span> <span class=n>d4</span><span class=o>.</span><span class=na>getMonth</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=n>assertEquals</span><span class=o>(</span><span class=n>2004</span><span class=o>,</span> <span class=n>d4</span><span class=o>.</span><span class=na>getYYYY</span><span class=o>());</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>여러 개념을 테스트 하고 있음<ul><li>5월처럼) 31일로 끝나는 달의 마지막 날짜가 주어지는 경우<ol><li>(6월처럼) 30일로 끝나는 한 달을 더하면 날짜는 30일이 되어야지 31일이 되어서는 안 된다.</li><li>두 달을 더하면 그리고 두 번째 달이 31일로 끝나면 날짜는 31일이 되어야 한다.</li></ol></li><li>(6월처럼) 30일로 끝나는 달의 마지막 날짜가 주어지는 경우<ol><li>31일로 끝나는 한 달을 더하면 날짜는 30일이 되어야지 31일이 되면 안 된다.</li></ol></li></ul></li><li>개념들을 정리하여 테스트 함수 하나당 하나의 개념만 테스트하도록 구성해야 함</li></ul><h2 id=first>F.I.R.S.T</h2><ul><li><strong>빠르게(Fast)</strong><ul><li>테스트는 빨라야 한다</li></ul></li><li><strong>독립적으로(Independent)</strong><ul><li>각 테스트는 서로 의존하면 안된다</li><li>한 테스트가 다음 테스트가 실행활 환경을 준비하면 안된다</li><li>각 테스트는 어떤 순서로 실행해도 괜찮아야 함</li></ul></li><li><strong>반복가능하게(Repeatable)</strong><ul><li>어떤 환경에서도 반복 가능해야 함</li></ul></li><li><strong>자가검증하는(Self-Validating)</strong><ul><li>테스트는 <code>Boolean</code>값으로 결과를 내야 함</li><li>통과 여부를 알고자 로그 파일을 열도록 해선 안된다.</li></ul></li><li><strong>적시에(Timely)</strong><ul><li>테스트는 적시에 작성해야 한다</li><li>테스트하려는 실제 코드를 구현하기 직전에 구현</li></ul></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2022-06-21</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/chap9/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/cleancode/>CleanCode</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/chap4/ class=prev rel=prev title="[Clean Code] Chap4. 주석"><i class="fas fa-angle-left fa-fw"></i>[Clean Code] Chap4. 주석</a></div></div><div id=comments><div id=utterances></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Plox</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"plooox/blog_comments"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
