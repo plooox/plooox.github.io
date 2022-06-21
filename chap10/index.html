@@ -1,0 +1,770 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>[Clean Code] Chap10. 클래스 - Plox's blog</title><meta name=Description content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta property="og:title" content="[Clean Code] Chap10. 클래스"><meta property="og:description" content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta property="og:type" content="article"><meta property="og:url" content="http://plooox.github.io/chap10/"><meta property="og:image" content="http://plooox.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-06-21T17:27:23+09:00"><meta property="article:modified_time" content="2022-06-21T17:27:23+09:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://plooox.github.io/logo.png"><meta name=twitter:title content="[Clean Code] Chap10. 클래스"><meta name=twitter:description content="Clean Code 스터디에서 담당했던 부분 포스트 입니다."><meta name=application-name content="Plox's blog"><meta name=apple-mobile-web-app-title content="Plox's blog"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=canonical href=http://plooox.github.io/chap10/><link rel=prev href=http://plooox.github.io/chap9/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"[Clean Code] Chap10. 클래스","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/plooox.github.io\/chap10\/"},"genre":"posts","keywords":"CleanCode","wordcount":2178,"url":"http:\/\/plooox.github.io\/chap10\/","datePublished":"2022-06-21T17:27:23+09:00","dateModified":"2022-06-21T17:27:23+09:00","publisher":{"@type":"Organization","name":"Plox"},"author":{"@type":"Person","name":"Plox"},"description":"Clean Code 스터디에서 담당했던 부분 포스트 입니다."}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/categories/>Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Plox's blog">Plox's Blog</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw"></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw"></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/categories/ title>Categories</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">[Clean Code] Chap10. 클래스</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>Plox</a></span>&nbsp;<span class=post-category>included in <a href=/categories/cleancode/><i class="far fa-folder fa-fw"></i>CleanCode</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-06-21>2022-06-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2178 words&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;11 minutes&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#클래스>클래스</a><ul><li><a href=#클래스-체계>클래스 체계</a><ul><li><a href=#캡슐화>캡슐화</a></li></ul></li><li><a href=#클래스는-작아야-한다>클래스는 작아야 한다!</a><ul><li><a href=#단일-책임-원칙srp>단일 책임 원칙(SRP)</a></li><li><a href=#응집도>응집도</a></li><li><a href=#응집도를-유지하면-작은-클래스-여럿이-나온다>응집도를 유지하면 작은 클래스 여럿이 나온다</a></li></ul></li><li><a href=#변경하기-쉬운-클래스>변경하기 쉬운 클래스</a><ul><li><a href=#변경으로부터-격리>변경으로부터 격리</a></li></ul></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=클래스>클래스</h1><h2 id=클래스-체계>클래스 체계</h2><ul><li>표준 자바 컨벤션<ol><li>변수 목록: <code>static public</code> → <code>static private</code> → <code>private 인스턴스</code> → <code>public(거의 안씀)</code></li><li>공개함수</li><li>비공개함수: 자신을 호출하는 공개함수 직후</li></ol></li></ul><p>⇒ <strong>추상화 단계가 순차적으로 내려간다</strong></p><h3 id=캡슐화>캡슐화</h3><ul><li>변수와 유틸리티 함수 ← 공개하지 않는게 좋으나 ‘반드시&rsquo; 숨길 필요는 없다.<ul><li><code>protected</code> 로 선언 후 테스트 코드에 접근 허용</li></ul></li><li>그럼에도 불구하고 비공개 상태를 유지하기 위해 온갖 방법을 강구하는 것이 최우선<ul><li>캡슐화 해제는 언제나 최후 수단</li></ul></li></ul><h2 id=클래스는-작아야-한다>클래스는 작아야 한다!</h2><ul><li><p>함수와 마찬갖지로 ‘작게&rsquo;가 기본 규칙</p><ul><li><p>‘얼마나&rsquo; 작아야 할까? ⇒ <strong>맡은 책임을 측정</strong></p><details><summary>너무 많은 책임</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SuperDashboard</span> <span class=kd>extends</span> <span class=n>JFrame</span> <span class=kd>implements</span> <span class=n>MetaDataUser</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>getCustomizerLanguagePath</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setSystemConfigPath</span><span class=o>(</span><span class=n>String</span> <span class=n>systemConfigPath</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>getSystemConfigDocument</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setSystemConfigDocument</span><span class=o>(</span><span class=n>String</span> <span class=n>systemConfigDocument</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>getGuruState</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>getNoviceState</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>getOpenSourceState</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>showObject</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>showProgress</span><span class=o>(</span><span class=n>String</span> <span class=n>s</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>isMetadataDirty</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setIsMetadataDirty</span><span class=o>(</span><span class=kt>boolean</span> <span class=n>isMetadataDirty</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Component</span> <span class=nf>getLastFocusedComponent</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setLastFocused</span><span class=o>(</span><span class=n>Component</span> <span class=n>lastFocused</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setMouseSelectState</span><span class=o>(</span><span class=kt>boolean</span> <span class=n>isMouseSelected</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>isMouseSelected</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>LanguageManager</span> <span class=nf>getLanguageManager</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Project</span> <span class=nf>getProject</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Project</span> <span class=nf>getFirstProject</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Project</span> <span class=nf>getLastProject</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>getNewProjectName</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setComponentSizes</span><span class=o>(</span><span class=n>Dimension</span> <span class=n>dim</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>getCurrentDir</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setCurrentDir</span><span class=o>(</span><span class=n>String</span> <span class=n>newDir</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>updateStatus</span><span class=o>(</span><span class=kt>int</span> <span class=n>dotPos</span><span class=o>,</span> <span class=kt>int</span> <span class=n>markPos</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Class</span><span class=o>[]</span> <span class=nf>getDataBaseClasses</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>MetadataFeeder</span> <span class=nf>getMetadataFeeder</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>addProject</span><span class=o>(</span><span class=n>Project</span> <span class=n>project</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>setCurrentProject</span><span class=o>(</span><span class=n>Project</span> <span class=n>project</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>removeProject</span><span class=o>(</span><span class=n>Project</span> <span class=n>project</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>MetaProjectHeader</span> <span class=nf>getProgramMetadata</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>resetDashboard</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Project</span> <span class=nf>loadProject</span><span class=o>(</span><span class=n>String</span> <span class=n>fileName</span><span class=o>,</span> <span class=n>String</span> <span class=n>projectName</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setCanSaveMetadata</span><span class=o>(</span><span class=kt>boolean</span> <span class=n>canSave</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>MetaObject</span> <span class=nf>getSelectedObject</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>deselectObjects</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setProject</span><span class=o>(</span><span class=n>Project</span> <span class=n>project</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>editorAction</span><span class=o>(</span><span class=n>String</span> <span class=n>actionName</span><span class=o>,</span> <span class=n>ActionEvent</span> <span class=n>event</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setMode</span><span class=o>(</span><span class=kt>int</span> <span class=n>mode</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>FileManager</span> <span class=nf>getFileManager</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setFileManager</span><span class=o>(</span><span class=n>FileManager</span> <span class=n>fileManager</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>ConfigManager</span> <span class=nf>getConfigManager</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setConfigManager</span><span class=o>(</span><span class=n>ConfigManager</span> <span class=n>configManager</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>ClassLoader</span> <span class=nf>getClassLoader</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setClassLoader</span><span class=o>(</span><span class=n>ClassLoader</span> <span class=n>classLoader</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>Properties</span> <span class=nf>getProps</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>getUserHome</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>getBaseDir</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getMajorVersionNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getMinorVersionNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getBuildNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>MetaObject</span> <span class=nf>pasting</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>target</span><span class=o>,</span> <span class=n>MetaObject</span> <span class=n>pasted</span><span class=o>,</span> <span class=n>MetaProject</span> <span class=n>project</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processMenuItems</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>metaObject</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processMenuSeparators</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>metaObject</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processTabPages</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>metaObject</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processPlacement</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processCreateLayout</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>updateDisplayLayer</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>,</span> <span class=kt>int</span> <span class=n>layerIndex</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>propertyEditedRepaint</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processDeleteObject</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>getAttachedToDesigner</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processProjectChangedState</span><span class=o>(</span><span class=kt>boolean</span> <span class=n>hasProjectChanged</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>processObjectNameChanged</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>object</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>runProject</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setAçowDragging</span><span class=o>(</span><span class=kt>boolean</span> <span class=n>allowDragging</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>allowDragging</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>isCustomizing</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setTitle</span><span class=o>(</span><span class=n>String</span> <span class=n>title</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>IdeMenuBar</span> <span class=nf>getIdeMenuBar</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>showHelper</span><span class=o>(</span><span class=n>MetaObject</span> <span class=n>metaObject</span><span class=o>,</span> <span class=n>String</span> <span class=n>propertyName</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// ... many non-public methods follow ...
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></div></details><details><summary>메서드 수를 줄인다면?</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SuperDashboard</span> <span class=kd>extends</span> <span class=n>JFrame</span> <span class=kd>implements</span> <span class=n>MetaDataUser</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// 책임1. Swing 컴포넌트 관리
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=kd>public</span> <span class=n>Component</span> <span class=nf>getLastFocusedComponent</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setLastFocused</span><span class=o>(</span><span class=n>Component</span> <span class=n>lastFocused</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 책임2. 소프트웨어 버전 추적
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getMajorVersionNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getMinorVersionNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getBuildNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>메서드 수가 작음에도 불구하고 <strong>책임이 너무 많다!</strong><ul><li>버전 관리를 담당하는 메서드를 따로 분리하여 <code>Version</code> 클래스를 만들 수 있다<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>Version</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getMajorVersionNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getMinorVersionNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>getBuildNumber</span><span class=o>()</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></li></ul></li></ul></div></details></li><li><p>클래스 이름은 해당 클래스의 책임을 기술해야한다.</p><ul><li>클래스 이름이 모호하거나 짓기 어렵다면, 책임이 너무 큰 것</li><li>25단어 내외로 클래스 설명이 가능해야 함</li></ul></li></ul></li></ul><h3 id=단일-책임-원칙srp>단일 책임 원칙(SRP)</h3><ul><li>클래스나 모듈을 **변경할 이유(책임)**가 단 하나뿐이어야 한다.</li><li>객체 지향 설계의 핵심</li><li>이해하고 지키기 쉬우나 가장 무시하는 규칙
+→ why? ) ‘돌아가는 소프트웨어&rsquo; 개발에 초점이 맞춰지기 때문</li><li>작은 클래스 여럿으로 이뤙진 시스템이 바람직하다</li></ul><h3 id=응집도>응집도</h3><ul><li><strong>클래스는 인스턴스 변수 수가 작아야 한다.</strong></li><li>각 클래스 메서드는 클래스 인스턴스 변수를 하나 이상 사용해야 한다.<ul><li>메서드가 변수를 더 많이 사용할 수록 메서드와 클래스는 응집도가 더 높다</li></ul></li><li>가능한한 응집도가 높은 클래스를 지향<ul><li><strong>응집도가 높다 = 클래스에 속한 메서드와 변수가 서로 의존하며 논리적인 단위로 묶인다</strong></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 응집도가 높은 클래스
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>Stack</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>int</span> <span class=n>topOfStack</span> <span class=o>=</span> <span class=n>0</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=n>List</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>elements</span> <span class=o>=</span> <span class=k>new</span> <span class=n>LinkedList</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>size</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>topOfStack</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>push</span><span class=o>(</span><span class=kt>int</span> <span class=n>element</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>topOfStack</span><span class=o>++;</span>
+</span></span><span class=line><span class=cl>		<span class=n>elements</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>element</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>int</span> <span class=nf>pop</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>PoppedWhenEmpty</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=o>(</span><span class=n>topOfStack</span> <span class=o>==</span> <span class=n>0</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>			<span class=k>throw</span> <span class=k>new</span> <span class=n>PoppedWhenEmpty</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>element</span> <span class=o>=</span> <span class=n>elements</span><span class=o>.</span><span class=na>get</span><span class=o>(--</span><span class=n>topOfStack</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>elements</span><span class=o>.</span><span class=na>remove</span><span class=o>(</span><span class=n>topOfStack</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>element</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong>함수는 작게, 매개변수 목록은 짧게</strong><ul><li>메서드가 사용하는 인스턴스 변수가 많아진다 → 새로운 클래스로 쪼개라!</li></ul></li></ul><h3 id=응집도를-유지하면-작은-클래스-여럿이-나온다>응집도를 유지하면 작은 클래스 여럿이 나온다</h3><p>Ex) 변수가 아주 많은 큰 함수</p><details><summary>예시</summary><div markdown=1><pre><code>```java
+package literatePrimes;
+
+public class PrintPrimes {
+  public static void main(String[] args) {
+    final int M = 1000;
+    final int RR = 50;
+    final int CC = 4;
+    final int WW = 10;
+    final int ORDMAX = 30;
+    int P[] = new int[M + 1];
+    int PAGENUMBER;
+    int PAGEOFFSET;
+    int ROWOFFSET;
+    int C;
+    int J;
+    int K;
+    boolean JPRIME;
+    int ORD;
+    int SQUARE;
+    int N;
+    int MULT[] = new int[ORDMAX + 1];
+
+    J = 1;
+    K = 1;
+    P[1] = 2;
+    ORD = 2;
+    SQUARE = 9;
+
+    while (K &lt; M) {
+      do {
+        J = J + 2;
+        if (J == SQUARE) {
+          ORD = ORD + 1;
+          SQUARE = P[ORD] * P[ORD];
+          MULT[ORD - 1] = J;
+        }
+        N = 2;
+        JPRIME = true;
+        while (N &lt; ORD &amp;&amp; JPRIME) {
+          while (MULT[N] &lt; J)
+            MULT[N] = MULT[N] + P[N] + P[N];
+          if (MULT[N] == J)
+            JPRIME = false;
+          N = N + 1;
+        }
+      } while (!JPRIME);
+      K = K + 1;
+      P[K] = J;
+    }
+    {
+      PAGENUMBER = 1;
+      PAGEOFFSET = 1;
+      while (PAGEOFFSET &lt;= M) {
+        System.out.println(&quot;The First &quot; + M + &quot; Prime Numbers --- Page &quot; + PAGENUMBER);
+        System.out.println(&quot;&quot;);
+        for (ROWOFFSET = PAGEOFFSET; ROWOFFSET &lt; PAGEOFFSET + RR; ROWOFFSET++) {
+          for (C = 0; C &lt; CC;C++)
+            if (ROWOFFSET + C * RR &lt;= M)
+              System.out.format(&quot;%10d&quot;, P[ROWOFFSET + C * RR]);
+          System.out.println(&quot;&quot;);
+        }
+        System.out.println(&quot;\f&quot;); PAGENUMBER = PAGENUMBER + 1; PAGEOFFSET = PAGEOFFSET + RR * CC;
+      }
+    }
+  }
+}
+```
+</code></pre></div></details><p>→ 큰 함수 일부를 작은 함수로 분할</p><p>→ 추출하고자 하는 코드가 큰 함수에 정의된 변수를 많이 사용</p><p>→ 변수를 클래스 인스턴스 변수로 승격시켜 함수 인수가 필요없게 구성 (응집력 down)</p><p>→ 몇몇 함수가 몇몇 인스턴스 변수만 사용하면 독자적인 클래스로 분리</p><details><summary>리펙토링</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span> <span class=nn>literatePrimes</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// PrimePrinter 클래스: main함수 하나만 포함, 실행 환경을 책임
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>PrimePrinter</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>final</span> <span class=kt>int</span> <span class=n>NUMBER_OF_PRIMES</span> <span class=o>=</span> <span class=n>1000</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span><span class=o>[]</span> <span class=n>primes</span> <span class=o>=</span> <span class=n>PrimeGenerator</span><span class=o>.</span><span class=na>generate</span><span class=o>(</span><span class=n>NUMBER_OF_PRIMES</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>		<span class=kd>final</span> <span class=kt>int</span> <span class=n>ROWS_PER_PAGE</span> <span class=o>=</span> <span class=n>50</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=kd>final</span> <span class=kt>int</span> <span class=n>COLUMNS_PER_PAGE</span> <span class=o>=</span> <span class=n>4</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=n>RowColumnPagePrinter</span> <span class=n>tablePrinter</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>			<span class=k>new</span> <span class=n>RowColumnPagePrinter</span><span class=o>(</span><span class=n>ROWS_PER_PAGE</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>						<span class=n>COLUMNS_PER_PAGE</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>						<span class=s>&#34;The First &#34;</span> <span class=o>+</span> <span class=n>NUMBER_OF_PRIMES</span> <span class=o>+</span> <span class=s>&#34; Prime Numbers&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>tablePrinter</span><span class=o>.</span><span class=na>print</span><span class=o>(</span><span class=n>primes</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span> <span class=nn>literatePrimes</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>java.io.PrintStream</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// RowColumnPagePrinter 클래스: 숫자목록을 행과 열에 맞추어 페이지를 출력
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>RowColumnPagePrinter</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>int</span> <span class=n>rowsPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>int</span> <span class=n>columnsPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>int</span> <span class=n>numbersPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=n>String</span> <span class=n>pageHeader</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=n>PrintStream</span> <span class=n>printStream</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=nf>RowColumnPagePrinter</span><span class=o>(</span><span class=kt>int</span> <span class=n>rowsPerPage</span><span class=o>,</span> <span class=kt>int</span> <span class=n>columnsPerPage</span><span class=o>,</span> <span class=n>String</span> <span class=n>pageHeader</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>this</span><span class=o>.</span><span class=na>rowsPerPage</span> <span class=o>=</span> <span class=n>rowsPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>this</span><span class=o>.</span><span class=na>columnsPerPage</span> <span class=o>=</span> <span class=n>columnsPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>this</span><span class=o>.</span><span class=na>pageHeader</span> <span class=o>=</span> <span class=n>pageHeader</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=n>numbersPerPage</span> <span class=o>=</span> <span class=n>rowsPerPage</span> <span class=o>*</span> <span class=n>columnsPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=n>printStream</span> <span class=o>=</span> <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>print</span><span class=o>(</span><span class=kt>int</span> <span class=n>data</span><span class=o>[])</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>pageNumber</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>firstIndexOnPage</span> <span class=o>=</span> <span class=n>0</span> <span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=n>firstIndexOnPage</span> <span class=o>&lt;</span> <span class=n>data</span><span class=o>.</span><span class=na>length</span> <span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=n>firstIndexOnPage</span> <span class=o>+=</span> <span class=n>numbersPerPage</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=kt>int</span> <span class=n>lastIndexOnPage</span> <span class=o>=</span>  <span class=n>Math</span><span class=o>.</span><span class=na>min</span><span class=o>(</span><span class=n>firstIndexOnPage</span> <span class=o>+</span> <span class=n>numbersPerPage</span> <span class=o>-</span> <span class=n>1</span><span class=o>,</span> <span class=n>data</span><span class=o>.</span><span class=na>length</span> <span class=o>-</span> <span class=n>1</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=n>printPageHeader</span><span class=o>(</span><span class=n>pageHeader</span><span class=o>,</span> <span class=n>pageNumber</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=n>printPage</span><span class=o>(</span><span class=n>firstIndexOnPage</span><span class=o>,</span> <span class=n>lastIndexOnPage</span><span class=o>,</span> <span class=n>data</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=n>printStream</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;\f&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=n>pageNumber</span><span class=o>++;</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>void</span> <span class=nf>printPage</span><span class=o>(</span><span class=kt>int</span> <span class=n>firstIndexOnPage</span><span class=o>,</span> <span class=kt>int</span> <span class=n>lastIndexOnPage</span><span class=o>,</span> <span class=kt>int</span><span class=o>[]</span> <span class=n>data</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>firstIndexOfLastRowOnPage</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>		<span class=n>firstIndexOnPage</span> <span class=o>+</span> <span class=n>rowsPerPage</span> <span class=o>-</span> <span class=n>1</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>firstIndexInRow</span> <span class=o>=</span> <span class=n>firstIndexOnPage</span> <span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=n>firstIndexInRow</span> <span class=o>&lt;=</span> <span class=n>firstIndexOfLastRowOnPage</span> <span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=n>firstIndexInRow</span><span class=o>++)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>printRow</span><span class=o>(</span><span class=n>firstIndexInRow</span><span class=o>,</span> <span class=n>lastIndexOnPage</span><span class=o>,</span> <span class=n>data</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=n>printStream</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>void</span> <span class=nf>printRow</span><span class=o>(</span><span class=kt>int</span> <span class=n>firstIndexInRow</span><span class=o>,</span> <span class=kt>int</span> <span class=n>lastIndexOnPage</span><span class=o>,</span> <span class=kt>int</span><span class=o>[]</span> <span class=n>data</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>column</span> <span class=o>=</span> <span class=n>0</span><span class=o>;</span> <span class=n>column</span> <span class=o>&lt;</span> <span class=n>columnsPerPage</span><span class=o>;</span> <span class=n>column</span><span class=o>++)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=kt>int</span> <span class=n>index</span> <span class=o>=</span> <span class=n>firstIndexInRow</span> <span class=o>+</span> <span class=n>column</span> <span class=o>*</span> <span class=n>rowsPerPage</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=o>(</span><span class=n>index</span> <span class=o>&lt;=</span> <span class=n>lastIndexOnPage</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>				<span class=n>printStream</span><span class=o>.</span><span class=na>format</span><span class=o>(</span><span class=s>&#34;%10d&#34;</span><span class=o>,</span> <span class=n>data</span><span class=o>[</span><span class=n>index</span><span class=o>]);</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kt>void</span> <span class=nf>printPageHeader</span><span class=o>(</span><span class=n>String</span> <span class=n>pageHeader</span><span class=o>,</span> <span class=kt>int</span> <span class=n>pageNumber</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>printStream</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>pageHeader</span> <span class=o>+</span> <span class=s>&#34; --- Page &#34;</span> <span class=o>+</span> <span class=n>pageNumber</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=n>printStream</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>setOutput</span><span class=o>(</span><span class=n>PrintStream</span> <span class=n>printStream</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>this</span><span class=o>.</span><span class=na>printStream</span> <span class=o>=</span> <span class=n>printStream</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span> <span class=nn>literatePrimes</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>java.util.ArrayList</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// PrimeGenerator 클래스: 소수 목록을 생성
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>PrimeGenerator</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>int</span><span class=o>[]</span> <span class=n>primes</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=n>ArrayList</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span> <span class=n>multiplesOfPrimeFactors</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>protected</span> <span class=kd>static</span> <span class=kt>int</span><span class=o>[]</span> <span class=nf>generate</span><span class=o>(</span><span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>primes</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>int</span><span class=o>[</span><span class=n>n</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>		<span class=n>multiplesOfPrimeFactors</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ArrayList</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;();</span>
+</span></span><span class=line><span class=cl>		<span class=n>set2AsFirstPrime</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=n>checkOddNumbersForSubsequentPrimes</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>primes</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>set2AsFirstPrime</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=n>primes</span><span class=o>[</span><span class=n>0</span><span class=o>]</span> <span class=o>=</span> <span class=n>2</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=n>multiplesOfPrimeFactors</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>2</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>checkOddNumbersForSubsequentPrimes</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>primeIndex</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>candidate</span> <span class=o>=</span> <span class=n>3</span> <span class=o>;</span> <span class=n>primeIndex</span> <span class=o>&lt;</span> <span class=n>primes</span><span class=o>.</span><span class=na>length</span> <span class=o>;</span> <span class=n>candidate</span> <span class=o>+=</span> <span class=n>2</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=o>(</span><span class=n>isPrime</span><span class=o>(</span><span class=n>candidate</span><span class=o>))</span>
+</span></span><span class=line><span class=cl>				<span class=n>primes</span><span class=o>[</span><span class=n>primeIndex</span><span class=o>++]</span> <span class=o>=</span> <span class=n>candidate</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>boolean</span> <span class=nf>isPrime</span><span class=o>(</span><span class=kt>int</span> <span class=n>candidate</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=o>(</span><span class=n>isLeastRelevantMultipleOfNextLargerPrimeFactor</span><span class=o>(</span><span class=n>candidate</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=n>multiplesOfPrimeFactors</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>candidate</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>			<span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>isNotMultipleOfAnyPreviousPrimeFactor</span><span class=o>(</span><span class=n>candidate</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>boolean</span> <span class=nf>isLeastRelevantMultipleOfNextLargerPrimeFactor</span><span class=o>(</span><span class=kt>int</span> <span class=n>candidate</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>nextLargerPrimeFactor</span> <span class=o>=</span> <span class=n>primes</span><span class=o>[</span><span class=n>multiplesOfPrimeFactors</span><span class=o>.</span><span class=na>size</span><span class=o>()];</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>leastRelevantMultiple</span> <span class=o>=</span> <span class=n>nextLargerPrimeFactor</span> <span class=o>*</span> <span class=n>nextLargerPrimeFactor</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>candidate</span> <span class=o>==</span> <span class=n>leastRelevantMultiple</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>boolean</span> <span class=nf>isNotMultipleOfAnyPreviousPrimeFactor</span><span class=o>(</span><span class=kt>int</span> <span class=n>candidate</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=o>(</span><span class=kt>int</span> <span class=n>n</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span> <span class=n>n</span> <span class=o>&lt;</span> <span class=n>multiplesOfPrimeFactors</span><span class=o>.</span><span class=na>size</span><span class=o>();</span> <span class=n>n</span><span class=o>++)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>			<span class=k>if</span> <span class=o>(</span><span class=n>isMultipleOfNthPrimeFactor</span><span class=o>(</span><span class=n>candidate</span><span class=o>,</span> <span class=n>n</span><span class=o>))</span>
+</span></span><span class=line><span class=cl>				<span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>		<span class=o>}</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>boolean</span> <span class=nf>isMultipleOfNthPrimeFactor</span><span class=o>(</span><span class=kt>int</span> <span class=n>candidate</span><span class=o>,</span> <span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>candidate</span> <span class=o>==</span> <span class=n>smallestOddNthMultipleNotLessThanCandidate</span><span class=o>(</span><span class=n>candidate</span><span class=o>,</span> <span class=n>n</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=kd>static</span> <span class=kt>int</span> <span class=nf>smallestOddNthMultipleNotLessThanCandidate</span><span class=o>(</span><span class=kt>int</span> <span class=n>candidate</span><span class=o>,</span> <span class=kt>int</span> <span class=n>n</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kt>int</span> <span class=n>multiple</span> <span class=o>=</span> <span class=n>multiplesOfPrimeFactors</span><span class=o>.</span><span class=na>get</span><span class=o>(</span><span class=n>n</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>while</span> <span class=o>(</span><span class=n>multiple</span> <span class=o>&lt;</span> <span class=n>candidate</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>			<span class=n>multiple</span> <span class=o>+=</span> <span class=n>2</span> <span class=o>*</span> <span class=n>primes</span><span class=o>[</span><span class=n>n</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>		<span class=n>multiplesOfPrimeFactors</span><span class=o>.</span><span class=na>set</span><span class=o>(</span><span class=n>n</span><span class=o>,</span> <span class=n>multiple</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=n>multiple</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>프로그램 길이가 길어짐</p><ul><li>서술적인 변수 이름 사용</li><li>코드에 주석을 추가하는 수단 → 함수 선언 & 클래스 선언</li><li>가독성을 위한 공백 추가</li></ul></li><li><p>기존 프로그램의 로직을 그대로 두고 리펙토링 수행</p><ul><li>프로그램 동작을 검증하는 테스트 슈트 작성</li><li>한번에 하나씩 수차례에 거쳐 코드변경<ul><li>코드를 변경할 때마다 테스트를 수행</li></ul></li></ul></div></details></li></ul><h2 id=변경하기-쉬운-클래스>변경하기 쉬운 클래스</h2><ul><li><p>대다수 시스템은 지속적인 변경이 가해짐</p></li><li><p>무언가를 변경할 때마다 시스템이 의도대로 동작하지 않을 위험 존재</p></li><li><p>깨끗한 시스템 → 클래스를 체계적으로 정리, 변경에 수반되는 위험을 낮춤</p><details><summary>변경이 필요한 코드</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=nf>Sql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>create</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>insert</span><span class=o>(</span><span class=n>Object</span><span class=o>[]</span> <span class=n>fields</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>selectAll</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>findByKey</span><span class=o>(</span><span class=n>String</span> <span class=n>keyColumn</span><span class=o>,</span> <span class=n>String</span> <span class=n>keyValue</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>select</span><span class=o>(</span><span class=n>Column</span> <span class=n>column</span><span class=o>,</span> <span class=n>String</span> <span class=n>pattern</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>select</span><span class=o>(</span><span class=n>Criteria</span> <span class=n>criteria</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=n>String</span> <span class=nf>preparedInsert</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=n>String</span> <span class=nf>columnList</span><span class=o>(</span><span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=n>String</span> <span class=nf>valuesList</span><span class=o>(</span><span class=n>Object</span><span class=o>[]</span> <span class=n>fields</span><span class=o>,</span> <span class=kd>final</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span> <span class=kd>private</span> <span class=n>String</span> <span class=nf>selectWithCriteria</span><span class=o>(</span><span class=n>String</span> <span class=n>criteria</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=kd>private</span> <span class=n>String</span> <span class=nf>placeholderList</span><span class=o>(</span><span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>새로운 SQL문을 지원하거나 SQL문을 수정할 때 수정이 필요함 → <strong>SRP 위반</strong></li></ul></li></ul></div></details><ul><li><p>클래스 일부에서만 사용되는 비공개 메서드는 코드 개선의 잠재적인 여지를 시사</p><details><summary>닫힌 클래스 집합</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl>	<span class=kd>abstract</span> <span class=kd>public</span> <span class=kd>class</span> <span class=nc>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>Sql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=kd>abstract</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>CreateSql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>CreateSql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>SelectSql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>SelectSql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>InsertSql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>InsertSql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>,</span> <span class=n>Object</span><span class=o>[]</span> <span class=n>fields</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>		<span class=kd>private</span> <span class=n>String</span> <span class=nf>valuesList</span><span class=o>(</span><span class=n>Object</span><span class=o>[]</span> <span class=n>fields</span><span class=o>,</span> <span class=kd>final</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>SelectWithCriteriaSql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>SelectWithCriteriaSql</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>		<span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>,</span> <span class=n>Criteria</span> <span class=n>criteria</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>SelectWithMatchSql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>SelectWithMatchSql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>,</span> <span class=n>Column</span> <span class=n>column</span><span class=o>,</span> <span class=n>String</span> <span class=n>pattern</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>FindByKeySql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=kd>public</span> <span class=nf>FindByKeySql</span><span class=o>(</span>
+</span></span><span class=line><span class=cl>		<span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>,</span> <span class=n>String</span> <span class=n>keyColumn</span><span class=o>,</span> <span class=n>String</span> <span class=n>keyValue</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>PreparedInsertSql</span> <span class=kd>extends</span> <span class=n>Sql</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>PreparedInsertSql</span><span class=o>(</span><span class=n>String</span> <span class=n>table</span><span class=o>,</span> <span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>		<span class=nd>@Override</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>private</span> <span class=n>String</span> <span class=nf>placeholderList</span><span class=o>(</span><span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>Where</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>Where</span><span class=o>(</span><span class=n>String</span> <span class=n>criteria</span><span class=o>)</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kd>public</span> <span class=kd>class</span> <span class=nc>ColumnList</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>		<span class=kd>public</span> <span class=nf>ColumnList</span><span class=o>(</span><span class=n>Column</span><span class=o>[]</span> <span class=n>columns</span><span class=o>)</span> <span class=kd>public</span> <span class=n>String</span> <span class=nf>generate</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>	<span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>공개 인터페이스 → 파생 클래스</p></li><li><p>비공개 메서드 → 파생 클래스로 이동</p></li><li><p>모든 파생 클래스가 사용하는 비공개 메서드 → 유틸리티 클래스(<code>Where</code>, <code>ColumnList</code>)</p></li><li><p>각 클래스가 단순하고 이해하기 쉬움</p></li><li><p>함수 하나를 수정해도 다른 함수가 고장날 위험도 배제</p></li><li><p>테스트 관점에서 모든 논리 증명에도 용이</p></li><li><p>OCP원칙 준수</p></li></ul></li></ul></div></details><h3 id=변경으로부터-격리>변경으로부터 격리</h3><ul><li><p>concrete 클래스: 구체적인 클래스, 상세한 구현을 포함</p></li><li><p>abstract 클래스: 추상 클래스, 개념만 포함</p></li><li><p><strong>인터페이스</strong>와 <strong>추상클래스</strong>를 사용해 구현이 미치는 영향을 격리</p><ul><li>상셓나 구현에 의존하는 코드는 테스트가 어려움</li><li>추상화를 통해 테스트가 가능할 정도로 시스템의 결합도를 낮춤으로서 유연성과 재사용성을 높임</li></ul></li><li><details><summary>예시</summary><div markdown=1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 인터페이스(StockExchange)를 생성한 후 메서드를 선언
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>interface</span> <span class=nc>StockExchange</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>Money</span> <span class=nf>currentPrice</span><span class=o>(</span><span class=n>String</span> <span class=n>symbol</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// StockExchange 인터페이스를 구현하는 TokyoStockExchange 클래스를 구현
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=n>Portfolio</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>private</span> <span class=n>StockExchange</span> <span class=n>exchange</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=kd>public</span> <span class=nf>Portfolio</span><span class=o>(</span><span class=n>StockExchange</span> <span class=n>exchange</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=o>.</span><span class=na>exchange</span> <span class=o>=</span> <span class=n>exchange</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// ...
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 테스트용 클래스(FixedStockExchangeStub) By TokyoStockExchange 클래스
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>PortfolioTest</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=kd>private</span> <span class=n>FixedStockExchangeStub</span> <span class=n>exchange</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>  <span class=kd>private</span> <span class=n>Portfolio</span> <span class=n>portfolio</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nd>@Before</span>
+</span></span><span class=line><span class=cl>  <span class=kd>protected</span> <span class=kt>void</span> <span class=nf>setUp</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>exchange</span> <span class=o>=</span> <span class=k>new</span> <span class=n>FixedStockExchangeStub</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>exchange</span><span class=o>.</span><span class=na>fix</span><span class=o>(</span><span class=s>&#34;MSFT&#34;</span><span class=o>,</span> <span class=n>100</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>portfolio</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Portfolio</span><span class=o>(</span><span class=n>exchange</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nd>@Test</span>
+</span></span><span class=line><span class=cl>  <span class=kd>public</span> <span class=kt>void</span> <span class=nf>GivenFiveMSFTTotalShouldBe500</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>portfolio</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=n>5</span><span class=o>,</span> <span class=s>&#34;MSFT&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Assert</span><span class=o>.</span><span class=na>assertEquals</span><span class=o>(</span><span class=n>500</span><span class=o>,</span> <span class=n>portfolio</span><span class=o>.</span><span class=na>value</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></div></details></li></ul></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2022-06-21</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/chap10/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/cleancode/>CleanCode</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/chap9/ class=prev rel=prev title="[Clean Code] Chap9. 단위 테스트"><i class="fas fa-angle-left fa-fw"></i>[Clean Code] Chap9. 단위 테스트</a></div></div><div id=comments><div id=utterances></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>Utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>Plox</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw"></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"plooox/blog_comments"}},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightGallery:{actualSize:!1,exThumbImage:"data-thumbnail",hideBarsDelay:2e3,selector:".lightgallery",speed:400,thumbContHeight:80,thumbWidth:80,thumbnail:!0},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
