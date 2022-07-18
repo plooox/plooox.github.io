@@ -127,6 +127,11 @@ description
 - git checkout
   - branch 변경 → HEAD가 바뀜
 
+# Gist?
+
+- Github에서 제공하는 서비스
+- git 기반 컨트롤(버전관리)을 가지는 code snippets, log, memo 서비스
+
 ---
 
 ### 참고자료
